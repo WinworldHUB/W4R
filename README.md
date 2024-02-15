@@ -2,7 +2,7 @@
 
 ## Tests
 
-We are using Jest for writing tests.
+We are using Jest for writing tests
 Please read [Jest Docs](https://jestjs.io/docs/getting-started) for more details.
 
 # Getting Started with Create React App
