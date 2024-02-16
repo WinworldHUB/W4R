@@ -4,6 +4,7 @@ import { PageRoutes } from "./lib/constants";
 // import Dashboard from "./pages/dashboard";
 import Invoices from "./pages/Invoices";
 import Home from "./pages/home";
+import UserTable from "./lib/components/userTable";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route path={PageRoutes.Home} element={<Home />} />
         <Route path={PageRoutes.Login} element={<SignIn />} />
         <Route path={PageRoutes.Invoices} element={<Invoices />} />
+        <Route path={PageRoutes.Users} element={<UserTable />} />
+
       </Routes>
     </BrowserRouter>
   );

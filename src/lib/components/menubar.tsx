@@ -1,9 +1,14 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { MdSpaceDashboard } from "react-icons/md";
+
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: JSX.Element;
+  route: string;
+}
 
 interface MenuBarProps {
   onClick: Dispatch<SetStateAction<number>>;
@@ -13,13 +18,7 @@ interface MenuBarProps {
 
 const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
   return (
-    <Navbar
-      expand="md"
-      bg="primary"
-      data-bs-theme="dark"
-      className="shadow"
-      sticky="top"
-    >
+    <Navbar expand="md" bg="primary" data-bs-theme="dark" className="shadow" sticky="top">
       <Container fluid>
         <Navbar.Brand href="#home">W4R Admin Portal</Navbar.Brand>
         <Navbar.Toggle />
@@ -29,6 +28,7 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
               <Nav.Link
                 key={index}
                 onClick={() => onClick(index)}
+                href={item.route}
                 className={selectedItemId === item.id ? "active" : ""}
               >
                 {item.icon} {item.label}
