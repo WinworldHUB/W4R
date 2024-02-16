@@ -15,7 +15,7 @@ const APP_MENU: MenuItem[] = [
     id: 1,
     label: "Orders",
     icon: <FaOpencart />,
-    route: "/orders",
+    route: "/",
   },
   {
     id: 2,

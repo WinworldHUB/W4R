@@ -20,7 +20,7 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
   return (
     <Navbar expand="md" bg="primary" data-bs-theme="dark" className="shadow" sticky="top">
       <Container fluid>
-        <Navbar.Brand href="#home">W4R Admin Portal</Navbar.Brand>
+        <Navbar.Brand href="/">W4R Admin Portal</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav className="me-auto">

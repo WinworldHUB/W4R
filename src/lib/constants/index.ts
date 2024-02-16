@@ -1,5 +1,5 @@
 export enum PageRoutes {
-  Home = "/orders",
+  Home = "/",
   Login = "/login",
   Invoices = "/invoices",
   Users = "/members"
