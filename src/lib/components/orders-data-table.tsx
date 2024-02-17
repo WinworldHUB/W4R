@@ -2,12 +2,15 @@ import { DateTime } from "luxon";
 import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { APP_CONVERSION_DATE_FORMAT } from "../constants";
+import {
+  APP_CONVERSION_DATE_FORMAT,
+  KEY_ALL,
+  KEY_Latest,
+  KEY_UNPAID,
+} from "../constants";
 import { isOrderContains } from "../utils/order-utils";
 
-const KEY_Latest = "Latest";
-const KEY_UNPAID = "unpaid";
-const KEY_ALL = "all";
+const filters: string[] = [KEY_Latest, KEY_UNPAID, KEY_ALL];
 
 const columns: TableColumn<Order>[] = [
   {
@@ -67,16 +70,8 @@ const OrdersDataTable: FC<DataTableProps> = ({
   isEditable = false,
 }: DataTableProps) => {
   const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>(KEY_Latest);
-  const [selectedOrder, setSelectedOrder] = useState<Order>(null);
-  const [isShowStatusDropDown, setIsShowStatusDropDown] =
-    useState<boolean>(false);
-
-  const onItemClicked = (item: Order) => {
-    setSelectedOrder(item);
-
-    onRowClicked(item);
-  };
+  const [activeKey, setActiveKey] = useState<string>(filters[0]);
+  useState<boolean>(false);
 
   const filteredData = useMemo(() => {
     switch (activeKey) {
@@ -112,10 +107,15 @@ const OrdersDataTable: FC<DataTableProps> = ({
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? KEY_Latest);
+                setActiveKey(eventKey ?? filters[0]);
               }}
             >
-              <Nav.Item>
+              {filters.map((filterKey, index) => (
+                <Nav.Item>
+                  <Nav.Link eventKey={filterKey}>{filterKey}</Nav.Link>
+                </Nav.Item>
+              ))}
+              {/* <Nav.Item>
                 <Nav.Link eventKey={KEY_Latest}>Latest</Nav.Link>
               </Nav.Item>
               <Nav.Item>
@@ -123,7 +123,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey={KEY_ALL}>All</Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
             </Nav>
           </Col>
           <Col xs="3">
@@ -142,7 +142,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
           striped
           highlightOnHover
           pagination
-          onRowClicked={onItemClicked}
+          onRowClicked={onRowClicked}
         />
       </Card.Body>
     </Card>

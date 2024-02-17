@@ -1,10 +1,10 @@
-type Invoice = {
-  InvoiceId: number;
-  OrderId: number;
-  PaymentDate: string;
-  InvoiceDate: string;
-  Status: string;
-}
+// type Invoice = {
+//   InvoiceId: number;
+//   OrderId: number;
+//   PaymentDate: string;
+//   InvoiceDate: string;
+//   status: string;
+// };
 
 type MenuItem = {
   id: number;
@@ -20,7 +20,17 @@ type Order = {
   paymentDate?: string;
 };
 
-type User = {
+type Invoice = {
+  invoiceId: number;
+  orderId: number;
+  paymentDate: string;
+  invoiceDate: string;
+  orderDate: string;
+  orderValue: number;
+  status: string;
+};
+
+type Member = {
   ID: number;
   Status: string;
   "Customer ID": number;
@@ -74,4 +84,4 @@ type User = {
   "Last order date": string;
   "Last order amount": number;
   "Discount applied": string;
-}
+};

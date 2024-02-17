@@ -1,14 +1,14 @@
 import React from "react";
 import PageLayout from "../lib/components/page-layout";
 import data from "../lib/data/users.json";
-import UserTable from "../lib/components/users-data-table";
+import MembersDataTable from "../lib/components/members-data-table";
 
-const Users = () => {
+const Members = () => {
   return (
     <PageLayout>
-      <UserTable data={data} />
+      <MembersDataTable data={data} />
     </PageLayout>
   );
 };
 
-export default Users;
+export default Members;
