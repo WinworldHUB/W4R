@@ -38,17 +38,17 @@ const InvoiceTable = () => {
   ];
 
   const filteredData = useMemo(() => {
-    switch (activeKey) {
-      case 'today':
-        return invoices.filter(
-          (invoice) => DateTime.now().toFormat('MM/dd/yyyy') === invoice.OrderDate
-        );
-      case 'all':
-        return invoices.filter((invoice) => invoice.OrderDate);
-      default:
-        return invoices;
-    }
-  }, [activeKey, invoices]);
+    const searchTextLower = filterText.toLowerCase();
+    return invoices.filter((invoice) => {
+      return (
+        invoice.InvoiceId.toString().includes(searchTextLower) ||
+        invoice.OrderId.toString().includes(searchTextLower) ||
+        invoice.InvoicePayment.toString().includes(searchTextLower) ||
+        invoice.OrderDate.toLowerCase().includes(searchTextLower) ||
+        invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
+      );
+    });
+  }, [filterText, invoices]);
 
   return (
     <Card>
