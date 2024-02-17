@@ -64,10 +64,10 @@ const UserTable = ({ data }) => {
     <Card>
       <Card.Header>
         <Row>
-          <Col xs="3">
+          <Col xs="9">
             <Card.Title>Users</Card.Title>
           </Col>
-          <Col xs="9">
+          <Col xs="3">
             <Form.Control
               type="text"
               placeholder="Search"

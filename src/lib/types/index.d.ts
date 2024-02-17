@@ -1,10 +1,11 @@
 type Invoice = {
-    InvoiceId: number;
-    OrderId: number;
-    InvoicePayment: number;
-    OrderDate: string;
-    InvoiceDate: string;
+  InvoiceId: number;
+  OrderId: number;
+  PaymentDate: string;
+  InvoiceDate: string;
+  Status: string;
 }
+
 type MenuItem = {
   id: number;
   label: String;

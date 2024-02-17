@@ -1,13 +1,21 @@
-import React, { useState, useMemo } from 'react';
-import { DateTime } from 'luxon';
+import React, { useMemo, useState } from 'react';
 import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import invoiceData from '../data/invoice.json'; // Importing the JSON data
+import { DateTime } from 'luxon';
+
+type Invoice = {
+  InvoiceId: number;
+  OrderId: number;
+  PaymentDate: string;
+  InvoiceDate: string;
+  Status: string;
+};
 
 const InvoiceTable = () => {
   const [filterText, setFilterText] = useState<string>('');
   const [activeKey, setActiveKey] = useState<string>('today');
-  const [invoices, setInvoices] = useState<Invoice[]>(invoiceData);
+  const invoices: Invoice[] = invoiceData;
 
   const columns: TableColumn<Invoice>[] = [
     {
@@ -22,12 +30,12 @@ const InvoiceTable = () => {
     },
     {
       name: 'Invoice Payment',
-      selector: (row) =>`₹ ${row.InvoicePayment}`,
+      selector: (row) => row.Status,
       sortable: true,
     },
     {
       name: 'Order Date',
-      selector: (row) => row.OrderDate,
+      selector: (row) => row.PaymentDate,
       sortable: true,
     },
     {
@@ -39,23 +47,35 @@ const InvoiceTable = () => {
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
-    return invoices.filter((invoice) => {
-      return (
-        invoice.InvoiceId.toString().includes(searchTextLower) ||
-        invoice.OrderId.toString().includes(searchTextLower) ||
-        invoice.InvoicePayment.toString().includes(searchTextLower) ||
-        invoice.OrderDate.toLowerCase().includes(searchTextLower) ||
-        invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
-      );
-    });
-  }, [filterText, invoices]);
+    const currentDate = DateTime.now().toISODate();
+    switch (activeKey) {
+      case 'today':
+        return invoices.filter((invoice) => invoice.InvoiceDate === currentDate && (
+          invoice.InvoiceId.toString().includes(searchTextLower) ||
+          invoice.OrderId.toString().includes(searchTextLower) ||
+          invoice.Status.toString().includes(searchTextLower) ||
+          invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
+          invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
+        ));
+      case 'all':
+        return invoices.filter((invoice) => (
+          invoice.InvoiceId.toString().includes(searchTextLower) ||
+          invoice.OrderId.toString().includes(searchTextLower) ||
+          invoice.Status.toString().includes(searchTextLower) ||
+          invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
+          invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
+        ));
+      default:
+        return [];
+    }
+  }, [activeKey, filterText, invoices]);
 
   return (
     <Card>
       <Card.Header>
         <Row>
           <Col xs="2">
-            <Card.Title>Invoice Table</Card.Title>
+            <Card.Title>Invoices</Card.Title>
           </Col>
           <Col xs="7">
             <Nav
@@ -90,7 +110,6 @@ const InvoiceTable = () => {
           striped
           highlightOnHover
           pagination
-          
         />
       </Card.Body>
     </Card>
