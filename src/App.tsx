@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from 'react-redux'; 
-import store from './lib/store';
+import{ store} from './lib/store';
 import SignIn from "./pages/signin";
 import { PageRoutes } from "./lib/constants";
 import Invoices from "./pages/Invoices";

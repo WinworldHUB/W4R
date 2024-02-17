@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction, useMemo, useState, useEffect } from "reac
 import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrders } from '../reducers/ordersSlice';
+import { setOrders } from '../store/orders/ordersSlice';
 import { APP_CONVERSION_DATE_FORMAT } from '../constants';
 import { DateTime } from 'luxon';
 import orderData from "../data/orders.json"

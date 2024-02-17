@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { useSelector } from "react-redux";
-import { setUsers } from "../reducers/usersSlice";
+import { setUsers } from "../store/users/usersSlice";
 import userData from "../data/users.json";
 const UserTable = () => {
   

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
-import { setInvoices } from '../reducers/invoiceSlice'; 
+import { setInvoices } from '../store/invoices/invoiceSlice'; 
 import { APP_CONVERSION_DATE_FORMAT } from '../constants';
 import { DateTime } from 'luxon';
 import invoiceData from '../data/invoice.json';
