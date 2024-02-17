@@ -75,3 +75,5 @@ type User = {
   "Last order amount": number;
   "Discount applied": string;
 }
+
+type RootState = ReturnType<typeof rootReducer>;

@@ -1,14 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from 'react-redux'; 
+import store from './lib/store';
 import SignIn from "./pages/signin";
 import { PageRoutes } from "./lib/constants";
-// import Dashboard from "./pages/dashboard";
 import Invoices from "./pages/Invoices";
 import Home from "./pages/home";
-import UserTable from "./lib/components/users-data-table";
 import Users from "./pages/users";
 
 function App() {
   return (
+    <Provider store={store}>
     <BrowserRouter>
       <Routes>
         {/* <Route path={PageRoutes.Home} element={<Dashboard />} /> */}
@@ -19,6 +20,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+    </Provider>
   );
 }
 

@@ -1,9 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import invoiceData from '../data/invoice.json'; 
+import { useSelector, useDispatch } from 'react-redux';
+import { setInvoices } from '../reducers/invoiceSlice'; 
 import { APP_CONVERSION_DATE_FORMAT } from '../constants';
 import { DateTime } from 'luxon';
+import invoiceData from '../data/invoice.json';
 
 type Invoice = {
   InvoiceId: number;
@@ -14,11 +16,23 @@ type Invoice = {
 };
 
 const InvoiceTable = () => {
+  const dispatch = useDispatch();
+  const invoices = useSelector((state: RootState) => state.invoice.invoices);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch(setInvoices(invoiceData));
+      } catch (error) {
+        console.error('Error fetching invoices:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]); 
+
   const [filterText, setFilterText] = useState<string>('');
   const [activeKey, setActiveKey] = useState<string>('all');
-  const invoices = invoiceData;
 
-  
   const columns: TableColumn<Invoice>[] = [
     {
       name: 'Invoice ID',
@@ -46,7 +60,6 @@ const InvoiceTable = () => {
       sortable: true,
     },
   ];
-
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
