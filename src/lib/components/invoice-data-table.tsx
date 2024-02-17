@@ -14,8 +14,8 @@ type Invoice = {
 
 const InvoiceTable = () => {
   const [filterText, setFilterText] = useState<string>('');
-  const [activeKey, setActiveKey] = useState<string>('today');
-  const invoices: Invoice[] = invoiceData;
+  const [activeKey, setActiveKey] = useState<string>('all');
+  const invoices = invoiceData;
 
   const columns: TableColumn<Invoice>[] = [
     {
@@ -49,7 +49,7 @@ const InvoiceTable = () => {
     const searchTextLower = filterText.toLowerCase();
     const currentDate = DateTime.now().toISODate();
     switch (activeKey) {
-      case 'today':
+      case 'Latest':
         return invoices.filter((invoice) => invoice.InvoiceDate === currentDate && (
           invoice.InvoiceId.toString().includes(searchTextLower) ||
           invoice.OrderId.toString().includes(searchTextLower) ||
@@ -83,11 +83,11 @@ const InvoiceTable = () => {
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey || 'today');
+                setActiveKey(eventKey || 'Latest');
               }}
             >
               <Nav.Item>
-                <Nav.Link eventKey="today">Today</Nav.Link>
+                <Nav.Link eventKey="Latest">Latest</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="all">All</Nav.Link>

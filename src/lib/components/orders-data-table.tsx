@@ -5,7 +5,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { APP_CONVERSION_DATE_FORMAT } from "../constants";
 import { isOrderContains } from "../utils/order-utils";
 
-const KEY_TODAY = "today";
+const KEY_Latest = "Latest";
 const KEY_UNPAID = "unpaid";
 const KEY_ALL = "all";
 
@@ -67,7 +67,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
   isEditable = false,
 }: DataTableProps) => {
   const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>(KEY_TODAY);
+  const [activeKey, setActiveKey] = useState<string>(KEY_Latest);
   const [selectedOrder, setSelectedOrder] = useState<Order>(null);
   const [isShowStatusDropDown, setIsShowStatusDropDown] =
     useState<boolean>(false);
@@ -80,7 +80,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
 
   const filteredData = useMemo(() => {
     switch (activeKey) {
-      case KEY_TODAY:
+      case KEY_Latest:
         return (data ?? []).filter(
           (order) =>
             order.orderDate ===
@@ -112,11 +112,11 @@ const OrdersDataTable: FC<DataTableProps> = ({
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? KEY_TODAY);
+                setActiveKey(eventKey ?? KEY_Latest);
               }}
             >
               <Nav.Item>
-                <Nav.Link eventKey={KEY_TODAY}>Today</Nav.Link>
+                <Nav.Link eventKey={KEY_Latest}>Latest</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey={KEY_UNPAID}>Unpaid</Nav.Link>
