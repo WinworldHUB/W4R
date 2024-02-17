@@ -13,6 +13,6 @@ export const APP_CONVERSION_DATE_FORMAT = "dd/MM/yyyy";
 export const APP_SHORT_DATE_FORMAT = "dd MMM yyyy";
 export const APP_LONG_DATE_FORMAT = "DDDD";
 
-export const KEY_Latest = "Latest";
+export const KEY_LATEST = "Latest";
 export const KEY_UNPAID = "Unpaid";
 export const KEY_ALL = "All";

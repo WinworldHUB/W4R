@@ -4,12 +4,12 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
   KEY_ALL,
-  KEY_Latest,
+  KEY_LATEST,
   KEY_UNPAID,
 } from "../constants";
 import { DateTime } from "luxon";
 
-const filters: string[] = [KEY_Latest, KEY_UNPAID, KEY_ALL];
+const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
 const columns: TableColumn<Invoice>[] = [
   {
@@ -86,15 +86,19 @@ interface DataTableProps {
   onRowClicked: Dispatch<SetStateAction<Invoice>>;
 }
 
-const InvoiceDataTable = ({ isEditable = false, data, onRowClicked }: DataTableProps) => {
+const InvoiceDataTable = ({
+  isEditable = false,
+  data,
+  onRowClicked,
+}: DataTableProps) => {
   const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>(KEY_Latest);
+  const [activeKey, setActiveKey] = useState<string>(filters[0]);
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
     const currentDate = DateTime.now().toISODate();
     switch (activeKey) {
-      case KEY_Latest:
+      case KEY_LATEST:
         return (data ?? []).filter(
           (invoice) =>
             invoice.invoiceDate === currentDate &&
@@ -141,7 +145,7 @@ const InvoiceDataTable = ({ isEditable = false, data, onRowClicked }: DataTableP
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? KEY_Latest);
+                setActiveKey(eventKey ?? filters[0]);
               }}
             >
               {filters.map((filter) => (

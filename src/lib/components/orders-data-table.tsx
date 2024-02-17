@@ -5,12 +5,12 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
   KEY_ALL,
-  KEY_Latest,
+  KEY_LATEST,
   KEY_UNPAID,
 } from "../constants";
 import { isOrderContains } from "../utils/order-utils";
 
-const filters: string[] = [KEY_Latest, KEY_UNPAID, KEY_ALL];
+const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
 const columns: TableColumn<Order>[] = [
   {
@@ -75,7 +75,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
 
   const filteredData = useMemo(() => {
     switch (activeKey) {
-      case KEY_Latest:
+      case KEY_LATEST:
         return (data ?? []).filter(
           (order) =>
             order.orderDate ===
@@ -115,15 +115,6 @@ const OrdersDataTable: FC<DataTableProps> = ({
                   <Nav.Link eventKey={filterKey}>{filterKey}</Nav.Link>
                 </Nav.Item>
               ))}
-              {/* <Nav.Item>
-                <Nav.Link eventKey={KEY_Latest}>Latest</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={KEY_UNPAID}>Unpaid</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={KEY_ALL}>All</Nav.Link>
-              </Nav.Item> */}
             </Nav>
           </Col>
           <Col xs="3">
