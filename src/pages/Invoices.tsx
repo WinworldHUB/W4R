@@ -1,6 +1,6 @@
 import React from 'react'
 import PageLayout from '../lib/components/page-layout'
-import InvoiceTable from '../lib/components/InvoiceTable'
+import InvoiceTable from '../lib/components/invoice-data-table'
 
 const Invoices = () => {
   return (

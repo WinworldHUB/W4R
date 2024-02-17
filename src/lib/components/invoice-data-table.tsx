@@ -90,16 +90,7 @@ const InvoiceTable = () => {
           striped
           highlightOnHover
           pagination
-          subHeader
-          subHeaderComponent={
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Form.Control
-                type="text"
-                placeholder="Search"
-                onChange={(e) => setFilterText(e.target.value)}
-              />
-            </div>
-          }
+          
         />
       </Card.Body>
     </Card>

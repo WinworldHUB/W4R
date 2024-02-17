@@ -4,7 +4,7 @@ import { PageRoutes } from "./lib/constants";
 // import Dashboard from "./pages/dashboard";
 import Invoices from "./pages/Invoices";
 import Home from "./pages/home";
-import UserTable from "./lib/components/userTable";
+import UserTable from "./lib/components/users-data-table";
 import Users from "./pages/users";
 
 function App() {

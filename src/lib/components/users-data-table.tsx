@@ -27,8 +27,8 @@ const UserTable = ({ data }) => {
         sortable: true,
       },
       {
-        name: "Customer Phone",
-        selector: (row) => row["Customer phone"],
+        name: "Payment method brand",
+        selector: (row) => row["Payment method brand"],
         sortable: true,
       },
       {
