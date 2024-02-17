@@ -7,14 +7,6 @@ import { APP_CONVERSION_DATE_FORMAT } from '../constants';
 import { DateTime } from 'luxon';
 import invoiceData from '../data/invoice.json';
 
-type Invoice = {
-  InvoiceId: number;
-  OrderId: number;
-  PaymentDate: string;
-  InvoiceDate: string;
-  Status: string;
-};
-
 const InvoiceTable = () => {
   const dispatch = useDispatch();
   const invoices = useSelector((state: RootState) => state.invoice.invoices);
