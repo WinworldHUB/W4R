@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Container } from "react-bootstrap";
-import { FaOpencart, FaFileInvoiceDollar, FaUsers, FaHome } from "react-icons/fa";
+import { FaOpencart, FaFileInvoiceDollar, FaUsers} from "react-icons/fa";
 import MenuBar from "./menubar";
 
 export interface MenuItem {
