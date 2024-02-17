@@ -14,23 +14,23 @@ const filters: string[] = [KEY_Latest, KEY_UNPAID, KEY_ALL];
 const columns: TableColumn<Invoice>[] = [
   {
     name: "Invoice#",
-    selector: (row) => row.InvoiceId,
+    selector: (row) => row.id,
     sortable: true,
   },
   {
     name: "Order#",
-    selector: (row) => row.OrderId,
+    selector: (row) => row.orderId,
     sortable: true,
   },
   {
     name: "Invoice Payment",
-    selector: (row) => row.Status,
+    selector: (row) => row.status,
     sortable: true,
   },
   {
     name: "Order Date",
     selector: (row) =>
-      DateTime.fromISO(row.PaymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+      DateTime.fromISO(row.paymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
     sortable: true,
   },
   {
@@ -41,13 +41,13 @@ const columns: TableColumn<Invoice>[] = [
   {
     name: "Invoice Date",
     selector: (row) =>
-      DateTime.fromISO(row.InvoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
     sortable: true,
   },
   {
     name: "Invoice Date",
     selector: (row) =>
-      DateTime.fromISO(row.InvoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
     sortable: true,
   },
   {
@@ -86,36 +86,42 @@ interface DataTableProps {
   onRowClicked: Dispatch<SetStateAction<Invoice>>;
 }
 
-const InvoiceDataTable = ({
-  isEditable = false,
-  data,
-  onRowClicked,
-}: DataTableProps) => {
+const InvoiceDataTable = ({ isEditable = false, data, onRowClicked }: DataTableProps) => {
   const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>("all");
+  const [activeKey, setActiveKey] = useState<string>(KEY_Latest);
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
     const currentDate = DateTime.now().toISODate();
     switch (activeKey) {
-      case "Latest":
+      case KEY_Latest:
         return (data ?? []).filter(
           (invoice) =>
-            invoice.InvoiceDate === currentDate &&
-            (invoice.InvoiceId.toString().includes(searchTextLower) ||
-              invoice.OrderId.toString().includes(searchTextLower) ||
-              invoice.Status.toString().includes(searchTextLower) ||
-              invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
-              invoice.InvoiceDate.toLowerCase().includes(searchTextLower))
+            invoice.invoiceDate === currentDate &&
+            (invoice.id.toString().includes(searchTextLower) ||
+              invoice.orderId.toString().includes(searchTextLower) ||
+              invoice.status.toString().includes(searchTextLower) ||
+              invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+              invoice.invoiceDate.toLowerCase().includes(searchTextLower))
         );
-      case "all":
+      case KEY_UNPAID:
         return (data ?? []).filter(
           (invoice) =>
-            invoice.InvoiceId.toString().includes(searchTextLower) ||
-            invoice.OrderId.toString().includes(searchTextLower) ||
-            invoice.Status.toString().includes(searchTextLower) ||
-            invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
-            invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
+            invoice.status !== "Paid" &&
+            (invoice.id.toString().includes(searchTextLower) ||
+              invoice.orderId.toString().includes(searchTextLower) ||
+              invoice.status.toString().includes(searchTextLower) ||
+              invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+              invoice.invoiceDate.toLowerCase().includes(searchTextLower))
+        );
+      case KEY_ALL:
+        return (data ?? []).filter(
+          (invoice) =>
+            invoice.id.toString().includes(searchTextLower) ||
+            invoice.orderId.toString().includes(searchTextLower) ||
+            invoice.status.toString().includes(searchTextLower) ||
+            invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+            invoice.invoiceDate.toLowerCase().includes(searchTextLower)
         );
       default:
         return [];
@@ -135,15 +141,14 @@ const InvoiceDataTable = ({
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? "Latest");
+                setActiveKey(eventKey ?? KEY_Latest);
               }}
             >
-              <Nav.Item>
-                <Nav.Link eventKey="Latest">Latest</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="all">All</Nav.Link>
-              </Nav.Item>
+              {filters.map((filter) => (
+                <Nav.Item key={filter}>
+                  <Nav.Link eventKey={filter}>{filter}</Nav.Link>
+                </Nav.Item>
+              ))}
             </Nav>
           </Col>
           <Col xs="3">

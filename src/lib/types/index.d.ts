@@ -21,7 +21,7 @@ type Order = {
 };
 
 type Invoice = {
-  invoiceId: number;
+  id: number;
   orderId: number;
   paymentDate: string;
   invoiceDate: string;
