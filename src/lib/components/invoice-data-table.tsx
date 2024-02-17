@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import invoiceData from '../data/invoice.json'; // Importing the JSON data
+import invoiceData from '../data/invoice.json'; 
+import { APP_CONVERSION_DATE_FORMAT } from '../constants';
 import { DateTime } from 'luxon';
 
 type Invoice = {
@@ -17,6 +18,7 @@ const InvoiceTable = () => {
   const [activeKey, setActiveKey] = useState<string>('all');
   const invoices = invoiceData;
 
+  
   const columns: TableColumn<Invoice>[] = [
     {
       name: 'Invoice ID',
@@ -35,15 +37,16 @@ const InvoiceTable = () => {
     },
     {
       name: 'Order Date',
-      selector: (row) => row.PaymentDate,
+      selector: (row) => DateTime.fromISO(row.PaymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
       sortable: true,
     },
     {
       name: 'Invoice Date',
-      selector: (row) => row.InvoiceDate,
+      selector: (row) => DateTime.fromISO(row.InvoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
       sortable: true,
     },
   ];
+
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
