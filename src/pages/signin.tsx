@@ -10,12 +10,12 @@ const SignIn = () => {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate(); // Hook for navigation
 
-  const handleEmailChange = (e:any) => {
+  const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
     setEmailError("");
   };
 
-  const handlePasswordChange = (e:any) => {
+  const handlePasswordChange = (e: any) => {
     setPassword(e.target.value);
     setPasswordError("");
   };
@@ -30,7 +30,9 @@ const SignIn = () => {
     // Password validation
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
-      setPasswordError("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
+      setPasswordError(
+        "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number"
+      );
       return;
     }
 
@@ -40,7 +42,7 @@ const SignIn = () => {
   };
 
   return (
-    <PageLayout>
+    <PageLayout menuItems={[]} selectedMenuId={0} isShowSideMenu={false}>
       <div className="main-content mt-0">
         <section className="min-vh-100 mb-8">
           <div
@@ -60,26 +62,36 @@ const SignIn = () => {
                       <div className="mb-4">
                         <input
                           type="email"
-                          className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                          className={`form-control ${
+                            emailError ? "is-invalid" : ""
+                          }`}
                           placeholder="Email"
                           aria-label="Email"
                           aria-describedby="email-addon"
                           value={email}
                           onChange={handleEmailChange}
                         />
-                        {emailError && <div className="invalid-feedback">{emailError}</div>}
+                        {emailError && (
+                          <div className="invalid-feedback">{emailError}</div>
+                        )}
                       </div>
                       <div className="mb-4">
                         <input
                           type="password"
-                          className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+                          className={`form-control ${
+                            passwordError ? "is-invalid" : ""
+                          }`}
                           placeholder="Password"
                           aria-label="Password"
                           aria-describedby="password-addon"
                           value={password}
                           onChange={handlePasswordChange}
                         />
-                        {passwordError && <div className="invalid-feedback">{passwordError}</div>}
+                        {passwordError && (
+                          <div className="invalid-feedback">
+                            {passwordError}
+                          </div>
+                        )}
                       </div>
                       <div className="text-center">
                         <button

@@ -111,7 +111,7 @@ const OrdersDataTable: FC<DataTableProps> = ({
               }}
             >
               {filters.map((filterKey, index) => (
-                <Nav.Item>
+                <Nav.Item key={index}>
                   <Nav.Link eventKey={filterKey}>{filterKey}</Nav.Link>
                 </Nav.Item>
               ))}

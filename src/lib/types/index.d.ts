@@ -1,15 +1,13 @@
-// type Invoice = {
-//   InvoiceId: number;
-//   OrderId: number;
-//   PaymentDate: string;
-//   InvoiceDate: string;
-//   status: string;
-// };
+interface PageProps {
+  selectedMenuId: number;
+  menuItems: MenuItem[];
+}
 
 type MenuItem = {
   id: number;
-  label: String;
+  label: string;
   icon: React.ReactElement;
+  route: string;
 };
 
 type Order = {

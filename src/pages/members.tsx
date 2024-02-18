@@ -3,9 +3,9 @@ import PageLayout from "../lib/components/page-layout";
 import data from "../lib/data/users.json";
 import MembersDataTable from "../lib/components/members-data-table";
 
-const Members = () => {
+const Members = (pageProps: PageProps) => {
   return (
-    <PageLayout>
+    <PageLayout {...pageProps}>
       <MembersDataTable data={data} />
     </PageLayout>
   );
