@@ -1,17 +1,23 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { MdSpaceDashboard } from "react-icons/md";
+import { PageRoutes } from "../constants";
 
 interface MenuBarProps {
-  onClick: Dispatch<SetStateAction<number>>;
+  onClick: (menuIndex: number) => void;
   menuItems: MenuItem[];
   selectedItemId: number;
 }
 
 const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
+  const [currentMenuId, setCurrentMenuId] = useState<number>(0);
+
+  useEffect(() => {
+    //setCurrentMenuId(0);
+    setCurrentMenuId(selectedItemId);
+  }, [selectedItemId]);
+
   return (
     <Navbar
       expand="md"
@@ -21,22 +27,28 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
       sticky="top"
     >
       <Container fluid>
-        <Navbar.Brand href="#home">W4R Admin Portal</Navbar.Brand>
+        <Navbar.Brand href="/">W4R Admin Portal</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav className="me-auto">
             {menuItems.map((item, index) => (
               <Nav.Link
                 key={index}
-                onClick={() => onClick(index)}
-                className={selectedItemId === item.id ? "active" : ""}
+                onClick={() => {
+                  //setSelectedMenuId(menuItems[index].id);
+                  onClick(index);
+                }}
+                href={item.route}
+                className={
+                  currentMenuId === menuItems[index].id ? "active" : ""
+                }
               >
                 {item.icon} {item.label}
               </Nav.Link>
             ))}
           </Nav>
           <Nav className="ms-auto">
-            <Nav.Link>
+            <Nav.Link href={PageRoutes.Login}>
               Logout{" "}
               <strong className="text-white">
                 <em>Mark Otto</em>

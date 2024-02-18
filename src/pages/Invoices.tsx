@@ -1,15 +1,15 @@
-import React from 'react'
-import PageLayout from '../lib/components/page-layout'
-import InvoiceTable from '../lib/components/InvoiceTable'
+import PageLayout from "../lib/components/page-layout";
+import InvoiceDataTable from "../lib/components/invoice-data-table";
+import data from "../lib/data/invoice.json";
 
-const Invoices = () => {
+const Invoices = (pageProps: PageProps) => {
   return (
     <div>
-      <PageLayout isShowSideMenu>
-        <InvoiceTable/>
+      <PageLayout {...pageProps}>
+        <InvoiceDataTable data={data} onRowClicked={() => {}} />
       </PageLayout>
     </div>
-  )
-}
+  );
+};
 
-export default Invoices
+export default Invoices;
