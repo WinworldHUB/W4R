@@ -1,57 +1,57 @@
-import { Dispatch, FC, SetStateAction, useMemo, useState, useEffect } from "react";
-import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import { useDispatch, useSelector } from 'react-redux';
-import { setOrders } from '../store/orders/ordersSlice';
-import { APP_CONVERSION_DATE_FORMAT } from '../constants';
-import { DateTime } from 'luxon';
-import orderData from "../data/orders.json"
+import { DateTime } from "luxon";
+import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
+import { Card, Col, Form, Nav, Row } from "react-bootstrap";
+import DataTable, { TableColumn } from "react-data-table-component";
+import {
+  APP_CONVERSION_DATE_FORMAT,
+  KEY_ALL,
+  KEY_LATEST,
+  KEY_UNPAID,
+} from "../constants";
 import { isOrderContains } from "../utils/order-utils";
 
-const KEY_Latest = 'Latest';
-const KEY_UNPAID = 'unpaid';
-const KEY_ALL = 'all';
+const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
 const columns: TableColumn<Order>[] = [
   {
-    name: 'Order#',
+    name: "Order#",
     selector: (row) => row.id,
     sortable: true,
   },
   {
-    name: 'Order Value',
+    name: "Order Value",
     selector: (row) => row.orderValue,
     sortable: true,
   },
   {
-    name: 'Order Date',
+    name: "Order Date",
     selector: (row) => row.orderDate,
     sortable: true,
   },
   {
-    name: 'Payment Date',
-    selector: (row) => row.paymentDate ?? 'N/A',
+    name: "Payment Date",
+    selector: (row) => row.paymentDate ?? "N/A",
     sortable: true,
   },
   {
-    name: 'Status',
+    name: "Status",
     selector: (row) => row.status,
     sortable: true,
     center: true,
     conditionalCellStyles: [
       {
-        when: (row) => row.status === 'Paid',
+        when: (row) => row.status === "Paid",
         style: {
-          backgroundColor: 'rgba(63, 195, 128, 0.9)',
-          color: 'white',
+          backgroundColor: "rgba(63, 195, 128, 0.9)",
+          color: "white",
         },
       },
       {
-        when: (row) => row.status === 'Un-paid',
+        when: (row) => row.status === "Un-paid",
         style: {
-          backgroundColor: 'rgba(242, 38, 19, 0.9)',
-          color: 'white',
-          fontWeight: 'bold',
+          backgroundColor: "rgba(242, 38, 19, 0.9)",
+          color: "white",
+          fontWeight: "bold",
         },
       },
     ],
@@ -64,38 +64,20 @@ interface DataTableProps {
   onRowClicked: Dispatch<SetStateAction<Order>>;
 }
 
-const OrdersDataTable: FC<DataTableProps> = ({ onRowClicked, isEditable = false }: DataTableProps) => {
-  const dispatch = useDispatch();
-  const orders = useSelector((state: RootState) => state.order.orders);
-
-  useEffect(() => {
-
-    const fetchData = async () => {
-      try {
-        dispatch(setOrders(orderData)); 
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  const [filterText, setFilterText] = useState<string>('');
-  const [activeKey, setActiveKey] = useState<string>(KEY_Latest);
-  const [selectedOrder, setSelectedOrder] = useState<Order>(null);
-  const [isShowStatusDropDown, setIsShowStatusDropDown] = useState<boolean>(false);
-
-  const onItemClicked = (item: Order) => {
-    setSelectedOrder(item);
-    onRowClicked(item);
-  };
+const OrdersDataTable: FC<DataTableProps> = ({
+  data,
+  onRowClicked,
+  isEditable = false,
+}: DataTableProps) => {
+  const [filterText, setFilterText] = useState<string>("");
+  const [activeKey, setActiveKey] = useState<string>(filters[0]);
+  useState<boolean>(false);
 
   const filteredData = useMemo(() => {
     switch (activeKey) {
-      case KEY_Latest:
-        return (orders ?? []).filter(
-          (order: Order) =>
+      case KEY_LATEST:
+        return (data ?? []).filter(
+          (order) =>
             order.orderDate ===
               DateTime.now().toFormat(APP_CONVERSION_DATE_FORMAT) &&
             isOrderContains(order, filterText.trim())
@@ -103,7 +85,7 @@ const OrdersDataTable: FC<DataTableProps> = ({ onRowClicked, isEditable = false 
       case KEY_UNPAID:
         return (orders ?? []).filter(
           (order: Order) =>
-            order.status === 'Un-paid' &&
+            order.status === "Un-paid" &&
             isOrderContains(order, filterText.trim())
         );
       case KEY_ALL:
@@ -126,18 +108,14 @@ const OrdersDataTable: FC<DataTableProps> = ({ onRowClicked, isEditable = false 
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? KEY_Latest);
+                setActiveKey(eventKey ?? filters[0]);
               }}
             >
-              <Nav.Item>
-                <Nav.Link eventKey={KEY_Latest}>Latest</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={KEY_UNPAID}>Unpaid</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={KEY_ALL}>All</Nav.Link>
-              </Nav.Item>
+              {filters.map((filterKey, index) => (
+                <Nav.Item key={index}>
+                  <Nav.Link eventKey={filterKey}>{filterKey}</Nav.Link>
+                </Nav.Item>
+              ))}
             </Nav>
           </Col>
           <Col xs="3">
@@ -156,7 +134,7 @@ const OrdersDataTable: FC<DataTableProps> = ({ onRowClicked, isEditable = false 
           striped
           highlightOnHover
           pagination
-          onRowClicked={onItemClicked}
+          onRowClicked={onRowClicked}
         />
       </Card.Body>
     </Card>

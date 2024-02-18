@@ -1,82 +1,136 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { Card, Col, Form, Nav, Row } from 'react-bootstrap';
-import DataTable, { TableColumn } from 'react-data-table-component';
-import { useSelector, useDispatch } from 'react-redux';
-import { setInvoices } from '../store/invoices/invoiceSlice'; 
-import { APP_CONVERSION_DATE_FORMAT } from '../constants';
-import { DateTime } from 'luxon';
-import invoiceData from '../data/invoice.json';
+import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Card, Col, Form, Nav, Row } from "react-bootstrap";
+import DataTable, { TableColumn } from "react-data-table-component";
+import {
+  APP_CONVERSION_DATE_FORMAT,
+  KEY_ALL,
+  KEY_LATEST,
+  KEY_UNPAID,
+} from "../constants";
+import { DateTime } from "luxon";
 
-const InvoiceTable = () => {
-  const dispatch = useDispatch();
-  const invoices = useSelector((state: RootState) => state.invoice.invoices);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch(setInvoices(invoiceData));
-      } catch (error) {
-        console.error('Error fetching invoices:', error);
-      }
-    };
+const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
-    fetchData();
-  }, [dispatch]); 
+const columns: TableColumn<Invoice>[] = [
+  {
+    name: "Invoice#",
+    selector: (row) => row.id,
+    sortable: true,
+  },
+  {
+    name: "Order#",
+    selector: (row) => row.orderId,
+    sortable: true,
+  },
+  {
+    name: "Invoice Payment",
+    selector: (row) => row.status,
+    sortable: true,
+  },
+  {
+    name: "Order Date",
+    selector: (row) =>
+      DateTime.fromISO(row.paymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+    sortable: true,
+  },
+  {
+    name: "Order Value",
+    selector: (row) => row.orderValue,
+    sortable: true,
+  },
+  {
+    name: "Invoice Date",
+    selector: (row) =>
+      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+    sortable: true,
+  },
+  {
+    name: "Invoice Date",
+    selector: (row) =>
+      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+    sortable: true,
+  },
+  {
+    name: "Payment Date",
+    selector: (row) => row.paymentDate ?? "N/A",
+    sortable: true,
+  },
+  {
+    name: "Status",
+    selector: (row) => row.status,
+    sortable: true,
+    center: true,
+    conditionalCellStyles: [
+      {
+        when: (row) => row.status === "Paid",
+        style: {
+          backgroundColor: "rgba(63, 195, 128, 0.9)",
+          color: "white",
+        },
+      },
+      {
+        when: (row) => row.status === "Un-paid",
+        style: {
+          backgroundColor: "rgba(242, 38, 19, 0.9)",
+          color: "white",
+          fontWeight: "bold",
+        },
+      },
+    ],
+  },
+];
 
-  const [filterText, setFilterText] = useState<string>('');
-  const [activeKey, setActiveKey] = useState<string>('all');
+interface DataTableProps {
+  isEditable?: boolean;
+  data: Invoice[];
+  onRowClicked: Dispatch<SetStateAction<Invoice>>;
+}
 
-  const columns: TableColumn<Invoice>[] = [
-    {
-      name: 'Invoice ID',
-      selector: (row) => row.InvoiceId,
-      sortable: true,
-    },
-    {
-      name: 'Order ID',
-      selector: (row) => row.OrderId,
-      sortable: true,
-    },
-    {
-      name: 'Invoice Payment',
-      selector: (row) => row.Status,
-      sortable: true,
-    },
-    {
-      name: 'Order Date',
-      selector: (row) => DateTime.fromISO(row.PaymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
-      sortable: true,
-    },
-    {
-      name: 'Invoice Date',
-      selector: (row) => DateTime.fromISO(row.InvoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
-      sortable: true,
-    },
-  ];
+const InvoiceDataTable = ({
+  isEditable = false,
+  data,
+  onRowClicked,
+}: DataTableProps) => {
+  const [filterText, setFilterText] = useState<string>("");
+  const [activeKey, setActiveKey] = useState<string>(filters[0]);
 
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
     const currentDate = DateTime.now().toISODate();
     switch (activeKey) {
-      case 'Latest':
-        return invoices.filter((invoice) => invoice.InvoiceDate === currentDate && (
-          invoice.InvoiceId.toString().includes(searchTextLower) ||
-          invoice.OrderId.toString().includes(searchTextLower) ||
-          invoice.Status.toString().includes(searchTextLower) ||
-          invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
-          invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
-        ));
-      case 'all':
-        return invoices.filter((invoice) => (
-          invoice.InvoiceId.toString().includes(searchTextLower) ||
-          invoice.OrderId.toString().includes(searchTextLower) ||
-          invoice.Status.toString().includes(searchTextLower) ||
-          invoice.PaymentDate.toLowerCase().includes(searchTextLower) ||
-          invoice.InvoiceDate.toLowerCase().includes(searchTextLower)
-        ));
+      case KEY_LATEST:
+        return (data ?? []).filter(
+          (invoice) =>
+            invoice.invoiceDate === currentDate &&
+            (invoice.id.toString().includes(searchTextLower) ||
+              invoice.orderId.toString().includes(searchTextLower) ||
+              invoice.status.toString().includes(searchTextLower) ||
+              invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+              invoice.invoiceDate.toLowerCase().includes(searchTextLower))
+        );
+      case KEY_UNPAID:
+        return (data ?? []).filter(
+          (invoice) =>
+            invoice.status !== "Paid" &&
+            (invoice.id.toString().includes(searchTextLower) ||
+              invoice.orderId.toString().includes(searchTextLower) ||
+              invoice.status.toString().includes(searchTextLower) ||
+              invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+              invoice.invoiceDate.toLowerCase().includes(searchTextLower))
+        );
+      case KEY_ALL:
+        return (data ?? []).filter(
+          (invoice) =>
+            invoice.id.toString().includes(searchTextLower) ||
+            invoice.orderId.toString().includes(searchTextLower) ||
+            invoice.status.toString().includes(searchTextLower) ||
+            invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
+            invoice.invoiceDate.toLowerCase().includes(searchTextLower)
+        );
       default:
         return [];
     }
-  }, [activeKey, filterText, invoices]);
+  }, [activeKey, filterText, data]);
 
   return (
     <Card>
@@ -91,15 +145,14 @@ const InvoiceTable = () => {
               variant="pills"
               activeKey={activeKey}
               onSelect={(eventKey) => {
-                setActiveKey(eventKey || 'Latest');
+                setActiveKey(eventKey ?? filters[0]);
               }}
             >
-              <Nav.Item>
-                <Nav.Link eventKey="Latest">Latest</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="all">All</Nav.Link>
-              </Nav.Item>
+              {filters.map((filter) => (
+                <Nav.Item key={filter}>
+                  <Nav.Link eventKey={filter}>{filter}</Nav.Link>
+                </Nav.Item>
+              ))}
             </Nav>
           </Col>
           <Col xs="3">
@@ -118,10 +171,11 @@ const InvoiceTable = () => {
           striped
           highlightOnHover
           pagination
+          onRowClicked={onRowClicked}
         />
       </Card.Body>
     </Card>
   );
 };
 
-export default InvoiceTable;
+export default InvoiceDataTable;

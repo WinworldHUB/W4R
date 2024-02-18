@@ -1,15 +1,13 @@
-type Invoice = {
-  InvoiceId: number;
-  OrderId: number;
-  PaymentDate: string;
-  InvoiceDate: string;
-  Status: string;
+interface PageProps {
+  selectedMenuId: number;
+  menuItems: MenuItem[];
 }
 
 type MenuItem = {
   id: number;
-  label: String;
+  label: string;
   icon: React.ReactElement;
+  route: string;
 };
 
 type Order = {
@@ -20,7 +18,17 @@ type Order = {
   paymentDate?: string;
 };
 
-type User = {
+type Invoice = {
+  id: number;
+  orderId: number;
+  paymentDate: string;
+  invoiceDate: string;
+  orderDate: string;
+  orderValue: number;
+  status: string;
+};
+
+type Member = {
   ID: number;
   Status: string;
   "Customer ID": number;
@@ -74,6 +82,6 @@ type User = {
   "Last order date": string;
   "Last order amount": number;
   "Discount applied": string;
-}
+};
 
 type RootState = ReturnType<typeof rootReducer>;

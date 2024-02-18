@@ -1,14 +1,9 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useMemo, useState } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
-import { useSelector } from "react-redux";
-import { setUsers } from "../store/users/usersSlice";
-import userData from "../data/users.json";
-const UserTable = () => {
-  
+
+const MembersDataTable = ({ data }) => {
   const [filterText, setFilterText] = useState("");
-  const users = useSelector((state: RootState) => state.users.users);
 
   const columns = useMemo(() => {
     return [
@@ -50,22 +45,8 @@ const UserTable = () => {
     ];
   }, []);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch(setUsers(userData));
-      } catch (error) {
-        console.error("Error fetching Users:", error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
   const filteredData = useMemo(() => {
-    return users.filter((user) => {
+    return data.filter((user) => {
       const {
         Status,
         "Customer name": customerName,
@@ -84,7 +65,7 @@ const UserTable = () => {
         lastOrderDate.toLowerCase().includes(searchText)
       );
     });
-  }, [users, filterText]);
+  }, [data, filterText]);
 
   return (
     <Card>
@@ -115,4 +96,4 @@ const UserTable = () => {
   );
 };
 
-export default UserTable;
+export default MembersDataTable;
