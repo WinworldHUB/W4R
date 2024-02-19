@@ -2,8 +2,6 @@ import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 
-
-
 interface ProductsDataTableProps {
   data;
   onRowClicked: Dispatch<SetStateAction<Product>>;
@@ -21,6 +19,8 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
       name: "Handle",
       selector: (row) => row.Handle,
       sortable: true,
+      wrap: true,
+      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.Handle}</div>, // Custom cell styling
     },
     {
       name: "Option1 Value",
@@ -53,15 +53,16 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
       sortable: true,
     },
   ];
-  
+
   const filteredData = useMemo(() => {
     return data.filter((product) => {
       if (activeCategory === "bulk") {
-        return product.Title.includes("Bulk") && product.Title.includes(filterText);
-      } else if (activeCategory === "live") {
-        return !product.Title.includes("Bulk") && product.Title.includes(filterText);
+        return (
+          product.Handle.includes("-bulk") &&
+          product.Handle.includes(filterText)
+        );
       } else {
-        return product.Title.includes(filterText);
+        return product.Handle.includes(filterText);
       }
     });
   }, [data, activeCategory, filterText]);
@@ -87,9 +88,6 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="bulk">Bulk</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="live">Live Inventory</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
