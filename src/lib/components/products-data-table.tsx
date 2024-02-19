@@ -3,6 +3,7 @@ import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 
 
+
 interface ProductsDataTableProps {
   data;
   onRowClicked: Dispatch<SetStateAction<Product>>;
@@ -22,13 +23,37 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
       sortable: true,
     },
     {
-      name: "Title",
-      selector: (row) => row.Title,
+      name: "Option1 Value",
+      selector: (row) => row["Option1 Value"],
       sortable: true,
     },
-    // Add more columns as needed
+    {
+      name: "Variant Inventory Tracker",
+      selector: (row) => row["Variant Inventory Tracker"],
+      sortable: true,
+    },
+    {
+      name: "Variant Inventory Qty",
+      selector: (row) => row["Variant Inventory Qty"],
+      sortable: true,
+    },
+    {
+      name: "Variant Inventory Policy",
+      selector: (row) => row["Variant Inventory Policy"],
+      sortable: true,
+    },
+    {
+      name: "Variant Fulfillment Service",
+      selector: (row) => row["Variant Fulfillment Service"],
+      sortable: true,
+    },
+    {
+      name: "Variant Price",
+      selector: (row) => `£${row["Variant Price"]}`,
+      sortable: true,
+    },
   ];
-
+  
   const filteredData = useMemo(() => {
     return data.filter((product) => {
       if (activeCategory === "bulk") {
