@@ -83,3 +83,51 @@ type Member = {
   "Last order amount": number;
   "Discount applied": string;
 };
+
+
+type Product = {
+  Handle: string;
+  Title: string;
+  BodyHTML: string;
+  Vendor: string;
+  ProductCategory: string;
+  ProductType: string;
+  ProductTags: string;
+  Published: boolean;
+  Option1Name: string;
+  Option1Value: string;
+  Option2Name: string;
+  Option2Value: string;
+  Option3Name: string;
+  Option3Value: string;
+  VariantSKU: string;
+  VariantGrams: number;
+  VariantInventoryTracker: string;
+  VariantInventoryQty: number;
+  VariantInventoryPolicy: string;
+  VariantFulfillmentService: string;
+  VariantPrice: number;
+  VariantCompareAtPrice: number | null;
+  VariantRequiresShipping: boolean;
+  VariantTaxable: boolean;
+  VariantBarcode: string;
+  ImageSrc: string;
+  ImagePosition: number;
+  ImageAltText: string;
+  IsGiftCard: boolean;
+  SEOTitle: string;
+  SEODescription: string;
+  GoogleShopping: {
+    GoogleProductCategory: string;
+    Gender: string;
+    AgeGroup: string;
+    MPN: string;
+    Condition: string;
+    CustomProduct: string;
+    CustomLabel0: string;
+    CustomLabel1: string;
+    CustomLabel2: string;
+    CustomLabel3: string;
+    CustomLabel4: string;
+  };
+};

@@ -3,6 +3,7 @@ export enum PageRoutes {
   Login = "/login",
   Invoices = "/invoices",
   Members = "/members",
+  Products = "/products",
 }
 
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
