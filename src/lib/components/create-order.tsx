@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Form, Button, ListGroup, Card } from "react-bootstrap";
+import { Form, Button, ListGroup, Card, Row, Col } from "react-bootstrap";
 import members from "../data/users.json";
 import products from "../data/products.json";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -95,11 +95,12 @@ const CreateOrder = (pageProps: PageProps) => {
   const incrementQuantity = (index: number) => {
     const updatedItems = [...orderItems];
     updatedItems[index].quantity += 1;
-    updatedItems[index].cost = updatedItems[index].quantity * updatedItems[index].cost;
+    updatedItems[index].cost =
+      updatedItems[index].quantity * updatedItems[index].cost;
     setOrderItems(updatedItems);
     updateTotalCost();
   };
-  
+
   const decrementQuantity = (index: number) => {
     const updatedItems = [...orderItems];
     const currentItem = updatedItems[index];
@@ -114,9 +115,6 @@ const CreateOrder = (pageProps: PageProps) => {
       updateTotalCost();
     }
   };
-  
-  
-  
 
   const updateTotalCost = () => {
     let total = 0;
@@ -147,9 +145,13 @@ const CreateOrder = (pageProps: PageProps) => {
       name: "Quantity",
       cell: (row, index) => (
         <div>
-          <Button  variant="danger" onClick={() => decrementQuantity(index)}>-</Button>
+          <Button variant="danger" onClick={() => decrementQuantity(index)}>
+            -
+          </Button>
           {row.quantity}
-          <Button variant="primary" onClick={() => incrementQuantity(index)}>+</Button>
+          <Button variant="primary" onClick={() => incrementQuantity(index)}>
+            +
+          </Button>
         </div>
       ),
     },
@@ -162,6 +164,7 @@ const CreateOrder = (pageProps: PageProps) => {
 
   return (
     <div className="container">
+      <h1>New Order</h1>
       <div className="mb-3">
         <Form.Control
           type="text"
@@ -171,14 +174,12 @@ const CreateOrder = (pageProps: PageProps) => {
         />
         <ListGroup>
           {filteredMembers.map((member) => (
-            <ListGroup.Item key={member.ID} action>
+            <ListGroup.Item
+              key={member.ID}
+              onClick={() => addMemberToOrder(member)}
+              action
+            >
               {member["Customer name"]}
-              <Button
-                variant="primary ms-1"
-                onClick={() => addMemberToOrder(member)}
-              >
-                add member
-              </Button>
             </ListGroup.Item>
           ))}
         </ListGroup>
@@ -192,20 +193,17 @@ const CreateOrder = (pageProps: PageProps) => {
         />
         <ListGroup>
           {filteredProducts.map((product) => (
-            <ListGroup.Item key={product.Handle} action>
+            <ListGroup.Item
+              key={product.Handle}
+              onClick={() => addProductToOrder(product)}
+              action
+            >
               {product.Handle}
-
-              <Button
-                variant="primary ms-1"
-                onClick={() => addProductToOrder(product)}
-              >
-                add product
-              </Button>
             </ListGroup.Item>
           ))}
         </ListGroup>
       </div>
-      <Button onClick={addToOrder}>Add to Order</Button>
+      <Button onClick={addToOrder}>Add product</Button>
       <Card.Body>
         <DataTable
           columns={columns}
@@ -213,6 +211,22 @@ const CreateOrder = (pageProps: PageProps) => {
           striped
           highlightOnHover
         />
+        <div style={{ marginTop: "20px", textAlign: "right" }}>
+          <Row>
+            <Col>Total :</Col>
+            <Col xs="auto">
+              <Card
+                style={{
+                  backgroundColor: "lightgrey",
+                  padding: "0 5px",
+                  display: "inline-block",
+                }}
+              >
+                £{totalCost.toFixed(2)}
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </Card.Body>
     </div>
   );
