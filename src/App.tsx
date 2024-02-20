@@ -34,12 +34,6 @@ export const APP_MENU: MenuItem[] = [
     icon: <MdOutlineProductionQuantityLimits />,
     route: "/products",
   },
-  {
-    id: 5,
-    label: "CreateOrder",
-    icon: <MdOutlineProductionQuantityLimits />,
-    route: "/create-order",
-  },
 ];
 
 function App() {
