@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { PageRoutes } from "../constants";
 
 interface MenuBarProps {
-  onClick: (menuIndex: number) => void;
+  onClick?: (menuIndex: number) => void;
   menuItems: MenuItem[];
   selectedItemId: number;
 }
@@ -14,7 +14,6 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
   const [currentMenuId, setCurrentMenuId] = useState<number>(0);
 
   useEffect(() => {
-    //setCurrentMenuId(0);
     setCurrentMenuId(selectedItemId);
   }, [selectedItemId]);
 
@@ -33,11 +32,8 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
           <Nav className="me-auto">
             {menuItems.map((item, index) => (
               <Nav.Link
-                key={index}
-                onClick={() => {
-                  //setSelectedMenuId(menuItems[index].id);
-                  onClick(index);
-                }}
+                key={item.id}
+                onClick={() => onClick(index)}
                 href={item.route}
                 className={
                   currentMenuId === menuItems[index].id ? "active" : ""

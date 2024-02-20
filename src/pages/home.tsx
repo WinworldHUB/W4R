@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/page-layout";
 import data from "../lib/data/orders.json";
 import OrdersDataTable from "../lib/components/orders-data-table";
@@ -13,17 +13,20 @@ const Home = (pageProps: PageProps) => {
 
   return (
     <PageLayout {...pageProps}>
-      <Button className="my-4" onClick={handleShow}>Create Order</Button>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Create Order</Modal.Title>
+      <Modal size="xl" show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton className="bg-light">
+          <Modal.Title>New Order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CreateOrder handleClose={handleClose} />
         </Modal.Body>
       </Modal>
 
-      <OrdersDataTable data={data} onRowClicked={() => {}} />
+      <OrdersDataTable
+        data={data}
+        onRowClicked={() => {}}
+        onCreateClick={handleShow}
+      />
     </PageLayout>
   );
 };

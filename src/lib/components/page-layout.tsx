@@ -1,6 +1,5 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Container } from "react-bootstrap";
-import { FaOpencart, FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
 import MenuBar from "./menubar";
 
 interface PageLayoutProps {
@@ -16,18 +15,12 @@ const PageLayout: FC<PageLayoutProps> = ({
   selectedMenuId,
   menuItems,
 }: PageLayoutProps) => {
-  // const [selectedMenuId, setSelectedMenuId] = useState<number>(APP_MENU[0].id);
-
   return (
     <>
-      <MenuBar
-        menuItems={menuItems}
-        onClick={(menuIndex) => {
-          //setSelectedMenuId(APP_MENU[menuIndex].id);
-        }}
-        selectedItemId={selectedMenuId}
-      />
-      <Container className="pt-3">{children}</Container>
+      <MenuBar menuItems={menuItems} selectedItemId={selectedMenuId} />
+      <Container fluid className="pt-3 w-90">
+        {children}
+      </Container>
     </>
   );
 };
