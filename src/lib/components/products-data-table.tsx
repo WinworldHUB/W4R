@@ -3,7 +3,7 @@ import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 
 interface ProductsDataTableProps {
-  data;
+  data:Product[];
   onRowClicked: Dispatch<SetStateAction<Product>>;
 }
 

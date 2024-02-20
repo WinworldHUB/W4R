@@ -106,7 +106,7 @@ type Product = {
   "Variant Inventory Policy": string;
   "Variant Fulfillment Service": string;
   "Variant Price": number;
-  "Variant Compare At Price": number | null;
+  "Variant Compare At Price": any;
   "Variant Requires Shipping": boolean;
   "Variant Taxable": boolean;
   "Variant Barcode": string;
@@ -118,10 +118,10 @@ type Product = {
   "SEO Description": string;
   "Google Shopping ": {
     " Google Product Category": string;
-    Gender: string;
+    " Gender": string;
     " Age Group": string;
-    MPN: string;
-    Condition: string;
+    " MPN": string;
+    " Condition": string;
     " Custom Product": string;
     " Custom Label 0": string;
     " Custom Label 1": string;
@@ -136,17 +136,17 @@ type Product = {
   "Included ": {
     " United Kingdom": boolean;
     " European Union": boolean;
-    International: boolean;
+    " International": boolean;
   };
   "Price ": {
     " United Kingdom": string;
     " European Union": string;
-    International: string;
+    " International": string;
   };
   "Compare At Price ": {
     " United Kingdom": string;
     " European Union": string;
-    International: string;
+    " International": string;
   };
   Status: string;
 };
