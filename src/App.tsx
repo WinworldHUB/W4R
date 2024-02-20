@@ -7,6 +7,7 @@ import Members from "./pages/members";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaOpencart, FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
 import Products from "./pages/products";
+import CreateOrder from "./lib/components/create-order";
 
 export const APP_MENU: MenuItem[] = [
   {
@@ -32,6 +33,12 @@ export const APP_MENU: MenuItem[] = [
     label: "Products",
     icon: <MdOutlineProductionQuantityLimits />,
     route: "/products",
+  },
+  {
+    id: 5,
+    label: "CreateOrder",
+    icon: <MdOutlineProductionQuantityLimits />,
+    route: "/create-order",
   },
 ];
 
@@ -62,6 +69,12 @@ function App() {
           path={PageRoutes.Products}
           element={
             <Products menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
+          }
+        />
+        <Route
+          path={PageRoutes.CreateOrder}
+          element={
+            <CreateOrder menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
           }
         />
       </Routes>
