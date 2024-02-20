@@ -33,11 +33,12 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
             {menuItems.map((item, index) => (
               <Nav.Link
                 key={item.id}
-                onClick={() => onClick(index)}
+                active={currentMenuId === menuItems[index].id}
+                onClick={() => onClick?.(index)}
                 href={item.route}
-                className={
-                  currentMenuId === menuItems[index].id ? "active" : ""
-                }
+                // className={
+                //   currentMenuId === menuItems[index].id ? "active" : ""
+                // }
               >
                 {item.icon} {item.label}
               </Nav.Link>
