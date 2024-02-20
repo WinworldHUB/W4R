@@ -7,7 +7,6 @@ import Members from "./pages/members";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { FaOpencart, FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
 import Products from "./pages/products";
-import CreateOrder from "./lib/components/create-order";
 
 export const APP_MENU: MenuItem[] = [
   {
