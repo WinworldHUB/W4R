@@ -71,12 +71,6 @@ function App() {
             <Products menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
           }
         />
-        <Route
-          path={PageRoutes.CreateOrder}
-          element={
-            <CreateOrder menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
-          }
-        />
       </Routes>
     </BrowserRouter>
   );

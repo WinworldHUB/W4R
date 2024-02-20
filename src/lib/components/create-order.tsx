@@ -12,7 +12,11 @@ type Order = {
   cost: number;
 };
 
-const CreateOrder = (pageProps: PageProps) => {
+interface CreateOrderProps {
+  handleClose: ()=> void
+}
+
+const CreateOrder: React.FC<CreateOrderProps> = ({handleClose}) => {
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
@@ -95,12 +99,11 @@ const CreateOrder = (pageProps: PageProps) => {
   const incrementQuantity = (index: number) => {
     const updatedItems = [...orderItems];
     updatedItems[index].quantity += 1;
-    updatedItems[index].cost =
-      updatedItems[index].quantity * updatedItems[index].cost;
+    updatedItems[index].cost *= updatedItems[index].quantity;
     setOrderItems(updatedItems);
     updateTotalCost();
   };
-
+  
   const decrementQuantity = (index: number) => {
     const updatedItems = [...orderItems];
     const currentItem = updatedItems[index];
@@ -115,14 +118,25 @@ const CreateOrder = (pageProps: PageProps) => {
       updateTotalCost();
     }
   };
-
+  
   const updateTotalCost = () => {
     let total = 0;
     orderItems.forEach((item) => {
-      total += item.quantity * item.cost;
+      total += item.cost;
     });
     setTotalCost(total);
   };
+  
+  
+
+  const resetOrder = () =>{
+    setOrderItems([])
+    setTotalCost(0)
+    setFilteredProducts([])
+    setFilteredMembers([])
+    setSelectedProduct(null)
+    setSelectedMember(null)
+  }
 
   const columns: TableColumn<Order>[] = [
     {
@@ -144,12 +158,20 @@ const CreateOrder = (pageProps: PageProps) => {
     {
       name: "Quantity",
       cell: (row, index) => (
-        <div>
-          <Button variant="danger" onClick={() => decrementQuantity(index)}>
+        <div className="d-flex align-items-center">
+          <Button
+            variant="danger"
+            className="ms-1"
+            onClick={() => decrementQuantity(index)}
+          >
             -
           </Button>
-          {row.quantity}
-          <Button variant="primary" onClick={() => incrementQuantity(index)}>
+          <span className="ms-2">{row.quantity}</span>
+          <Button
+            variant="primary"
+            className="ms-1"
+            onClick={() => incrementQuantity(index)}
+          >
             +
           </Button>
         </div>
@@ -157,14 +179,13 @@ const CreateOrder = (pageProps: PageProps) => {
     },
     {
       name: "Cost",
-      selector: (row) => `£${row.cost}`,
+      selector: (row) => `£${row.cost.toFixed(2)}`,
       sortable: true,
     },
   ];
 
   return (
     <div className="container">
-      <h1>New Order</h1>
       <div className="mb-3">
         <Form.Control
           type="text"
@@ -228,6 +249,19 @@ const CreateOrder = (pageProps: PageProps) => {
           </Row>
         </div>
       </Card.Body>
+      <Col>
+        <Button onClick={handleClose} variant="">Cancel</Button>
+        <Button onClick={()=>{resetOrder()}} variant="">Reset</Button>
+        <Button
+          onClick={() => {
+            console.log(orderItems);
+            handleClose()
+          }}
+          variant="primary"
+        >
+          Submit
+        </Button>
+      </Col>
     </div>
   );
 };
