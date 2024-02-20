@@ -67,6 +67,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({handleClose}) => {
       memberInputRef.current.value = member["Customer name"];
       setFilteredMembers([]);
     }
+    console.log(selectedMember)
   };
 
   const addProductToOrder = (product: Product) => {
@@ -93,6 +94,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({handleClose}) => {
       };
       setOrderItems([...orderItems, newOrderItem]);
       setSelectedProduct(null);
+      updateTotalCost()
     }
   };
 
