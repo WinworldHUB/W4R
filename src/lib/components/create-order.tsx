@@ -6,7 +6,6 @@ import products from "../data/products.json";
 import { Typeahead } from "react-bootstrap-typeahead";
 import OrderCart from "./order-cart";
 
-
 interface CreateOrderProps {
   handleClose: () => void;
 }
@@ -73,7 +72,12 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
           <Button
             variant="warning"
             onClick={() => {
-              if (selectedProduct) {
+              if (
+                selectedProduct &&
+                !selectedProducts.some(
+                  (product) => product.Title === selectedProduct.Title
+                )
+              ) {
                 setSelectedProducts([...selectedProducts, selectedProduct]);
               }
             }}
@@ -84,7 +88,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
       </Row>
       <Row className="py-3">
         <Col>
-          <OrderCart data={selectedProducts}/>
+          <OrderCart data={selectedProducts} />
         </Col>
       </Row>
     </>

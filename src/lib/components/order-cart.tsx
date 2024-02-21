@@ -16,26 +16,22 @@ const cleanUpDescription = (html: string): string => {
 };
 
 const OrderCart: React.FC<OrderCartProps> = ({data}) => {
-  const [quantities, setQuantities] = useState<{ [key: string]: number }>(
-    data.reduce<{ [key: string]: number }>((acc, product) => {
-      acc[product.Handle] = 1; // Set default quantity to 1
-      return acc;
-    }, {})
-  );
+    const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
 
-  const handleDecrement = (productId: string) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [productId]: Math.max((prevQuantities[productId] || 0) - 1, 0),
-    }));
-  };
-
-  const handleIncrement = (productId: string) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [productId]: (prevQuantities[productId] || 0) + 1,
-    }));
-  };
+    const handleDecrement = (productId: string) => {
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [productId]: Math.max((prevQuantities[productId] || 0) - 1, 0),
+      }));
+    };
+  
+    const handleIncrement = (productId: string) => {
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [productId]: (prevQuantities[productId] || 0) + 1,
+      }));
+    };
+  
 
   const columns: TableColumn<Product>[] = [
     {
@@ -59,11 +55,11 @@ const OrderCart: React.FC<OrderCartProps> = ({data}) => {
       name: "Quantity",
       cell: (row) => (
         <div className="d-flex align-items-center">
-          <Button variant="danger" className="ms-1" onClick={() => handleDecrement(row.Handle)}>
+          <Button variant="danger" className="ms-1" onClick={() => handleDecrement(row.Title)}>
             -
           </Button>
-          <span className="ms-2">{quantities[row.Handle] || 1}</span>
-          <Button variant="primary" className="ms-1" onClick={() => handleIncrement(row.Handle)}>
+          <span className="ms-2">{quantities[row.Title] || 1}</span>
+          <Button variant="primary" className="ms-1" onClick={() => handleIncrement(row.Title)}>
             +
           </Button>
         </div>
@@ -71,7 +67,7 @@ const OrderCart: React.FC<OrderCartProps> = ({data}) => {
     },
     {
       name: "Cost",
-      selector: (row) => `£${(row["Variant Price"] * (quantities[row.Handle] || 1)).toFixed(2)}`,
+      selector: (row) => `£${(row["Variant Price"] * (quantities[row.Title] || 1)).toFixed(2)}`,
       sortable: true,
     },
   ];
