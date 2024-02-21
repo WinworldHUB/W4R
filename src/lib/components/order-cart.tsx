@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Button } from "react-bootstrap";
 
@@ -16,38 +16,54 @@ const cleanUpDescription = (html: string): string => {
 };
 
 const OrderCart: React.FC<OrderCartProps> = ({data}) => {
-  const columns: TableColumn<Product>[] = [ // Change TableColumn type to Product
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>(
+    data.reduce<{ [key: string]: number }>((acc, product) => {
+      acc[product.Handle] = 1; // Set default quantity to 1
+      return acc;
+    }, {})
+  );
+
+  const handleDecrement = (productId: string) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max((prevQuantities[productId] || 0) - 1, 0),
+    }));
+  };
+
+  const handleIncrement = (productId: string) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: (prevQuantities[productId] || 0) + 1,
+    }));
+  };
+
+  const columns: TableColumn<Product>[] = [
     {
       name: "SR No",
-      selector: (_, index) => index + 1, // Generate serial number dynamically
+      selector: (_, index) => index + 1,
       sortable: true,
     },
     {
       name: "Item Name",
-      selector: (row) => row.Title, // Use the appropriate property from Product
+      selector: (row) => row.Title,
       sortable: true,
       wrap: true,
-      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.Title}</div>, // Use the appropriate property from Product
     },
     {
       name: "Item Description",
-      selector: (row) => cleanUpDescription(row["Body (HTML)"]), // Clean up the description
+      selector: (row) => cleanUpDescription(row["Body (HTML)"]),
       sortable: true,
       wrap: true,
-      cell: (row) => (
-        <div style={{ whiteSpace: "normal" }}>{cleanUpDescription(row["Body (HTML)"])}</div> // Use the cleaned-up description
-      ),
     },
     {
       name: "Quantity",
-      cell: (row, index) => (
+      cell: (row) => (
         <div className="d-flex align-items-center">
-          <Button variant="danger" className="ms-1" onClick={() => {}}>
+          <Button variant="danger" className="ms-1" onClick={() => handleDecrement(row.Handle)}>
             -
           </Button>
-          {/* You may need to handle quantity differently based on your business logic */}
-          <span className="ms-2">{row["Variant Inventory Qty"]}</span> 
-          <Button variant="primary" className="ms-1" onClick={() => {}}>
+          <span className="ms-2">{quantities[row.Handle] || 1}</span>
+          <Button variant="primary" className="ms-1" onClick={() => handleIncrement(row.Handle)}>
             +
           </Button>
         </div>
@@ -55,10 +71,11 @@ const OrderCart: React.FC<OrderCartProps> = ({data}) => {
     },
     {
       name: "Cost",
-      selector: (row) => `£${row["Variant Price"].toFixed(2)}`, // Use the appropriate property from Product
+      selector: (row) => `£${(row["Variant Price"] * (quantities[row.Handle] || 1)).toFixed(2)}`,
       sortable: true,
     },
   ];
+  
   return (
     <div>
       <DataTable columns={columns} data={data} />
