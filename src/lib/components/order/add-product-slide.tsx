@@ -22,9 +22,13 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
             id="select-member-slide-typeahead"
             options={products}
             labelKey="Title"
-            onChange={(selected: unknown[]) =>
-              onSelectedProduct(selected[0] as Product)
-            }
+            onChange={(selected: unknown[]) => {
+              const product = selected[0] as Product;
+
+              if (product) {
+                onSelectedProduct(product);
+              }
+            }}
           />
         </Col>
       </Row>

@@ -24,7 +24,11 @@ const AddMemberSlide: FC<AddMemberSlideProps> = ({
             options={members}
             labelKey="Customer name"
             onChange={(selected: unknown[]) => {
-              onSelectedMember(selected[0] as Member);
+              const member = selected[0] as Member;
+
+              if (member) {
+                onSelectedMember(member);
+              }
               setSelectedMember(selected[0] as Member);
             }}
           />

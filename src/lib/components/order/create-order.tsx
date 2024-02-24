@@ -6,6 +6,7 @@ import products from "../../data/products.json";
 import Slider from "../slider";
 import AddMemberSlide from "./add-member-slide";
 import AddProductSlide from "./add-product-slide";
+import useOrder from "../../hooks/useOrder";
 
 const TOTAL_SLIDES = 4;
 const NEXT_BUTTON_TITLES = [
@@ -29,6 +30,8 @@ interface CreateOrderProps {
 const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
   const [slideIndex, setSlideIndex] = useState<number>(0);
 
+  const { order, addMember, addProduct } = useOrder();
+
   return (
     <>
       <Row>
@@ -36,12 +39,12 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
           <Slider slideTo={slideIndex}>
             <AddMemberSlide
               members={members}
-              onSelectedMember={(member) => console.log(member)}
+              onSelectedMember={(member) => addMember(member)}
             />
             <AddProductSlide
               products={products as Product[]}
-              productsInOrder={[]}
-              onSelectedProduct={(product) => console.log(product)}
+              productsInOrder={order.products}
+              onSelectedProduct={(product) => addProduct(product)}
             />
             <div
               style={{ height: "300px", width: "100%" }}
