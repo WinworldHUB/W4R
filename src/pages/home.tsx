@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import PageLayout from "../lib/components/page-layout";
 import data from "../lib/data/orders.json";
-import OrdersDataTable from "../lib/components/orders-data-table";
-import CreateOrder from "../lib/components/create-order";
+import OrdersDataTable from "../lib/components/order/orders-data-table";
+import CreateOrder from "../lib/components/order/create-order";
 
 const Home = (pageProps: PageProps) => {
   const [showModal, setShowModal] = useState(false);

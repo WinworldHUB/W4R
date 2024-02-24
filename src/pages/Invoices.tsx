@@ -1,5 +1,5 @@
 import PageLayout from "../lib/components/page-layout";
-import InvoiceDataTable from "../lib/components/invoice-data-table";
+import InvoiceDataTable from "../lib/components/invoice/invoice-data-table";
 import data from "../lib/data/invoice.json";
 
 const Invoices = (pageProps: PageProps) => {
