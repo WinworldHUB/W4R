@@ -4,7 +4,7 @@ import members from "../data/users.json";
 import products from "../data/products.json";
 
 import { Typeahead } from "react-bootstrap-typeahead";
-import OrderCart from "./order-cart";
+import OrderCart from "./order-cart-data-table";
 
 interface CreateOrderProps {
   handleClose: () => void;
@@ -15,9 +15,9 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product>();
 
-  const processedProducts = Array.from(
-    new Set<Product>(products.filter((product) => (product.Title ?? "") !== ""))
-  );
+  // const processedProducts = Array.from(
+  //   new Set<Product>(products.filter((product) => (product.Title ?? "") !== ""))
+  // );
 
   return (
     <>
@@ -63,7 +63,8 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
           <Typeahead
             id="basic-typeahead-single"
             labelKey="Title"
-            options={processedProducts ?? []}
+            //options={processedProducts ?? []}
+            options={[]}
             placeholder="Choose a product..."
             onChange={(selected) => setSelectedProduct(selected[0] as Product)}
           />

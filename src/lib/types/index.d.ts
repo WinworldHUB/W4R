@@ -16,6 +16,8 @@ type Order = {
   status: string;
   orderDate: string;
   paymentDate?: string;
+  products?: Product[];
+  member?: Member;
 };
 
 type Invoice = {
@@ -85,6 +87,7 @@ type Member = {
 };
 
 type Product = {
+  id: number;
   Handle: string;
   Title: string;
   "Body (HTML)": string;
@@ -149,4 +152,5 @@ type Product = {
     " International": string;
   };
   Status: string;
+  quantity?: number;
 };
