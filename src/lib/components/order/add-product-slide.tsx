@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, ListGroup, Row, Image } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 
 interface AddProductSlideProps {
@@ -41,7 +41,10 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
             <Card.Body>
               <ListGroup>
                 {(productsInOrder ?? []).map((product) => (
-                  <ListGroup.Item>{product.Title}</ListGroup.Item>
+                  <ListGroup.Item>
+                    <Image rounded src={product["Image Src"]} width="50px" />{" "}
+                    {product.Title}
+                  </ListGroup.Item>
                 ))}
               </ListGroup>
             </Card.Body>
