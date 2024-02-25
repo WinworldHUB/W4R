@@ -66,7 +66,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
             </div>
           </Slider>
         </Col>
-        <Col md="4" className=".d-none .d-md-block">
+        <Col md="4" className=".d-none .d-md-block  bg-light shadow">
           Preview
         </Col>
       </Row>
