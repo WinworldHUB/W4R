@@ -1,17 +1,21 @@
 import { FC } from "react";
 import { Card, Col, Container, ListGroup, Row, Image } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
+import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface AddProductSlideProps {
   products: Product[];
   productsInOrder: Product[];
   onSelectedProduct: (product: Product) => void;
+  onRemoveProduct: (product: Product) => void;
 }
 
 const AddProductSlide: FC<AddProductSlideProps> = ({
   products,
   productsInOrder,
   onSelectedProduct,
+  onRemoveProduct,
 }) => {
   return (
     <Container>
@@ -39,11 +43,22 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
               <Card.Title>Selected products</Card.Title>
             </Card.Header>
             <Card.Body>
-              <ListGroup>
+              <ListGroup className="max-350">
                 {(productsInOrder ?? []).map((product) => (
-                  <ListGroup.Item>
-                    <Image rounded src={product["Image Src"]} width="50px" />{" "}
-                    {product.Title}
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex align-items-center">
+                      <Image
+                        rounded
+                        src={product["featuredImage"]}
+                        width="50px"
+                        loading="lazy"
+                      />
+                      &nbsp;
+                      {product.Title}
+                    </div>
+                    <Link to="" onClick={() => onRemoveProduct(product)}>
+                      <MdClose className="text-danger" title="Remove product" />
+                    </Link>
                   </ListGroup.Item>
                 ))}
               </ListGroup>

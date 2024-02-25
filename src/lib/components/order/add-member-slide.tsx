@@ -4,16 +4,16 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { dateFromString } from "../../utils/date-utils";
 
 interface AddMemberSlideProps {
+  selectedMember: Member;
   members: Member[];
   onSelectedMember: (member: Member) => void;
 }
 
 const AddMemberSlide: FC<AddMemberSlideProps> = ({
+  selectedMember,
   members,
   onSelectedMember,
 }) => {
-  const [selectedMember, setSelectedMember] = useState<Member>();
-
   return (
     <Container>
       <Row>
@@ -29,7 +29,6 @@ const AddMemberSlide: FC<AddMemberSlideProps> = ({
               if (member) {
                 onSelectedMember(member);
               }
-              setSelectedMember(selected[0] as Member);
             }}
           />
         </Col>

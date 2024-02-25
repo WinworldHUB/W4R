@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Row, Col, Card } from "react-bootstrap";
 import members from "../../data/users.json";
 import products from "../../data/formatted_products.json";
 
@@ -7,9 +7,20 @@ import Slider from "../slider";
 import AddMemberSlide from "./add-member-slide";
 import AddProductSlide from "./add-product-slide";
 import useOrder from "../../hooks/useOrder";
+import AddPackagingSlide from "./add-packaging-slide";
+import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
 
 const TOTAL_SLIDES = 4;
+const SLIDE_TITLES = [
+  "STEP 1: Select packaging type",
+  "STEP 2: Select member to place an order",
+  "STEP 3: Add products to the order",
+  "STEP 4: Update quantities and variants for products",
+  "STEP 5: Review and confirm the order",
+  "STEP 6: Order placed",
+];
 const NEXT_BUTTON_TITLES = [
+  "Add Member",
   "Add Products",
   "Add Quantities",
   "Preview",
@@ -18,9 +29,11 @@ const NEXT_BUTTON_TITLES = [
 ];
 const BACK_BUTTON_TITLES = [
   "",
-  "Select Member",
+  "Select Packaging",
+  "Add Member",
   "Add Products",
   "Add Quantities",
+  "Preview",
 ];
 
 interface CreateOrderProps {
@@ -28,43 +41,84 @@ interface CreateOrderProps {
 }
 
 const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
-  const [slideIndex, setSlideIndex] = useState<number>(0);
+  const [slideIndex, setSlideIndex] = useState<CreateOrderSlides>(
+    CreateOrderSlides.SelectPackaging
+  );
+  const [isPageValid, setIsPageValid] = useState<boolean>(false);
 
-  const { order, addMember, addProduct } = useOrder();
+  const { order, addPackaging, addMember, addProduct, removeProduct } =
+    useOrder();
+
+  useEffect(() => {
+    switch (slideIndex) {
+      case CreateOrderSlides.SelectPackaging:
+        setIsPageValid(!!order.packaging);
+        break;
+
+      case CreateOrderSlides.SelectMember:
+        setIsPageValid(!!order.member);
+        break;
+
+      case CreateOrderSlides.SelectProducts:
+        setIsPageValid(order.products.length > 0);
+        break;
+
+      case CreateOrderSlides.SelectQuantities:
+        setIsPageValid(order.products.length > 0);
+        break;
+
+      default:
+        break;
+    }
+  }, [order, slideIndex]);
 
   return (
     <>
       <Row>
         <Col md="8" sm="12">
-          <Slider slideTo={slideIndex}>
-            <AddMemberSlide
-              members={members}
-              onSelectedMember={(member) => addMember(member)}
-            />
-            <AddProductSlide
-              products={products as Product[]}
-              productsInOrder={order.products}
-              onSelectedProduct={(product) => addProduct(product)}
-            />
-            <div
-              style={{ height: "300px", width: "100%" }}
-              className="bg-primary"
-            >
-              Slide 3
-            </div>
-            <div
-              style={{ height: "400px", width: "100%" }}
-              className="bg-primary"
-            >
-              Slide 4
-            </div>
-            <div
-              style={{ height: "500px", width: "100%" }}
-              className="bg-primary"
-            >
-              Slide 5
-            </div>
-          </Slider>
+          <Card>
+            <Card.Header>
+              <Card.Title>{SLIDE_TITLES[slideIndex]}</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Slider slideTo={slideIndex}>
+                <AddPackagingSlide
+                  selectedPackagingId={order.packaging?.id}
+                  packagings={DEFAULT_PACKAGINGS}
+                  onSelectPackaging={(packaging) => addPackaging(packaging)}
+                />
+                <AddMemberSlide
+                  selectedMember={order.member}
+                  members={members}
+                  onSelectedMember={(member) => addMember(member)}
+                />
+                <AddProductSlide
+                  products={products as Product[]}
+                  productsInOrder={order.products}
+                  onSelectedProduct={(product) => addProduct(product)}
+                  onRemoveProduct={(product) => removeProduct(product.id)}
+                />
+                <div
+                  style={{ height: "300px", width: "100%" }}
+                  className="bg-primary"
+                >
+                  Slide 3
+                </div>
+                <div
+                  style={{ height: "400px", width: "100%" }}
+                  className="bg-primary"
+                >
+                  Slide 4
+                </div>
+                <div
+                  style={{ height: "500px", width: "100%" }}
+                  className="bg-primary"
+                >
+                  Slide 5
+                </div>
+              </Slider>
+            </Card.Body>
+          </Card>
         </Col>
         <Col md="4" className=".d-none .d-md-block  bg-light shadow">
           Preview
@@ -90,7 +144,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
           {slideIndex + 1} / {TOTAL_SLIDES + 1}
           {NEXT_BUTTON_TITLES[slideIndex] !== "" ? (
             <Button
-              disabled={slideIndex === TOTAL_SLIDES}
+              disabled={slideIndex === TOTAL_SLIDES || !isPageValid}
               onClick={() => {
                 if (slideIndex < TOTAL_SLIDES) {
                   setSlideIndex(slideIndex + 1);

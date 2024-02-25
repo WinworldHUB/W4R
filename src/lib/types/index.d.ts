@@ -18,6 +18,7 @@ type Order = {
   paymentDate?: string;
   products?: Product[];
   member?: Member;
+  packaging?: Packaging;
 };
 
 type Invoice = {
@@ -163,13 +164,22 @@ type Product = {
   published: boolean;
   size: string;
   variants: {
-      size: string;
-      available: boolean;
-      price: number;
-      quantity: number
+    size: string;
+    available: boolean;
+    price: number;
+    quantity: number;
   }[];
   price: number;
   taxable: boolean;
   featuredImage: string;
   otherImages: string;
+};
+
+type Packaging = {
+  id: string;
+  title: string;
+  description: string;
+  minQuantity: number;
+  maxQuantity: number;
+  available: boolean;
 };
