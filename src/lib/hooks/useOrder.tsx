@@ -15,7 +15,7 @@ interface OrderState {
   order: Order;
   addMember: (member: Member) => void;
   addProduct: (product: Product) => void;
-  removeProduct: (productId: number) => void;
+  removeProduct: (productId: string) => void;
   updateProduct: (product: Product) => void;
 }
 
@@ -35,7 +35,7 @@ const useOrder = (): OrderState => {
   const addProduct = (product: Product) =>
     updateProducts([...products, product]);
 
-  const removeProduct = (productId: number) =>
+    const removeProduct = (productId: string) =>
     updateProducts([...products.filter((product) => product.id !== productId)]);
 
   const updateProduct = (product: Product) =>

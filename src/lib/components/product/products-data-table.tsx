@@ -3,7 +3,7 @@ import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 
 interface ProductsDataTableProps {
-  data:Product[];
+  data: Product[];
   onRowClicked: Dispatch<SetStateAction<Product>>;
 }
 
@@ -16,40 +16,40 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
 
   const columns: TableColumn<Product>[] = [
     {
-      name: "Handle",
-      selector: (row) => row.Handle,
+      name: "Featured Image",
+      selector: (row) => row.featuredImage,
+      sortable: true,
+      cell: (row) => (
+        <img
+          src={row.featuredImage}
+          alt="Featured"
+          style={{ width: "50px", height: "50px" }}
+        />
+      ),
+    },
+    {
+      name: "Title",
+      selector: (row) => row.Title,
       sortable: true,
       wrap: true,
-      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.Handle}</div>, // Custom cell styling
+      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.Title}</div>, // Custom cell styling
     },
     {
-      name: "Option1 Value",
-      selector: (row) => row["Option1 Value"],
+      name: "Description",
+      selector: (row) => row.body,
+      sortable: true,
+      wrap: true,
+      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.body}</div>, // Custom cell styling
+    },
+    {
+      name: "Sizes",
+      selector: (row) => row.variants.map((variant) => variant.size).join(", "),
       sortable: true,
     },
     {
-      name: "Variant Inventory Tracker",
-      selector: (row) => row["Variant Inventory Tracker"],
-      sortable: true,
-    },
-    {
-      name: "Variant Inventory Qty",
-      selector: (row) => row["Variant Inventory Qty"],
-      sortable: true,
-    },
-    {
-      name: "Variant Inventory Policy",
-      selector: (row) => row["Variant Inventory Policy"],
-      sortable: true,
-    },
-    {
-      name: "Variant Fulfillment Service",
-      selector: (row) => row["Variant Fulfillment Service"],
-      sortable: true,
-    },
-    {
-      name: "Variant Price",
-      selector: (row) => `£${row["Variant Price"]}`,
+      name: "Prices",
+      selector: (row) =>
+        row.variants.map((variant) => `£${variant.price}`).join(", "),
       sortable: true,
     },
   ];
@@ -57,12 +57,9 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
   const filteredData = useMemo(() => {
     return data.filter((product) => {
       if (activeCategory === "bulk") {
-        return (
-          product.Handle.includes("-bulk") &&
-          product.Handle.includes(filterText)
-        );
+        return product.id.includes("-bulk") && product.id.includes(filterText);
       } else {
-        return product.Handle.includes(filterText);
+        return product.id.includes(filterText);
       }
     });
   }, [data, activeCategory, filterText]);

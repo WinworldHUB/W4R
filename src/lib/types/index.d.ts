@@ -86,71 +86,90 @@ type Member = {
   "Discount applied": string;
 };
 
+// type Product = {
+//   id: number;
+//   Handle: string;
+//   Title: string;
+//   "Body (HTML)": string;
+//   Vendor: string;
+//   "Product Category": string;
+//   Type: string;
+//   Tags: string;
+//   Published: boolean;
+//   "Option1 Name": string;
+//   "Option1 Value": string;
+//   "Option2 Name": string;
+//   "Option2 Value": string;
+//   "Option3 Name": string;
+//   "Option3 Value": string;
+//   "Variant SKU": string;
+//   "Variant Grams": number;
+//   "Variant Inventory Tracker": string;
+//   "Variant Inventory Qty": number;
+//   "Variant Inventory Policy": string;
+//   "Variant Fulfillment Service": string;
+//   "Variant Price": number;
+//   "Variant Compare At Price": any;
+//   "Variant Requires Shipping": boolean;
+//   "Variant Taxable": boolean;
+//   "Variant Barcode": string;
+//   "Image Src": string;
+//   "Image Position": number;
+//   "Image Alt Text": string;
+//   "Gift Card": boolean;
+//   "SEO Title": string;
+//   "SEO Description": string;
+//   "Google Shopping ": {
+//     " Google Product Category": string;
+//     " Gender": string;
+//     " Age Group": string;
+//     " MPN": string;
+//     " Condition": string;
+//     " Custom Product": string;
+//     " Custom Label 0": string;
+//     " Custom Label 1": string;
+//     " Custom Label 2": string;
+//     " Custom Label 3": string;
+//     " Custom Label 4": string;
+//   };
+//   "Variant Image": string;
+//   "Variant Weight Unit": string;
+//   "Variant Tax Code": string;
+//   "Cost per item": string;
+//   "Included ": {
+//     " United Kingdom": boolean;
+//     " European Union": boolean;
+//     " International": boolean;
+//   };
+//   "Price ": {
+//     " United Kingdom": string;
+//     " European Union": string;
+//     " International": string;
+//   };
+//   "Compare At Price ": {
+//     " United Kingdom": string;
+//     " European Union": string;
+//     " International": string;
+//   };
+//   Status: string;
+//   quantity?: number;
+// };
+
 type Product = {
-  id: number;
-  Handle: string;
+  id: string;
   Title: string;
-  "Body (HTML)": string;
-  Vendor: string;
-  "Product Category": string;
-  Type: string;
-  Tags: string;
-  Published: boolean;
-  "Option1 Name": string;
-  "Option1 Value": string;
-  "Option2 Name": string;
-  "Option2 Value": string;
-  "Option3 Name": string;
-  "Option3 Value": string;
-  "Variant SKU": string;
-  "Variant Grams": number;
-  "Variant Inventory Tracker": string;
-  "Variant Inventory Qty": number;
-  "Variant Inventory Policy": string;
-  "Variant Fulfillment Service": string;
-  "Variant Price": number;
-  "Variant Compare At Price": any;
-  "Variant Requires Shipping": boolean;
-  "Variant Taxable": boolean;
-  "Variant Barcode": string;
-  "Image Src": string;
-  "Image Position": number;
-  "Image Alt Text": string;
-  "Gift Card": boolean;
-  "SEO Title": string;
-  "SEO Description": string;
-  "Google Shopping ": {
-    " Google Product Category": string;
-    " Gender": string;
-    " Age Group": string;
-    " MPN": string;
-    " Condition": string;
-    " Custom Product": string;
-    " Custom Label 0": string;
-    " Custom Label 1": string;
-    " Custom Label 2": string;
-    " Custom Label 3": string;
-    " Custom Label 4": string;
-  };
-  "Variant Image": string;
-  "Variant Weight Unit": string;
-  "Variant Tax Code": string;
-  "Cost per item": string;
-  "Included ": {
-    " United Kingdom": boolean;
-    " European Union": boolean;
-    " International": boolean;
-  };
-  "Price ": {
-    " United Kingdom": string;
-    " European Union": string;
-    " International": string;
-  };
-  "Compare At Price ": {
-    " United Kingdom": string;
-    " European Union": string;
-    " International": string;
-  };
-  Status: string;
-  quantity?: number;
+  body: string;
+  category: string;
+  published: boolean;
+  size: string;
+  variants: {
+      size: string;
+      available: boolean;
+      price: number;
+      quantity: number
+  }[];
+  price: number;
+  taxable: boolean;
+  featuredImage: string;
+  otherImages: string;
 };

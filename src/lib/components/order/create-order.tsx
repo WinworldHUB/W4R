@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import members from "../../data/users.json";
-import products from "../../data/products.json";
+import products from "../../data/formatted_products.json";
 
 import Slider from "../slider";
 import AddMemberSlide from "./add-member-slide";
