@@ -9,22 +9,27 @@
     "variants": [
       {
         "size": "UK8",
+        "available":true,
         "price": "309.99"
       },
       {
         "size": "UK8.5",
+        "available":true,
         "price": "310.99"
       },
       {
         "size": "UK9",
+        "available":true,
         "price": "315.99"
       },
       {
         "size": "UK9.5",
+        "available":true,
         "price": "320.99"
       },
       {
         "size": "UK10",
+        "available":true,
         "price": "325.99"
       }
     ],
