@@ -9,6 +9,7 @@ import AddProductSlide from "./add-product-slide";
 import useOrder from "../../hooks/useOrder";
 import AddPackagingSlide from "./add-packaging-slide";
 import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
+import AddProductQuantitySlide from "./add-product-quantities-slide";
 
 const TOTAL_SLIDES = 4;
 const SLIDE_TITLES = [
@@ -46,8 +47,14 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
   );
   const [isPageValid, setIsPageValid] = useState<boolean>(false);
 
-  const { order, addPackaging, addMember, addProduct, removeProduct } =
-    useOrder();
+  const {
+    order,
+    addPackaging,
+    addMember,
+    addProduct,
+    updateProduct,
+    removeProduct,
+  } = useOrder();
 
   useEffect(() => {
     switch (slideIndex) {
@@ -98,12 +105,11 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
                   onSelectedProduct={(product) => addProduct(product)}
                   onRemoveProduct={(product) => removeProduct(product.id)}
                 />
-                <div
-                  style={{ height: "300px", width: "100%" }}
-                  className="bg-primary"
-                >
-                  Slide 3
-                </div>
+                <AddProductQuantitySlide
+                  maxQuantities={order.packaging?.maxQuantity}
+                  products={order.products}
+                  onProductUpdate={(product) => updateProduct(product)}
+                />
                 <div
                   style={{ height: "400px", width: "100%" }}
                   className="bg-primary"

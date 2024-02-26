@@ -25,7 +25,7 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
           <Typeahead
             id="select-member-slide-typeahead"
             options={products}
-            labelKey="Title"
+            labelKey="title"
             onChange={(selected: unknown[]) => {
               const product = selected[0] as Product;
 
@@ -45,7 +45,10 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
             <Card.Body>
               <ListGroup className="max-350">
                 {(productsInOrder ?? []).map((product) => (
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  <ListGroup.Item
+                    className="d-flex justify-content-between align-items-center"
+                    key={product.id}
+                  >
                     <div className="d-flex align-items-center">
                       <Image
                         rounded
@@ -54,7 +57,7 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
                         loading="lazy"
                       />
                       &nbsp;
-                      {product.Title}
+                      {product.title}
                     </div>
                     <Link to="" onClick={() => onRemoveProduct(product)}>
                       <MdClose className="text-danger" title="Remove product" />

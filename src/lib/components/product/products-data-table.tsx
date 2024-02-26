@@ -29,10 +29,10 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
     },
     {
       name: "Title",
-      selector: (row) => row.Title,
+      selector: (row) => row.title,
       sortable: true,
       wrap: true,
-      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.Title}</div>, // Custom cell styling
+      cell: (row) => <div style={{ whiteSpace: "normal" }}>{row.title}</div>, // Custom cell styling
     },
     {
       name: "Description",

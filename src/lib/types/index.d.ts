@@ -158,7 +158,7 @@ type Member = {
 
 type Product = {
   id: string;
-  Title: string;
+  title: string;
   body: string;
   category: string;
   published: boolean;
@@ -169,6 +169,7 @@ type Product = {
     price: number;
     quantity: number;
   }[];
+  quantity: number;
   price: number;
   taxable: boolean;
   featuredImage: string;
