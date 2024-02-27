@@ -1,0 +1,38 @@
+.w-90 {
+  width: 90% !important;
+}
+
+.hand-cursor {
+  cursor: pointer !important;
+}
+
+.min-200 {
+  min-height: 200px !important;
+}
+
+.min-300 {
+  min-height: 300px !important;
+}
+
+.min-400 {
+  min-height: 400px !important;
+}
+
+.min-500 {
+  min-height: 500px !important;
+}
+
+.max-350 {
+  max-height: 350px !important;
+  overflow-y: auto !important;
+}
+
+.max-400 {
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+.max-500 {
+  max-height: 500px !important;
+  overflow-y: auto !important;
+}

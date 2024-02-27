@@ -1,0 +1,41 @@
+[
+  {
+    "id": "jordan-4-taupe-haze-bulk",
+    "title": "Jordan 4 Taupe Haze Bulk",
+    "body": "Please fill out the bulk order form If you would like to order and we will be in contact.\nUK minimum order quantity = 3 pairs\nEU minimum order quantity = 8 pairs\n14-21 Day Delivery from the day you have paid\nPlease be aware this time frame is an estimation\nTheres only minimal updates we can provide as to when your delivery will arrive\nNo tracking is provided until the stock arrives In the UK.",
+    "category": "Bulk",
+    "published": true,
+    "size": "UK7",
+    "variants": [
+      {
+        "size": "UK8",
+        "available":true,
+        "price": "309.99"
+      },
+      {
+        "size": "UK8.5",
+        "available":true,
+        "price": "310.99"
+      },
+      {
+        "size": "UK9",
+        "available":true,
+        "price": "315.99"
+      },
+      {
+        "size": "UK9.5",
+        "available":true,
+        "price": "320.99"
+      },
+      {
+        "size": "UK10",
+        "available":true,
+        "price": "325.99"
+      }
+    ],
+    "price": "309.99",
+    "taxable": true,
+    "featuredImage": "https://cdn.shopify.com/s/files/1/0713/7129/2977/files/Untitleddesign-2024-02-14T192635.224.png?v=1707938804",
+    "otherImages": []
+  }
+]

@@ -1,14 +1,22 @@
 import { DateTime } from "luxon";
 import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
-import { Card, Col, Form, Nav, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Row,
+} from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
   KEY_ALL,
   KEY_LATEST,
   KEY_UNPAID,
-} from "../constants";
-import { isOrderContains } from "../utils/order-utils";
+} from "../../constants";
+import { isOrderContains } from "../../utils/order-utils";
 
 const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
@@ -61,6 +69,7 @@ const columns: TableColumn<Order>[] = [
 interface DataTableProps {
   isEditable?: boolean;
   data: Order[];
+  onCreateClick: VoidFunction;
   onRowClicked: Dispatch<SetStateAction<Order>>;
 }
 
@@ -68,10 +77,10 @@ const OrdersDataTable: FC<DataTableProps> = ({
   data,
   onRowClicked,
   isEditable = false,
+  onCreateClick,
 }: DataTableProps) => {
   const [filterText, setFilterText] = useState<string>("");
   const [activeKey, setActiveKey] = useState<string>(filters[0]);
-  useState<boolean>(false);
 
   const filteredData = useMemo(() => {
     switch (activeKey) {
@@ -98,31 +107,35 @@ const OrdersDataTable: FC<DataTableProps> = ({
     <Card>
       <Card.Header>
         <Row>
-          <Col xs="2">
+          <Col>
             <Card.Title>Orders</Card.Title>
           </Col>
-          <Col xs="7">
-            <Nav
-              justify
-              variant="pills"
-              activeKey={activeKey}
-              onSelect={(eventKey) => {
-                setActiveKey(eventKey ?? filters[0]);
-              }}
-            >
-              {filters.map((filterKey, index) => (
-                <Nav.Item key={index}>
-                  <Nav.Link eventKey={filterKey}>{filterKey}</Nav.Link>
-                </Nav.Item>
-              ))}
-            </Nav>
-          </Col>
-          <Col xs="3">
+          <Col lg="3">
             <Form.Control
               type="text"
               placeholder="Search"
               onChange={(e) => setFilterText(e.target.value)}
             />
+          </Col>
+          <Col lg="auto" className="text-end">
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={`Filters (${activeKey})`}
+            >
+              {filters.map((filterKey, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => setActiveKey(filters[index])}
+                >
+                  {filterKey}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+          </Col>
+          <Col lg="auto" className="text-end">
+            <Button variant="warning" onClick={onCreateClick}>
+              New Order
+            </Button>
           </Col>
         </Row>
       </Card.Header>
