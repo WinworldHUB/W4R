@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Row, Col, Card } from "react-bootstrap";
 import members from "../../data/users.json";
-import products from "../../data/formatted_products.json";
+import productsData from "../../data/formatted_products.json";
 
 import Slider from "../slider";
 import AddMemberSlide from "./add-member-slide";
@@ -10,8 +10,9 @@ import useOrder from "../../hooks/useOrder";
 import AddPackagingSlide from "./add-packaging-slide";
 import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
 import AddProductQuantitySlide from "./add-product-quantities-slide";
+import OrderPreviewSlide from "./order-preview-slide";
 
-const TOTAL_SLIDES = 4;
+const TOTAL_SLIDES = 5;
 const SLIDE_TITLES = [
   "STEP 1: Select packaging type",
   "STEP 2: Select member to place an order",
@@ -56,7 +57,17 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
     removeProduct,
   } = useOrder();
 
+  const products = useMemo(() => {
+    return productsData.filter((product) => !order.products.includes(product));
+  }, [order]);
+
   useEffect(() => {
+    console.log(order);
+    const totalQuantities = order.products.reduce(
+      (total, product) => total + product.quantity,
+      0
+    );
+
     switch (slideIndex) {
       case CreateOrderSlides.SelectPackaging:
         setIsPageValid(!!order.packaging);
@@ -71,10 +82,14 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
         break;
 
       case CreateOrderSlides.SelectQuantities:
-        setIsPageValid(order.products.length > 0);
+        setIsPageValid(
+          totalQuantities >= order.packaging?.minQuantity &&
+            totalQuantities <= order.packaging?.maxQuantity
+        );
         break;
 
       default:
+        setIsPageValid(true);
         break;
     }
   }, [order, slideIndex]);
@@ -82,12 +97,12 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
   return (
     <>
       <Row>
-        <Col md="8" sm="12">
+        <Col md="12" sm="12">
           <Card>
             <Card.Header>
               <Card.Title>{SLIDE_TITLES[slideIndex]}</Card.Title>
             </Card.Header>
-            <Card.Body>
+            <Card.Body className="max-500">
               <Slider slideTo={slideIndex}>
                 <AddPackagingSlide
                   selectedPackagingId={order.packaging?.id}
@@ -106,32 +121,20 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
                   onRemoveProduct={(product) => removeProduct(product.id)}
                 />
                 <AddProductQuantitySlide
-                  maxQuantities={order.packaging?.maxQuantity}
+                  minQuantity={order.packaging?.minQuantity}
+                  maxQuantity={order.packaging?.maxQuantity}
                   products={order.products}
                   onProductUpdate={(product) => updateProduct(product)}
                 />
-                <div
-                  style={{ height: "400px", width: "100%" }}
-                  className="bg-primary"
-                >
-                  Slide 4
-                </div>
-                <div
-                  style={{ height: "500px", width: "100%" }}
-                  className="bg-primary"
-                >
-                  Slide 5
-                </div>
+                <OrderPreviewSlide order={order} />
+                <div className="bg-primary">Slide 5</div>
               </Slider>
             </Card.Body>
           </Card>
         </Col>
-        <Col md="4" className=".d-none .d-md-block  bg-light shadow">
-          Preview
-        </Col>
       </Row>
       <Row className="pt-3">
-        <Col md="8" sm="12" className="d-flex justify-content-between">
+        <Col md="12" sm="12" className="d-flex justify-content-between">
           {BACK_BUTTON_TITLES[slideIndex] !== "" ? (
             <Button
               variant="secondary"
@@ -162,9 +165,6 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
           ) : (
             <span>&nbsp;</span>
           )}
-        </Col>
-        <Col md="4" className=".d-none .d-md-block">
-          Preview
         </Col>
       </Row>
     </>

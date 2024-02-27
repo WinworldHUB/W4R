@@ -15,7 +15,7 @@ const AddMemberSlide: FC<AddMemberSlideProps> = ({
   onSelectedMember,
 }) => {
   return (
-    <Container>
+    <Container className="min-400">
       <Row>
         <Col xs="auto">Select member:</Col>
         <Col>

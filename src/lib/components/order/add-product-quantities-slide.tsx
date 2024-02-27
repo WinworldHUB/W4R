@@ -1,41 +1,52 @@
-import { FC, useMemo, useState } from "react";
-import { Accordion, Col, Form, Row } from "react-bootstrap";
+import { FC, useState } from "react";
+import { Accordion, Col, Form, Row, Image, Container } from "react-bootstrap";
 import { getArrayFromTo } from "../../utils/array-utils";
 
 interface AddProductQuantitySlideProps {
-  maxQuantities: number;
+  minQuantity: number;
+  maxQuantity: number;
   products: Product[];
   onProductUpdate: (product: Product) => void;
 }
 
 const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
-  maxQuantities,
+  minQuantity,
+  maxQuantity,
   products,
   onProductUpdate,
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product>(products[0]);
-
-  const totalQuantities = useMemo(() => {}, [products]);
+  const [selectedProduct, setSelectedProduct] = useState<Product>();
 
   return (
-    <>
+    <Container className="min-400">
       <Accordion
         onSelect={(activeEventKey) => {
-          console.log(activeEventKey);
           if (activeEventKey) {
             setSelectedProduct(
-              products.filter(
-                (product) => product.id === activeEventKey?.[0]
-              )[0]
+              products.filter((product) => product.id === activeEventKey)[0]
             );
           }
         }}
         defaultActiveKey={selectedProduct?.id}
         alwaysOpen={false}
       >
-        {products.map((product, index) => (
-          <Accordion.Item eventKey={product.id} key={`${product.id}-${index}`}>
-            <Accordion.Header>{product.title}</Accordion.Header>
+        {products.map((product) => (
+          <Accordion.Item eventKey={product.id} key={product.id}>
+            <Accordion.Header>
+              <div className="w-50">
+                <Image
+                  rounded
+                  src={product["featuredImage"]}
+                  width="32px"
+                  loading="lazy"
+                />
+                &nbsp;{product.title}
+              </div>
+              <div className="w-50 text-end me-2">
+                Size:&nbsp;{product.size}&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;
+                {product.quantity}
+              </div>
+            </Accordion.Header>
             <Accordion.Body>
               <Form.Group
                 as={Row}
@@ -50,11 +61,20 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                     aria-label="Products sizes"
                     title="Product sizes"
                     onChange={(e) => {
-                      console.log(e.target.value);
+                      setSelectedProduct({
+                        ...selectedProduct,
+                        size: selectedProduct.variants[parseInt(e.target.value)]
+                          .size,
+                      });
+                      onProductUpdate({
+                        ...selectedProduct,
+                        size: selectedProduct.variants[parseInt(e.target.value)]
+                          .size,
+                      });
                     }}
                   >
                     {product.variants.map((variant, vIndex) => (
-                      <option key={`${variant.size}-${vIndex}`} value={vIndex}>
+                      <option key={variant.size} value={vIndex}>
                         {variant.size}
                       </option>
                     ))}
@@ -74,16 +94,21 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                     aria-label="Products quantities"
                     title="Product quantities"
                     onChange={(e) => {
-                      console.log(e.target.value);
+                      setSelectedProduct({
+                        ...selectedProduct,
+                        quantity: parseInt(e.target.value),
+                      });
+                      onProductUpdate({
+                        ...selectedProduct,
+                        quantity: parseInt(e.target.value),
+                      });
                     }}
                   >
-                    {getArrayFromTo(1, maxQuantities).map(
-                      (quantity, qIndex) => (
-                        <option key={`${quantity}-${qIndex}`} value={quantity}>
-                          {quantity}
-                        </option>
-                      )
-                    )}
+                    {getArrayFromTo(1, maxQuantity).map((quantity) => (
+                      <option key={quantity} value={quantity}>
+                        {quantity}
+                      </option>
+                    ))}
                   </Form.Select>
                 </Col>
               </Form.Group>
@@ -91,7 +116,7 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
           </Accordion.Item>
         ))}
       </Accordion>
-    </>
+    </Container>
   );
 };
 

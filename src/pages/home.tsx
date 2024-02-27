@@ -20,19 +20,6 @@ const Home = (pageProps: PageProps) => {
         <Modal.Body>
           <CreateOrder handleClose={handleClose} />
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-between">
-          <Button variant="light" onClick={() => {}}>
-            Cancel
-          </Button>
-          <div>
-            <Button variant="secondary" onClick={() => {}} className="me-2">
-              Reset
-            </Button>
-            <Button variant="primary" onClick={() => {}}>
-              Submit
-            </Button>
-          </div>
-        </Modal.Footer>
       </Modal>
 
       <OrdersDataTable

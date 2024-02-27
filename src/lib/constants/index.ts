@@ -12,6 +12,7 @@ export enum CreateOrderSlides {
   SelectProducts = 2,
   SelectQuantities = 3,
   Preview = 4,
+  Submit = 5,
 }
 
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {

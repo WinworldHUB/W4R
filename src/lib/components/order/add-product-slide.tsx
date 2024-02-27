@@ -18,7 +18,7 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
   onRemoveProduct,
 }) => {
   return (
-    <Container>
+    <Container className="min-400">
       <Row>
         <Col xs="auto">Select product:</Col>
         <Col>

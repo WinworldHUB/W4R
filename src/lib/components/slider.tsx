@@ -5,9 +5,10 @@ import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 interface SliderProps {
   children: React.ReactNode;
   slideTo: number;
+  autoHeight?: boolean;
 }
 
-const Slider: FC<SliderProps> = ({ children, slideTo }) => {
+const Slider: FC<SliderProps> = ({ children, slideTo, autoHeight = true }) => {
   const swiperRef = useRef<SwiperClass>();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Slider: FC<SliderProps> = ({ children, slideTo }) => {
       slidesPerView={1}
       noSwiping
       allowTouchMove={false}
-      autoHeight={false}
+      autoHeight={autoHeight}
       autoplay={false}
       onSwiper={(swiper) => {
         swiperRef.current = swiper;

@@ -11,7 +11,7 @@ type MenuItem = {
 };
 
 type Order = {
-  id: number;
+  id: string;
   orderValue: number;
   status: string;
   orderDate: string;

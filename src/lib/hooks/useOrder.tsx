@@ -1,8 +1,9 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const DEFAULT_ORDER: Order = {
-  id: 0,
+  id: uuidv4(),
   orderDate: DateTime.now().toString(),
   orderValue: 0,
   status: "pending",
@@ -22,31 +23,27 @@ interface OrderState {
 }
 
 const useOrder = (): OrderState => {
-  const [order, updateOrder] = useState<Order>(DEFAULT_ORDER);
-  const [products, updateProducts] = useState<Product[]>(
-    DEFAULT_ORDER.products
-  );
+  const [order, setOrder] = useState<Order>(DEFAULT_ORDER);
+  const [products, setProducts] = useState<Product[]>(order.products);
 
   useEffect(() => {
-    updateOrder({ ...order, products: products });
+    setOrder({ ...order, products: products });
   }, [products]);
 
   const addPackaging = (packaging: Packaging) =>
-    updateOrder({ ...order, packaging: packaging });
+    setOrder({ ...order, packaging: packaging });
 
-  const addMember = (member: Member) =>
-    updateOrder({ ...order, member: member });
+  const addMember = (member: Member) => setOrder({ ...order, member: member });
 
-  const addProduct = (product: Product) =>
-    updateProducts([...products, product]);
+  const addProduct = (product: Product) => setProducts([...products, product]);
 
   const removeProduct = (productId: string) =>
-    updateProducts([...products.filter((product) => product.id !== productId)]);
+    setProducts([...products.filter((product) => product.id !== productId)]);
 
   const updateProduct = (product: Product) =>
-    updateProducts(
-      products.map((item) => (item.id === product.id ? product : item))
-    );
+    setProducts([
+      ...products.map((item) => (item.id === product.id ? product : item)),
+    ]);
 
   return {
     order,
