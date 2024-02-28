@@ -1,9 +1,15 @@
-import React, { useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
+import { isMemberContains } from "../../utils/member-utils";
+import { dateFromString } from "../../utils/date-utils";
+import CSVReader from "react-csv-reader";
 
-const MembersDataTable = ({ data }) => {
-  const [filterText, setFilterText] = useState("");
+const MembersDataTable: FC<DataTableProps<Member>> = ({
+  data,
+  onDataImport,
+}) => {
+  const [filterText, setFilterText] = useState<string>("");
 
   const columns = useMemo(() => {
     return [
@@ -34,44 +40,30 @@ const MembersDataTable = ({ data }) => {
       },
       {
         name: "Created At",
-        selector: (row) => row["Created at"],
+        selector: (row) => dateFromString(row["Created at"]),
         sortable: true,
       },
       {
         name: "Last Order Date",
-        selector: (row) => row["Last order date"],
+        selector: (row) => dateFromString(row["Last order date"]),
         sortable: true,
       },
     ];
   }, []);
 
-  const filteredData = useMemo(() => {
-    return data.filter((user) => {
-      const {
-        Status,
-        "Customer name": customerName,
-        "Customer email": customerEmail,
-        "Payment method brand": paymentMethodBrand,
-        "Created at": createdAt,
-        "Last order date": lastOrderDate,
-      } = user;
-      const searchText = filterText.toLowerCase();
-      return (
-        Status.toLowerCase().includes(searchText) ||
-        customerName.toLowerCase().includes(searchText) ||
-        customerEmail.toLowerCase().includes(searchText) ||
-        paymentMethodBrand.toLowerCase().includes(searchText) ||
-        createdAt.toLowerCase().includes(searchText) ||
-        lastOrderDate.toLowerCase().includes(searchText)
-      );
-    });
-  }, [data, filterText]);
+  const filteredData = useMemo(
+    () =>
+      (data ?? []).filter((member) =>
+        isMemberContains(member, filterText.trim())
+      ),
+    [data, filterText]
+  );
 
   return (
     <Card>
       <Card.Header>
         <Row>
-          <Col xs="9">
+          <Col>
             <Card.Title>Users</Card.Title>
           </Col>
           <Col xs="3">
@@ -80,6 +72,14 @@ const MembersDataTable = ({ data }) => {
               placeholder="Search"
               onChange={(e) => setFilterText(e.target.value)}
             />
+          </Col>
+          <Col xs="auto">
+            <label
+              className="btn btn-warning cursor-hand"
+              htmlFor="importMember"
+            >
+              Import
+            </label>
           </Col>
         </Row>
       </Card.Header>
@@ -90,6 +90,16 @@ const MembersDataTable = ({ data }) => {
           striped
           highlightOnHover
           pagination
+        />
+        <CSVReader
+          inputName="importMember"
+          inputId="importMember"
+          cssClass="d-none"
+          accept=".csv"
+          parserOptions={{ header: true }}
+          onFileLoaded={(data, fileInfo) => {
+            onDataImport?.(data as Member[]);
+          }}
         />
       </Card.Body>
     </Card>

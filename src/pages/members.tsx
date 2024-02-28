@@ -6,7 +6,12 @@ import MembersDataTable from "../lib/components/member/members-data-table";
 const Members = (pageProps: PageProps) => {
   return (
     <PageLayout {...pageProps}>
-      <MembersDataTable data={data} />
+      <MembersDataTable
+        data={data as Member[]}
+        onDataImport={(data) => {
+          console.log(JSON.stringify(data));
+        }}
+      />
     </PageLayout>
   );
 };
