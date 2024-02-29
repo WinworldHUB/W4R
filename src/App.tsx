@@ -5,8 +5,14 @@ import Invoices from "./pages/Invoices";
 import Home from "./pages/home";
 import Members from "./pages/members";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
-import { FaOpencart, FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
+import {
+  FaOpencart,
+  FaFileInvoiceDollar,
+  FaUsers,
+  FaBug,
+} from "react-icons/fa";
 import Products from "./pages/products";
+import TestPage from "./pages/test";
 
 export const APP_MENU: MenuItem[] = [
   {
@@ -32,6 +38,12 @@ export const APP_MENU: MenuItem[] = [
     label: "Products",
     icon: <MdOutlineProductionQuantityLimits />,
     route: "/products",
+  },
+  {
+    id: 5,
+    label: "Test",
+    icon: <FaBug />,
+    route: "/test",
   },
 ];
 
@@ -62,6 +74,12 @@ function App() {
           path={PageRoutes.Products}
           element={
             <Products menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
+          }
+        />
+        <Route
+          path={PageRoutes.Test}
+          element={
+            <TestPage menuItems={APP_MENU} selectedMenuId={APP_MENU[4].id} />
           }
         />
       </Routes>

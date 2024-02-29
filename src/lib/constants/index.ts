@@ -4,6 +4,7 @@ export enum PageRoutes {
   Invoices = "/invoices",
   Members = "/members",
   Products = "/products",
+  Test = "/test",
 }
 
 export enum CreateOrderSlides {

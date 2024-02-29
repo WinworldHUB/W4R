@@ -192,3 +192,35 @@ type Packaging = {
   maxQuantity: number;
   available: boolean;
 };
+
+/** To be Removed */
+interface TestUserResponse {
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: TestUser[];
+  support: Support;
+}
+
+interface TestUser {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+}
+
+interface Support {
+  url: string;
+  text: string;
+}
+
+interface CreatedTestUser {
+  name: string;
+  job: string;
+  id: string;
+  createdAt: Date;
+}
+
+/** To be Removed */
