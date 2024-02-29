@@ -192,3 +192,27 @@ type Packaging = {
   maxQuantity: number;
   available: boolean;
 };
+
+/** To be Removed */
+interface Cartoon2D {
+  title: string;
+  year: number;
+  creator: string[];
+  rating: string;
+  genre: Genre[];
+  runtime_in_minutes: number;
+  episodes: number;
+  image: string;
+  id: number;
+}
+
+enum Genre {
+  Action = "Action",
+  Adventure = "Adventure",
+  Comedy = "Comedy",
+  Drama = "Drama",
+  Family = "Family",
+  Short = "Short",
+}
+
+/** To be Removed */

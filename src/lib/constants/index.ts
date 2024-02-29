@@ -4,6 +4,7 @@ export enum PageRoutes {
   Invoices = "/invoices",
   Members = "/members",
   Products = "/products",
+  Test = "/test",
 }
 
 export enum CreateOrderSlides {
@@ -14,6 +15,9 @@ export enum CreateOrderSlides {
   Preview = 4,
   Submit = 5,
 }
+
+export const DEFAULT_GET_API_HEADER = {};
+export const DEFAULT_POST_API_HEADER = {};
 
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
   transition: "background-color 0.3s",
