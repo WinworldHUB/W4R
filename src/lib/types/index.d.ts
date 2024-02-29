@@ -194,25 +194,33 @@ type Packaging = {
 };
 
 /** To be Removed */
-interface Cartoon2D {
-  title: string;
-  year: number;
-  creator: string[];
-  rating: string;
-  genre: Genre[];
-  runtime_in_minutes: number;
-  episodes: number;
-  image: string;
-  id: number;
+interface TestUserResponse {
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: TestUser[];
+  support: Support;
 }
 
-enum Genre {
-  Action = "Action",
-  Adventure = "Adventure",
-  Comedy = "Comedy",
-  Drama = "Drama",
-  Family = "Family",
-  Short = "Short",
+interface TestUser {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+}
+
+interface Support {
+  url: string;
+  text: string;
+}
+
+interface CreatedTestUser {
+  name: string;
+  job: string;
+  id: string;
+  createdAt: Date;
 }
 
 /** To be Removed */

@@ -16,9 +16,6 @@ export enum CreateOrderSlides {
   Submit = 5,
 }
 
-export const DEFAULT_GET_API_HEADER = {};
-export const DEFAULT_POST_API_HEADER = {};
-
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
   transition: "background-color 0.3s",
 };
