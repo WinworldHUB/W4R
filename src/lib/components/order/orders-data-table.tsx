@@ -66,19 +66,12 @@ const columns: TableColumn<Order>[] = [
   },
 ];
 
-interface DataTableProps {
-  isEditable?: boolean;
-  data: Order[];
-  onCreateClick: VoidFunction;
-  onRowClicked: Dispatch<SetStateAction<Order>>;
-}
-
-const OrdersDataTable: FC<DataTableProps> = ({
+const OrdersDataTable: FC<DataTableProps<Order>> = ({
   data,
   onRowClicked,
   isEditable = false,
   onCreateClick,
-}: DataTableProps) => {
+}) => {
   const [filterText, setFilterText] = useState<string>("");
   const [activeKey, setActiveKey] = useState<string>(filters[0]);
 

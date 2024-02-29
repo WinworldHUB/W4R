@@ -3,6 +3,14 @@ interface PageProps {
   menuItems: MenuItem[];
 }
 
+interface DataTableProps<T> {
+  isEditable?: boolean;
+  data: T[];
+  onCreateClick?: VoidFunction;
+  onRowClicked?: Dispatch<SetStateAction<Order>>;
+  onDataImport?: (data: T[]) => void;
+}
+
 type MenuItem = {
   id: number;
   label: string;
