@@ -224,3 +224,8 @@ interface CreatedTestUser {
 }
 
 /** To be Removed */
+
+interface Credentials {
+  email: string;
+  password: string;
+}

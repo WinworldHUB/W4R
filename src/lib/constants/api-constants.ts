@@ -6,3 +6,7 @@ export const TEST_APIS = {
   GET_API: "/api/users?page=2",
   POST_API: "/api/users",
 };
+
+export const COGNITO_ERROR_CODE = [
+  "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED",
+];
