@@ -13,6 +13,8 @@ import {
 } from "react-icons/fa";
 import Products from "./pages/products";
 import TestPage from "./pages/test";
+import { useContext } from "react";
+import { AppContext } from "./lib/contexts/appcontext";
 
 export const APP_MENU: MenuItem[] = [
   {
@@ -48,10 +50,20 @@ export const APP_MENU: MenuItem[] = [
 ];
 
 function App() {
+  const { appState } = useContext(AppContext);
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={PageRoutes.Login} element={<SignIn />} />
+        <Route
+          path={PageRoutes.Login}
+          element={
+            appState.isUserLoggedIn ? (
+              <Home menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
+            ) : (
+              <SignIn />
+            )
+          }
+        />
         <Route
           path={PageRoutes.Home}
           element={

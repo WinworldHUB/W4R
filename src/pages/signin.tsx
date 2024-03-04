@@ -1,7 +1,8 @@
 import PageLayout from "../lib/components/page-layout";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useAuthentication from "../lib/hooks/useAuthentication";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../lib/contexts/appcontext";
 
 const SignIn = () => {
   const {
@@ -10,10 +11,18 @@ const SignIn = () => {
     signInUser,
     signOutUser,
   } = useAuthentication();
+
+  const { appState, setAppState } = useContext(AppContext);
+
+  useEffect(() => {
+    setAppState({ ...appState, isUserLoggedIn: isUserSignedIn });
+  }, [isUserSignedIn]);
+
   const [credentials, setCredentials] = useState<Credentials>({
     email: "",
     password: "",
   });
+
   return (
     <PageLayout menuItems={[]} selectedMenuId={0} isShowSideMenu={false}>
       <Row className="d-flex justify-content-center">
@@ -70,8 +79,11 @@ const SignIn = () => {
                   You are logged in. To sign-out use the Sign Out button below.
                 </Card.Text>
               </Card.Body>
-              <Card.Footer className="text-end">
-                <Button onClick={() => signOutUser}>Sign Out</Button>
+              <Card.Footer className="d-flex justify-content-between align-items-center">
+                <div className="w-75">
+                  <span className="text-danger">{loginError ?? ""}</span>
+                </div>
+                <Button onClick={signOutUser}>Sign Out</Button>
               </Card.Footer>
             </Card>
           )}
