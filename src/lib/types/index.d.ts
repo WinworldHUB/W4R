@@ -1,3 +1,15 @@
+interface AppState {
+  isUserLoggedIn: boolean;
+  accessToken: string;
+  refreshToken: string;
+
+  setAppState: ({
+    isUserLoggedIn,
+    accessToken,
+    refreshToken,
+  }: AppState) => void;
+}
+
 interface PageProps {
   selectedMenuId: number;
   menuItems: MenuItem[];

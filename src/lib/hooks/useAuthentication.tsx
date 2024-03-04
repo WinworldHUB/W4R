@@ -27,7 +27,7 @@ const useAuthentication = (): UseAuthenticationState => {
   const [error, setError] = useState<string>(null);
   const [isSignInDone, setIsSignInDone] = useState<boolean>(false);
 
-  const getUserData = () => {
+  const getUserData = (ignoreError: boolean) => {
     getCurrentUser()
       .then((user) => {
         setSignedInUser(user);
@@ -37,19 +37,27 @@ const useAuthentication = (): UseAuthenticationState => {
             setRefreshToken(session.tokens?.idToken.toString());
           })
           .catch((reason) => {
-            setSignedInUser(null);
-            setError(reason.message);
+            if (!ignoreError) {
+              setSignedInUser(null);
+              setError(reason.message);
+            }
           });
       })
       .catch((reason) => {
-        setSignedInUser(null);
-        setError(reason.message);
+        if (!ignoreError) {
+          setSignedInUser(null);
+          setError(reason.message);
+        }
       });
   };
 
   useEffect(() => {
+    getUserData(true);
+  }, []);
+
+  useEffect(() => {
     if (isSignInDone) {
-      getUserData();
+      getUserData(false);
     }
   }, [isSignInDone]);
 
@@ -71,10 +79,15 @@ const useAuthentication = (): UseAuthenticationState => {
   };
 
   const signOutUser = () => {
-    signOut().then(() => {
-      setSignedInUser(null);
-      setError(null);
-    });
+    signOut()
+      .then(() => {
+        setSignedInUser(null);
+        setError(null);
+      })
+      .catch((reason) => {
+        setSignedInUser(null);
+        setError(reason.message);
+      });
   };
 
   return {
