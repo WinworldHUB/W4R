@@ -1,3 +1,11 @@
+export const DEFAULT_APP_STATE: AppState = {
+  isUserLoggedIn: false,
+  accessToken: "",
+  refreshToken: "",
+
+  setAppState: () => {},
+};
+
 export enum PageRoutes {
   Home = "/home",
   Login = "/",
