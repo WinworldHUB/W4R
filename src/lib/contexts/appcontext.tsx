@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useState } from "react";
-import { DEFAULT_APP_STATE } from "../constants/api-constants";
+import { DEFAULT_APP_STATE } from "../constants";
 
 interface AppContextProviderProps {
   children: React.ReactNode;
