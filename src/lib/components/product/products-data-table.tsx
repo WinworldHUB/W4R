@@ -2,19 +2,14 @@ import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
 import { Card, Col, Form, Nav, Row } from "react-bootstrap";
 import CSVReader from "react-csv-reader";
 import DataTable, { TableColumn } from "react-data-table-component";
-import useApi from "../../hooks/useApi";
-interface ProductsDataTableProps {
-  data: Product[];
-  onRowClicked: Dispatch<SetStateAction<Product>>;
-}
 
-const ProductsDataTable: FC<ProductsDataTableProps> = ({
+const ProductsDataTable: FC<DataTableProps<Product>> = ({
   data,
   onRowClicked,
-}: ProductsDataTableProps) => {
+  onDataImport
+}) => {
   const [filterText, setFilterText] = useState<string>("");
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const {postData} = useApi()
   const columns: TableColumn<Product>[] = [
     {
       name: "Featured Image",
@@ -58,28 +53,14 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
   const filteredData = useMemo(() => {
     return data.filter((product) => {
       if (activeCategory === "bulk") {
-        return product.id.includes("-bulk") && product.id.includes(filterText);
+        return product?.id?.includes("-bulk") && product?.id?.includes(filterText);
       } else {
-        return product.id.includes(filterText);
+        return product?.id?.includes(filterText);
       }
     });
   }, [data, activeCategory, filterText]);
 
-  const handleImportProduct = async(jsonData: Product[])=>{
-    try {
-      // Send the JSON data to the backend API using postData function
-      const responseData = await postData(
-        "/products",
-        jsonData
-      );
-      console.log("Response from server:", responseData);
-  
-      // Handle response from the backend if needed
-    } catch (error) {
-      // Handle errors
-      console.error("Error:", error);
-    }
-  }
+
 
   return (
     <Card>
@@ -138,7 +119,7 @@ const ProductsDataTable: FC<ProductsDataTableProps> = ({
           accept=".csv"
           parserOptions={{ header: true }}
           onFileLoaded={(data, fileInfo) => {
-            handleImportProduct(data as Product[])
+           onDataImport?.(data as Product[])
           }}
         />
       </Card.Body>
