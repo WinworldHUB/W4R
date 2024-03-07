@@ -183,17 +183,19 @@ type Product = {
   category: string;
   published: boolean;
   size: string;
-  variants: {
-    size: string;
-    available: boolean;
-    price: number;
-    quantity: number;
-  }[];
+  variants: ProductVariant[];
   quantity: number;
   price: number;
   taxable: boolean;
   featuredImage: string;
   otherImages: string;
+};
+
+type ProductVariant = {
+  size: string;
+  available: boolean;
+  price: number;
+  quantity: number;
 };
 
 type Packaging = {

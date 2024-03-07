@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import { isMemberContains } from "../../utils/member-utils";
 import { dateFromString } from "../../utils/date-utils";
 import CSVReader from "react-csv-reader";
+import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
 
 const MembersDataTable: FC<DataTableProps<Member>> = ({
   data,
@@ -90,6 +91,7 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
           striped
           highlightOnHover
           pagination
+          customStyles={DATA_TABLE_DEFAULT_STYLE}
         />
         <CSVReader
           inputName="importMember"

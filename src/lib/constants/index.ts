@@ -56,3 +56,27 @@ export const DEFAULT_PACKAGINGS: Packaging[] = [
     available: true,
   },
 ];
+
+export const DATA_TABLE_DEFAULT_STYLE = {
+  rows: {
+    style: {
+      minHeight: "72px", // override the row height
+    },
+  },
+  headCells: {
+    style: {
+      paddingLeft: "8px", // override the cell padding for head cells
+      paddingRight: "8px",
+      backgroundColor: "var(--bs-primary)",
+      color: "var(--bs-white)",
+      fontWeight: "bold",
+      fontSize: "0.9rem",
+    },
+  },
+  cells: {
+    style: {
+      paddingLeft: "8px", // override the cell padding for data cells
+      paddingRight: "8px",
+    },
+  },
+};

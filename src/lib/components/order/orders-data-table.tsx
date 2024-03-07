@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Dispatch, FC, SetStateAction, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -12,6 +12,7 @@ import {
 import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
+  DATA_TABLE_DEFAULT_STYLE,
   KEY_ALL,
   KEY_LATEST,
   KEY_UNPAID,
@@ -140,6 +141,7 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
           highlightOnHover
           pagination
           onRowClicked={onRowClicked}
+          customStyles={DATA_TABLE_DEFAULT_STYLE}
         />
       </Card.Body>
     </Card>

@@ -1,15 +1,28 @@
-import React from "react";
+import { useEffect } from "react";
 import PageLayout from "../lib/components/page-layout";
-import data from "../lib/data/users.json";
 import MembersDataTable from "../lib/components/member/members-data-table";
+import useApi from "../lib/hooks/useApi";
+import { MEMBERS_APIS } from "../lib/constants/api-constants";
 
 const Members = (pageProps: PageProps) => {
+  const {
+    data: members,
+    getData: getAllMembers,
+    postData: addMembers,
+  } = useApi<Member[]>();
+
+  useEffect(() => {
+    getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
+  }, []);
+
   return (
     <PageLayout {...pageProps}>
       <MembersDataTable
-        data={data as Member[]}
+        data={members}
         onDataImport={(data) => {
-          console.log(JSON.stringify(data));
+          if (data && data.length > 0) {
+            addMembers(MEMBERS_APIS.IMPORT_MEMBERS_API, data);
+          }
         }}
       />
     </PageLayout>
