@@ -52,14 +52,11 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
     ];
   }, []);
 
-  const filteredData = useMemo(
-    () =>
-      (data ?? []).filter((member) =>
-        isMemberContains(member, filterText.trim())
-      ),
-    [data, filterText]
-  );
-
+  const filteredData = useMemo(() => {
+    if (!Array.isArray(data)) return [];  
+    return data.filter((member) => isMemberContains(member, filterText.trim()));
+  }, [data, filterText]);
+  
   return (
     <Card>
       <Card.Header>

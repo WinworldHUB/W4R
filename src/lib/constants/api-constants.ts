@@ -2,7 +2,7 @@ export const DEFAULT_GET_API_HEADER = {};
 export const DEFAULT_POST_API_HEADER = {
   "Content-Type": "application/json",
 };
-export const API_BASE_URL = "https://main.d3dfz5blon3rxt.amplifyapp.com";
+export const API_BASE_URL = "http://localhost:3000";
 
 export const TEST_APIS = {
   GET_API: "https://reqres.in/api/users?page=2",
