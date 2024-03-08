@@ -21,7 +21,9 @@ const Members = (pageProps: PageProps) => {
         data={members}
         onDataImport={(data) => {
           if (data && data.length > 0) {
-            addMembers(MEMBERS_APIS.IMPORT_MEMBERS_API, data);
+            addMembers(MEMBERS_APIS.IMPORT_MEMBERS_API, data).then(() => {
+              getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
+            })
           }
         }}
       />
