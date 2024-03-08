@@ -26,7 +26,7 @@ const SignIn = () => {
   return (
     <PageLayout menuItems={[]} selectedMenuId={0} isShowSideMenu={false}>
       <Row className="d-flex justify-content-center">
-        <Col xs="4">
+        <Col xs="8" sm="6" md="4">
           {!isUserSignedIn && (
             <Card>
               <Card.Header>

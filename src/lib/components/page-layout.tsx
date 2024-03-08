@@ -1,6 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useContext, useState } from "react";
 import { Container } from "react-bootstrap";
 import MenuBar from "./menubar";
+import { AppContext } from "../contexts/appcontext";
+import useAuthentication from "../hooks/useAuthentication";
+import SignIn from "../../pages/signin";
 
 interface PageLayoutProps {
   isShowSideMenu?: boolean;

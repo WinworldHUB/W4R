@@ -51,17 +51,18 @@ export const APP_MENU: MenuItem[] = [
 
 function App() {
   const { appState } = useContext(AppContext);
+
+  if (!appState.isUserLoggedIn) {
+    return <SignIn />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={PageRoutes.Login}
           element={
-            appState.isUserLoggedIn ? (
-              <Home menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
-            ) : (
-              <SignIn />
-            )
+            <Home menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
           }
         />
         <Route
