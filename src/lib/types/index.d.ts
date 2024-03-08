@@ -178,6 +178,7 @@ type Member = {
 
 type Product = {
   id: string;
+  internalId?: string;
   title: string;
   body: string;
   category: string;

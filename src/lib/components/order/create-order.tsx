@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button, Row, Col, Card } from "react-bootstrap";
-import members from "../../data/users.json";
-import productsData from "../../data/formatted_products.json";
 
 import Slider from "../slider";
 import AddMemberSlide from "./add-member-slide";
@@ -40,9 +38,15 @@ const BACK_BUTTON_TITLES = [
 
 interface CreateOrderProps {
   handleClose: () => void;
+  members: Member[];
+  products: Product[];
 }
 
-const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
+const CreateOrder: React.FC<CreateOrderProps> = ({
+  handleClose,
+  members,
+  products,
+}) => {
   const [slideIndex, setSlideIndex] = useState<CreateOrderSlides>(
     CreateOrderSlides.SelectPackaging
   );
@@ -56,10 +60,6 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
     updateProduct,
     removeProduct,
   } = useOrder();
-
-  const products = useMemo(() => {
-    return productsData.filter((product) => !order.products.includes(product));
-  }, [order]);
 
   useEffect(() => {
     console.log(order);
@@ -115,7 +115,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({ handleClose }) => {
                   onSelectedMember={(member) => addMember(member)}
                 />
                 <AddProductSlide
-                  products={products as Product[]}
+                  products={products}
                   productsInOrder={order.products}
                   onSelectedProduct={(product) => addProduct(product)}
                   onRemoveProduct={(product) => removeProduct(product.id)}
