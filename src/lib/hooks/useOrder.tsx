@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { Product } from "../../../awsApis";
 
 const DEFAULT_ORDER: Order = {
   id: uuidv4(),

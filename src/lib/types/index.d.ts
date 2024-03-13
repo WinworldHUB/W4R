@@ -176,7 +176,7 @@ type Member = {
 //   quantity?: number;
 // };
 
-type Product = {
+type ProductVM = {
   id: string;
   internalId?: string;
   title: string;

@@ -15,6 +15,7 @@ import DataTable, {
 import { DATA_TABLE_DEFAULT_STYLE, KEY_ALL } from "../../constants";
 import { isProductContains } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
+import { Product } from "../../../../awsApis";
 
 const filters: string[] = [KEY_ALL];
 
@@ -44,6 +45,9 @@ const columns: TableColumn<Product>[] = [
 ];
 
 const VariantsTableComponent = (product: ExpanderComponentProps<Product>) => {
+  const variants = JSON.parse(
+    product.data.variants ?? "[]"
+  ) as ProductVariant[];
   return (
     <Table bordered hover>
       <thead>
@@ -53,7 +57,7 @@ const VariantsTableComponent = (product: ExpanderComponentProps<Product>) => {
         </tr>
       </thead>
       <tbody>
-        {product.data.variants.map((variant) => (
+        {(variants ?? []).map((variant) => (
           <tr key={variant.size}>
             <td>{variant.size}</td>
             <td>{variant.price}</td>

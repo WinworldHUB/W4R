@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Accordion, Col, Form, Row, Image, Container } from "react-bootstrap";
 import { getArrayFromTo } from "../../utils/array-utils";
+import { Product } from "../../../../awsApis";
 
 interface AddProductQuantitySlideProps {
   minQuantity: number;
@@ -16,6 +17,11 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
   onProductUpdate,
 }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product>();
+
+  const variants = useMemo(
+    () => JSON.parse(selectedProduct.variants) as ProductVariant[],
+    [selectedProduct]
+  );
 
   return (
     <Container className="min-400">
@@ -63,17 +69,15 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                     onChange={(e) => {
                       setSelectedProduct({
                         ...selectedProduct,
-                        size: selectedProduct.variants[parseInt(e.target.value)]
-                          .size,
+                        size: variants[parseInt(e.target.value)].size,
                       });
                       onProductUpdate({
                         ...selectedProduct,
-                        size: selectedProduct.variants[parseInt(e.target.value)]
-                          .size,
+                        size: variants[parseInt(e.target.value)].size,
                       });
                     }}
                   >
-                    {product.variants.map((variant, vIndex) => (
+                    {variants.map((variant, vIndex) => (
                       <option key={variant.size} value={vIndex}>
                         {variant.size}
                       </option>

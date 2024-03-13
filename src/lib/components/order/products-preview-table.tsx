@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { Card, Col, Form, Nav, Row } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
+import { Product } from "../../../../awsApis";
 
 interface ProductsPreviewTableProps {
   products: Product[];

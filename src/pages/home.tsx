@@ -6,6 +6,7 @@ import OrdersDataTable from "../lib/components/order/orders-data-table";
 import CreateOrder from "../lib/components/order/create-order";
 import useApi from "../lib/hooks/useApi";
 import { MEMBERS_APIS, PRODUCTS_APIS } from "../lib/constants/api-constants";
+import { Product } from "../../awsApis";
 
 const Home: FC<PageProps> = (pageProps) => {
   const { data: members, getData: getAllMembers } = useApi<Member[]>();

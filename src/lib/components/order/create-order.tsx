@@ -10,6 +10,7 @@ import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
 import AddProductQuantitySlide from "./add-product-quantities-slide";
 import OrderPreviewSlide from "./order-preview-slide";
 import CannotProceed from "./caanot-proceed";
+import { Product } from "../../../../awsApis";
 
 const TOTAL_SLIDES = 5;
 const SLIDE_TITLES = [

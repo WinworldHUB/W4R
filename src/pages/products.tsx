@@ -3,6 +3,7 @@ import ProductsDataTable from "../lib/components/product/products-data-table";
 import useApi from "../lib/hooks/useApi";
 import { useEffect } from "react";
 import { PRODUCTS_APIS } from "../lib/constants/api-constants";
+import { Product } from "../../awsApis";
 
 const Products = (pageProps: PageProps) => {
   const {

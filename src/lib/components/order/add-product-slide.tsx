@@ -3,6 +3,7 @@ import { Card, Col, Container, ListGroup, Row, Image } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Product } from "../../../../awsApis";
 
 interface AddProductSlideProps {
   products: Product[];
