@@ -8,6 +8,144 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createInvoice = /* GraphQL */ `mutation CreateInvoice(
+  $input: CreateInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  createInvoice(input: $input, condition: $condition) {
+    id
+    invoiceNumber
+    invoiceDate
+    paymentDate
+    orderID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateInvoiceMutationVariables,
+  APITypes.CreateInvoiceMutation
+>;
+export const updateInvoice = /* GraphQL */ `mutation UpdateInvoice(
+  $input: UpdateInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  updateInvoice(input: $input, condition: $condition) {
+    id
+    invoiceNumber
+    invoiceDate
+    paymentDate
+    orderID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateInvoiceMutationVariables,
+  APITypes.UpdateInvoiceMutation
+>;
+export const deleteInvoice = /* GraphQL */ `mutation DeleteInvoice(
+  $input: DeleteInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  deleteInvoice(input: $input, condition: $condition) {
+    id
+    invoiceNumber
+    invoiceDate
+    paymentDate
+    orderID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteInvoiceMutationVariables,
+  APITypes.DeleteInvoiceMutation
+>;
+export const createOrder = /* GraphQL */ `mutation CreateOrder(
+  $input: CreateOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  createOrder(input: $input, condition: $condition) {
+    id
+    Products
+    orderNumber
+    date
+    value
+    valueCurrency
+    deliveryDetails
+    status
+    memberEmail
+    InvoiceId {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateOrderMutationVariables,
+  APITypes.CreateOrderMutation
+>;
+export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
+  $input: UpdateOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  updateOrder(input: $input, condition: $condition) {
+    id
+    Products
+    orderNumber
+    date
+    value
+    valueCurrency
+    deliveryDetails
+    status
+    memberEmail
+    InvoiceId {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateOrderMutationVariables,
+  APITypes.UpdateOrderMutation
+>;
+export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
+  $input: DeleteOrderInput!
+  $condition: ModelOrderConditionInput
+) {
+  deleteOrder(input: $input, condition: $condition) {
+    id
+    Products
+    orderNumber
+    date
+    value
+    valueCurrency
+    deliveryDetails
+    status
+    memberEmail
+    InvoiceId {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteOrderMutationVariables,
+  APITypes.DeleteOrderMutation
+>;
 export const createProduct = /* GraphQL */ `mutation CreateProduct(
   $input: CreateProductInput!
   $condition: ModelProductConditionInput

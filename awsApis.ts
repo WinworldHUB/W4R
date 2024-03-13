@@ -2,38 +2,22 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateProductInput = {
+export type CreateInvoiceInput = {
   id?: string | null,
-  title?: string | null,
-  body?: string | null,
-  variants?: string | null,
-  quantity?: number | null,
-  category?: string | null,
-  price?: number | null,
-  taxable?: boolean | null,
-  published?: boolean | null,
-  featuredImage?: string | null,
-  otherImages?: Array< string | null > | null,
-  size?: string | null,
-  available?: boolean | null,
+  invoiceNumber?: string | null,
+  invoiceDate?: string | null,
+  paymentDate?: string | null,
+  orderID: string,
 };
 
-export type ModelProductConditionInput = {
-  title?: ModelStringInput | null,
-  body?: ModelStringInput | null,
-  variants?: ModelStringInput | null,
-  quantity?: ModelIntInput | null,
-  category?: ModelStringInput | null,
-  price?: ModelFloatInput | null,
-  taxable?: ModelBooleanInput | null,
-  published?: ModelBooleanInput | null,
-  featuredImage?: ModelStringInput | null,
-  otherImages?: ModelStringInput | null,
-  size?: ModelStringInput | null,
-  available?: ModelBooleanInput | null,
-  and?: Array< ModelProductConditionInput | null > | null,
-  or?: Array< ModelProductConditionInput | null > | null,
-  not?: ModelProductConditionInput | null,
+export type ModelInvoiceConditionInput = {
+  invoiceNumber?: ModelStringInput | null,
+  invoiceDate?: ModelStringInput | null,
+  paymentDate?: ModelStringInput | null,
+  orderID?: ModelIDInput | null,
+  and?: Array< ModelInvoiceConditionInput | null > | null,
+  or?: Array< ModelInvoiceConditionInput | null > | null,
+  not?: ModelInvoiceConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -76,7 +60,78 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIntInput = {
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type Invoice = {
+  __typename: "Invoice",
+  id: string,
+  invoiceNumber?: string | null,
+  invoiceDate?: string | null,
+  paymentDate?: string | null,
+  orderID: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateInvoiceInput = {
+  id: string,
+  invoiceNumber?: string | null,
+  invoiceDate?: string | null,
+  paymentDate?: string | null,
+  orderID?: string | null,
+};
+
+export type DeleteInvoiceInput = {
+  id: string,
+};
+
+export type CreateOrderInput = {
+  id?: string | null,
+  Products?: string | null,
+  orderNumber?: string | null,
+  date?: string | null,
+  value?: number | null,
+  valueCurrency?: string | null,
+  deliveryDetails?: string | null,
+  status?: OrderStatus | null,
+  memberEmail?: string | null,
+};
+
+export enum OrderStatus {
+  UNPAID = "UNPAID",
+  PAID = "PAID",
+}
+
+
+export type ModelOrderConditionInput = {
+  Products?: ModelStringInput | null,
+  orderNumber?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  value?: ModelFloatInput | null,
+  valueCurrency?: ModelStringInput | null,
+  deliveryDetails?: ModelStringInput | null,
+  status?: ModelOrderStatusInput | null,
+  memberEmail?: ModelStringInput | null,
+  and?: Array< ModelOrderConditionInput | null > | null,
+  or?: Array< ModelOrderConditionInput | null > | null,
+  not?: ModelOrderConditionInput | null,
+};
+
+export type ModelFloatInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -88,7 +143,84 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type ModelFloatInput = {
+export type ModelOrderStatusInput = {
+  eq?: OrderStatus | null,
+  ne?: OrderStatus | null,
+};
+
+export type Order = {
+  __typename: "Order",
+  id: string,
+  Products?: string | null,
+  orderNumber?: string | null,
+  date?: string | null,
+  value?: number | null,
+  valueCurrency?: string | null,
+  deliveryDetails?: string | null,
+  status?: OrderStatus | null,
+  memberEmail?: string | null,
+  InvoiceId?: ModelInvoiceConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelInvoiceConnection = {
+  __typename: "ModelInvoiceConnection",
+  items:  Array<Invoice | null >,
+  nextToken?: string | null,
+};
+
+export type UpdateOrderInput = {
+  id: string,
+  Products?: string | null,
+  orderNumber?: string | null,
+  date?: string | null,
+  value?: number | null,
+  valueCurrency?: string | null,
+  deliveryDetails?: string | null,
+  status?: OrderStatus | null,
+  memberEmail?: string | null,
+};
+
+export type DeleteOrderInput = {
+  id: string,
+};
+
+export type CreateProductInput = {
+  id?: string | null,
+  title?: string | null,
+  body?: string | null,
+  variants?: string | null,
+  quantity?: number | null,
+  category?: string | null,
+  price?: number | null,
+  taxable?: boolean | null,
+  published?: boolean | null,
+  featuredImage?: string | null,
+  otherImages?: Array< string | null > | null,
+  size?: string | null,
+  available?: boolean | null,
+};
+
+export type ModelProductConditionInput = {
+  title?: ModelStringInput | null,
+  body?: ModelStringInput | null,
+  variants?: ModelStringInput | null,
+  quantity?: ModelIntInput | null,
+  category?: ModelStringInput | null,
+  price?: ModelFloatInput | null,
+  taxable?: ModelBooleanInput | null,
+  published?: ModelBooleanInput | null,
+  featuredImage?: ModelStringInput | null,
+  otherImages?: ModelStringInput | null,
+  size?: ModelStringInput | null,
+  available?: ModelBooleanInput | null,
+  and?: Array< ModelProductConditionInput | null > | null,
+  or?: Array< ModelProductConditionInput | null > | null,
+  not?: ModelProductConditionInput | null,
+};
+
+export type ModelIntInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -227,6 +359,44 @@ export type DeleteMemberInput = {
   id: string,
 };
 
+export type ModelInvoiceFilterInput = {
+  id?: ModelIDInput | null,
+  invoiceNumber?: ModelStringInput | null,
+  invoiceDate?: ModelStringInput | null,
+  paymentDate?: ModelStringInput | null,
+  orderID?: ModelIDInput | null,
+  and?: Array< ModelInvoiceFilterInput | null > | null,
+  or?: Array< ModelInvoiceFilterInput | null > | null,
+  not?: ModelInvoiceFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelOrderFilterInput = {
+  id?: ModelIDInput | null,
+  Products?: ModelStringInput | null,
+  orderNumber?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  value?: ModelFloatInput | null,
+  valueCurrency?: ModelStringInput | null,
+  deliveryDetails?: ModelStringInput | null,
+  status?: ModelOrderStatusInput | null,
+  memberEmail?: ModelStringInput | null,
+  and?: Array< ModelOrderFilterInput | null > | null,
+  or?: Array< ModelOrderFilterInput | null > | null,
+  not?: ModelOrderFilterInput | null,
+};
+
+export type ModelOrderConnection = {
+  __typename: "ModelOrderConnection",
+  items:  Array<Order | null >,
+  nextToken?: string | null,
+};
+
 export type ModelProductFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -244,22 +414,6 @@ export type ModelProductFilterInput = {
   and?: Array< ModelProductFilterInput | null > | null,
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type ModelProductConnection = {
@@ -295,22 +449,14 @@ export type ModelMemberConnection = {
   nextToken?: string | null,
 };
 
-export type ModelSubscriptionProductFilterInput = {
+export type ModelSubscriptionInvoiceFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  title?: ModelSubscriptionStringInput | null,
-  body?: ModelSubscriptionStringInput | null,
-  variants?: ModelSubscriptionStringInput | null,
-  quantity?: ModelSubscriptionIntInput | null,
-  category?: ModelSubscriptionStringInput | null,
-  price?: ModelSubscriptionFloatInput | null,
-  taxable?: ModelSubscriptionBooleanInput | null,
-  published?: ModelSubscriptionBooleanInput | null,
-  featuredImage?: ModelSubscriptionStringInput | null,
-  otherImages?: ModelSubscriptionStringInput | null,
-  size?: ModelSubscriptionStringInput | null,
-  available?: ModelSubscriptionBooleanInput | null,
-  and?: Array< ModelSubscriptionProductFilterInput | null > | null,
-  or?: Array< ModelSubscriptionProductFilterInput | null > | null,
+  invoiceNumber?: ModelSubscriptionStringInput | null,
+  invoiceDate?: ModelSubscriptionStringInput | null,
+  paymentDate?: ModelSubscriptionStringInput | null,
+  orderID?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionInvoiceFilterInput | null > | null,
+  or?: Array< ModelSubscriptionInvoiceFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -343,7 +489,21 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionIntInput = {
+export type ModelSubscriptionOrderFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  Products?: ModelSubscriptionStringInput | null,
+  orderNumber?: ModelSubscriptionStringInput | null,
+  date?: ModelSubscriptionStringInput | null,
+  value?: ModelSubscriptionFloatInput | null,
+  valueCurrency?: ModelSubscriptionStringInput | null,
+  deliveryDetails?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
+  memberEmail?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
+  or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
+};
+
+export type ModelSubscriptionFloatInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -355,7 +515,25 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
-export type ModelSubscriptionFloatInput = {
+export type ModelSubscriptionProductFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  body?: ModelSubscriptionStringInput | null,
+  variants?: ModelSubscriptionStringInput | null,
+  quantity?: ModelSubscriptionIntInput | null,
+  category?: ModelSubscriptionStringInput | null,
+  price?: ModelSubscriptionFloatInput | null,
+  taxable?: ModelSubscriptionBooleanInput | null,
+  published?: ModelSubscriptionBooleanInput | null,
+  featuredImage?: ModelSubscriptionStringInput | null,
+  otherImages?: ModelSubscriptionStringInput | null,
+  size?: ModelSubscriptionStringInput | null,
+  available?: ModelSubscriptionBooleanInput | null,
+  and?: Array< ModelSubscriptionProductFilterInput | null > | null,
+  or?: Array< ModelSubscriptionProductFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
   ne?: number | null,
   eq?: number | null,
   le?: number | null,
@@ -390,6 +568,138 @@ export type ModelSubscriptionMemberFilterInput = {
   deliveryAddress2?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionMemberFilterInput | null > | null,
   or?: Array< ModelSubscriptionMemberFilterInput | null > | null,
+};
+
+export type CreateInvoiceMutationVariables = {
+  input: CreateInvoiceInput,
+  condition?: ModelInvoiceConditionInput | null,
+};
+
+export type CreateInvoiceMutation = {
+  createInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateInvoiceMutationVariables = {
+  input: UpdateInvoiceInput,
+  condition?: ModelInvoiceConditionInput | null,
+};
+
+export type UpdateInvoiceMutation = {
+  updateInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteInvoiceMutationVariables = {
+  input: DeleteInvoiceInput,
+  condition?: ModelInvoiceConditionInput | null,
+};
+
+export type DeleteInvoiceMutation = {
+  deleteInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateOrderMutationVariables = {
+  input: CreateOrderInput,
+  condition?: ModelOrderConditionInput | null,
+};
+
+export type CreateOrderMutation = {
+  createOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateOrderMutationVariables = {
+  input: UpdateOrderInput,
+  condition?: ModelOrderConditionInput | null,
+};
+
+export type UpdateOrderMutation = {
+  updateOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteOrderMutationVariables = {
+  input: DeleteOrderInput,
+  condition?: ModelOrderConditionInput | null,
+};
+
+export type DeleteOrderMutation = {
+  deleteOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
 };
 
 export type CreateProductMutationVariables = {
@@ -554,6 +864,123 @@ export type DeleteMemberMutation = {
   } | null,
 };
 
+export type GetInvoiceQueryVariables = {
+  id: string,
+};
+
+export type GetInvoiceQuery = {
+  getInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListInvoicesQueryVariables = {
+  filter?: ModelInvoiceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListInvoicesQuery = {
+  listInvoices?:  {
+    __typename: "ModelInvoiceConnection",
+    items:  Array< {
+      __typename: "Invoice",
+      id: string,
+      invoiceNumber?: string | null,
+      invoiceDate?: string | null,
+      paymentDate?: string | null,
+      orderID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type InvoicesByOrderIDQueryVariables = {
+  orderID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelInvoiceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type InvoicesByOrderIDQuery = {
+  invoicesByOrderID?:  {
+    __typename: "ModelInvoiceConnection",
+    items:  Array< {
+      __typename: "Invoice",
+      id: string,
+      invoiceNumber?: string | null,
+      invoiceDate?: string | null,
+      paymentDate?: string | null,
+      orderID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetOrderQueryVariables = {
+  id: string,
+};
+
+export type GetOrderQuery = {
+  getOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListOrdersQueryVariables = {
+  filter?: ModelOrderFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListOrdersQuery = {
+  listOrders?:  {
+    __typename: "ModelOrderConnection",
+    items:  Array< {
+      __typename: "Order",
+      id: string,
+      Products?: string | null,
+      orderNumber?: string | null,
+      date?: string | null,
+      value?: number | null,
+      valueCurrency?: string | null,
+      deliveryDetails?: string | null,
+      status?: OrderStatus | null,
+      memberEmail?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetProductQueryVariables = {
   id: string,
 };
@@ -667,6 +1094,132 @@ export type ListMembersQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateInvoiceSubscriptionVariables = {
+  filter?: ModelSubscriptionInvoiceFilterInput | null,
+};
+
+export type OnCreateInvoiceSubscription = {
+  onCreateInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateInvoiceSubscriptionVariables = {
+  filter?: ModelSubscriptionInvoiceFilterInput | null,
+};
+
+export type OnUpdateInvoiceSubscription = {
+  onUpdateInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteInvoiceSubscriptionVariables = {
+  filter?: ModelSubscriptionInvoiceFilterInput | null,
+};
+
+export type OnDeleteInvoiceSubscription = {
+  onDeleteInvoice?:  {
+    __typename: "Invoice",
+    id: string,
+    invoiceNumber?: string | null,
+    invoiceDate?: string | null,
+    paymentDate?: string | null,
+    orderID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateOrderSubscriptionVariables = {
+  filter?: ModelSubscriptionOrderFilterInput | null,
+};
+
+export type OnCreateOrderSubscription = {
+  onCreateOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateOrderSubscriptionVariables = {
+  filter?: ModelSubscriptionOrderFilterInput | null,
+};
+
+export type OnUpdateOrderSubscription = {
+  onUpdateOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteOrderSubscriptionVariables = {
+  filter?: ModelSubscriptionOrderFilterInput | null,
+};
+
+export type OnDeleteOrderSubscription = {
+  onDeleteOrder?:  {
+    __typename: "Order",
+    id: string,
+    Products?: string | null,
+    orderNumber?: string | null,
+    date?: string | null,
+    value?: number | null,
+    valueCurrency?: string | null,
+    deliveryDetails?: string | null,
+    status?: OrderStatus | null,
+    memberEmail?: string | null,
+    InvoiceId?:  {
+      __typename: "ModelInvoiceConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 

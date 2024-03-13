@@ -8,6 +8,127 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getInvoice = /* GraphQL */ `query GetInvoice($id: ID!) {
+  getInvoice(id: $id) {
+    id
+    invoiceNumber
+    invoiceDate
+    paymentDate
+    orderID
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetInvoiceQueryVariables,
+  APITypes.GetInvoiceQuery
+>;
+export const listInvoices = /* GraphQL */ `query ListInvoices(
+  $filter: ModelInvoiceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listInvoices(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      invoiceNumber
+      invoiceDate
+      paymentDate
+      orderID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListInvoicesQueryVariables,
+  APITypes.ListInvoicesQuery
+>;
+export const invoicesByOrderID = /* GraphQL */ `query InvoicesByOrderID(
+  $orderID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelInvoiceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  invoicesByOrderID(
+    orderID: $orderID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      invoiceNumber
+      invoiceDate
+      paymentDate
+      orderID
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.InvoicesByOrderIDQueryVariables,
+  APITypes.InvoicesByOrderIDQuery
+>;
+export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
+  getOrder(id: $id) {
+    id
+    Products
+    orderNumber
+    date
+    value
+    valueCurrency
+    deliveryDetails
+    status
+    memberEmail
+    InvoiceId {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetOrderQueryVariables, APITypes.GetOrderQuery>;
+export const listOrders = /* GraphQL */ `query ListOrders(
+  $filter: ModelOrderFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      Products
+      orderNumber
+      date
+      value
+      valueCurrency
+      deliveryDetails
+      status
+      memberEmail
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListOrdersQueryVariables,
+  APITypes.ListOrdersQuery
+>;
 export const getProduct = /* GraphQL */ `query GetProduct($id: ID!) {
   getProduct(id: $id) {
     id
