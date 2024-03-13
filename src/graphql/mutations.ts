@@ -105,6 +105,10 @@ export const createMember = /* GraphQL */ `mutation CreateMember(
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
@@ -130,6 +134,10 @@ export const updateMember = /* GraphQL */ `mutation UpdateMember(
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
@@ -155,6 +163,10 @@ export const deleteMember = /* GraphQL */ `mutation DeleteMember(
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename

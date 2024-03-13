@@ -77,6 +77,10 @@ export const getMember = /* GraphQL */ `query GetMember($id: ID!) {
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
@@ -101,6 +105,10 @@ export const listMembers = /* GraphQL */ `query ListMembers(
       country
       address1
       address2
+      deliveryPerson
+      deliveryEmail
+      deliveryAddress1
+      deliveryAddress2
       createdAt
       updatedAt
       __typename

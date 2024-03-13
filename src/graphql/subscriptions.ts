@@ -93,6 +93,10 @@ export const onCreateMember = /* GraphQL */ `subscription OnCreateMember($filter
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
@@ -115,6 +119,10 @@ export const onUpdateMember = /* GraphQL */ `subscription OnUpdateMember($filter
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
@@ -137,6 +145,10 @@ export const onDeleteMember = /* GraphQL */ `subscription OnDeleteMember($filter
     country
     address1
     address2
+    deliveryPerson
+    deliveryEmail
+    deliveryAddress1
+    deliveryAddress2
     createdAt
     updatedAt
     __typename
