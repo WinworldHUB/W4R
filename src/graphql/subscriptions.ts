@@ -8,69 +8,16 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateInvoice = /* GraphQL */ `subscription OnCreateInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
-  onCreateInvoice(filter: $filter) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateInvoiceSubscriptionVariables,
-  APITypes.OnCreateInvoiceSubscription
->;
-export const onUpdateInvoice = /* GraphQL */ `subscription OnUpdateInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
-  onUpdateInvoice(filter: $filter) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateInvoiceSubscriptionVariables,
-  APITypes.OnUpdateInvoiceSubscription
->;
-export const onDeleteInvoice = /* GraphQL */ `subscription OnDeleteInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
-  onDeleteInvoice(filter: $filter) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteInvoiceSubscriptionVariables,
-  APITypes.OnDeleteInvoiceSubscription
->;
 export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
   onCreateOrder(filter: $filter) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -83,18 +30,13 @@ export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: 
 export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: ModelSubscriptionOrderFilterInput) {
   onUpdateOrder(filter: $filter) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -107,18 +49,13 @@ export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: 
 export const onDeleteOrder = /* GraphQL */ `subscription OnDeleteOrder($filter: ModelSubscriptionOrderFilterInput) {
   onDeleteOrder(filter: $filter) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -203,8 +140,8 @@ export const onDeleteProduct = /* GraphQL */ `subscription OnDeleteProduct($filt
 export const onCreateMember = /* GraphQL */ `subscription OnCreateMember($filter: ModelSubscriptionMemberFilterInput) {
   onCreateMember(filter: $filter) {
     id
-    name
     email
+    name
     phone
     active
     province
@@ -229,8 +166,8 @@ export const onCreateMember = /* GraphQL */ `subscription OnCreateMember($filter
 export const onUpdateMember = /* GraphQL */ `subscription OnUpdateMember($filter: ModelSubscriptionMemberFilterInput) {
   onUpdateMember(filter: $filter) {
     id
-    name
     email
+    name
     phone
     active
     province
@@ -255,8 +192,8 @@ export const onUpdateMember = /* GraphQL */ `subscription OnUpdateMember($filter
 export const onDeleteMember = /* GraphQL */ `subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
   onDeleteMember(filter: $filter) {
     id
-    name
     email
+    name
     phone
     active
     province

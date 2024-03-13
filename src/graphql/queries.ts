@@ -8,93 +8,16 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getInvoice = /* GraphQL */ `query GetInvoice($id: ID!) {
-  getInvoice(id: $id) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetInvoiceQueryVariables,
-  APITypes.GetInvoiceQuery
->;
-export const listInvoices = /* GraphQL */ `query ListInvoices(
-  $filter: ModelInvoiceFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listInvoices(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      invoiceNumber
-      invoiceDate
-      paymentDate
-      orderID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListInvoicesQueryVariables,
-  APITypes.ListInvoicesQuery
->;
-export const invoicesByOrderID = /* GraphQL */ `query InvoicesByOrderID(
-  $orderID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelInvoiceFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  invoicesByOrderID(
-    orderID: $orderID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      invoiceNumber
-      invoiceDate
-      paymentDate
-      orderID
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.InvoicesByOrderIDQueryVariables,
-  APITypes.InvoicesByOrderIDQuery
->;
 export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
   getOrder(id: $id) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -109,9 +32,8 @@ export const listOrders = /* GraphQL */ `query ListOrders(
   listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      Products
+      products
       orderNumber
-      date
       value
       valueCurrency
       deliveryDetails
@@ -188,8 +110,8 @@ export const listProducts = /* GraphQL */ `query ListProducts(
 export const getMember = /* GraphQL */ `query GetMember($id: ID!) {
   getMember(id: $id) {
     id
-    name
     email
+    name
     phone
     active
     province
@@ -216,8 +138,8 @@ export const listMembers = /* GraphQL */ `query ListMembers(
   listMembers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      name
       email
+      name
       phone
       active
       province

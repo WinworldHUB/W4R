@@ -8,81 +8,19 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createInvoice = /* GraphQL */ `mutation CreateInvoice(
-  $input: CreateInvoiceInput!
-  $condition: ModelInvoiceConditionInput
-) {
-  createInvoice(input: $input, condition: $condition) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateInvoiceMutationVariables,
-  APITypes.CreateInvoiceMutation
->;
-export const updateInvoice = /* GraphQL */ `mutation UpdateInvoice(
-  $input: UpdateInvoiceInput!
-  $condition: ModelInvoiceConditionInput
-) {
-  updateInvoice(input: $input, condition: $condition) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateInvoiceMutationVariables,
-  APITypes.UpdateInvoiceMutation
->;
-export const deleteInvoice = /* GraphQL */ `mutation DeleteInvoice(
-  $input: DeleteInvoiceInput!
-  $condition: ModelInvoiceConditionInput
-) {
-  deleteInvoice(input: $input, condition: $condition) {
-    id
-    invoiceNumber
-    invoiceDate
-    paymentDate
-    orderID
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteInvoiceMutationVariables,
-  APITypes.DeleteInvoiceMutation
->;
 export const createOrder = /* GraphQL */ `mutation CreateOrder(
   $input: CreateOrderInput!
   $condition: ModelOrderConditionInput
 ) {
   createOrder(input: $input, condition: $condition) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -98,18 +36,13 @@ export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
 ) {
   updateOrder(input: $input, condition: $condition) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -125,18 +58,13 @@ export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
 ) {
   deleteOrder(input: $input, condition: $condition) {
     id
-    Products
+    products
     orderNumber
-    date
     value
     valueCurrency
     deliveryDetails
     status
     memberEmail
-    InvoiceId {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -233,8 +161,8 @@ export const createMember = /* GraphQL */ `mutation CreateMember(
 ) {
   createMember(input: $input, condition: $condition) {
     id
-    name
     email
+    name
     phone
     active
     province
@@ -262,8 +190,8 @@ export const updateMember = /* GraphQL */ `mutation UpdateMember(
 ) {
   updateMember(input: $input, condition: $condition) {
     id
-    name
     email
+    name
     phone
     active
     province
@@ -291,8 +219,8 @@ export const deleteMember = /* GraphQL */ `mutation DeleteMember(
 ) {
   deleteMember(input: $input, condition: $condition) {
     id
-    name
     email
+    name
     phone
     active
     province
