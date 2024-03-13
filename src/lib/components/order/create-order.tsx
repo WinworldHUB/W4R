@@ -9,6 +9,7 @@ import AddPackagingSlide from "./add-packaging-slide";
 import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
 import AddProductQuantitySlide from "./add-product-quantities-slide";
 import OrderPreviewSlide from "./order-preview-slide";
+import CannotProceed from "./caanot-proceed";
 
 const TOTAL_SLIDES = 5;
 const SLIDE_TITLES = [
@@ -93,6 +94,14 @@ const CreateOrder: React.FC<CreateOrderProps> = ({
         break;
     }
   }, [order, slideIndex]);
+
+  if (members.length === 0) {
+    return <CannotProceed message="Cannot proceed since, no members loaded" />;
+  }
+
+  if (products.length === 0) {
+    return <CannotProceed message="Cannot proceed since, no products loaded" />;
+  }
 
   return (
     <>
