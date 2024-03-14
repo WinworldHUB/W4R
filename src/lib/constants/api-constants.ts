@@ -1,6 +1,9 @@
-export const DEFAULT_GET_API_HEADER = {};
+export const DEFAULT_GET_API_HEADER = {
+  "Access-Control-Allow-Origin": "*",
+};
 export const DEFAULT_POST_API_HEADER = {
   "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
 };
 export const API_BASE_URL = "https://main.d20i40zf49k8k8.amplifyapp.com";
 
