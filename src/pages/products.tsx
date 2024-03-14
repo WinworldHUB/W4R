@@ -6,15 +6,18 @@ import { PRODUCTS_APIS } from "../lib/constants/api-constants";
 import { Product } from "../../awsApis";
 
 const Products = (pageProps: PageProps) => {
-  const {
-    data: products,
-    getData: getAllProducts,
-    postData: addProducts,
-  } = useApi<Product[]>();
+  const { data: products, getData: getAllProducts } = useApi<Product[]>();
+  const { data: importedProducts, postData: addProducts } = useApi<Product[]>();
 
   useEffect(() => {
     getAllProducts(PRODUCTS_APIS.GET_ALL_PRODUCTS_API);
   }, []);
+
+  useEffect(() => {
+    if (importedProducts) {
+      alert("Imported successful");
+    }
+  }, [importedProducts]);
 
   return (
     <div>
