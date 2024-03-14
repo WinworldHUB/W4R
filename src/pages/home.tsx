@@ -7,7 +7,7 @@ import CreateOrder from "../lib/components/order/create-order";
 import useApi from "../lib/hooks/useApi";
 import { MEMBERS_APIS, PRODUCTS_APIS } from "../lib/constants/api-constants";
 import { Product } from "../../awsApis";
-
+import { Member } from "../../awsApis";
 const Home: FC<PageProps> = (pageProps) => {
   const { data: members, getData: getAllMembers } = useApi<Member[]>();
   const { data: products, getData: getAllProducts } = useApi<Product[]>();
