@@ -3,7 +3,7 @@ import PageLayout from "../lib/components/page-layout";
 import MembersDataTable from "../lib/components/member/members-data-table";
 import useApi from "../lib/hooks/useApi";
 import { MEMBERS_APIS } from "../lib/constants/api-constants";
-
+import { Member } from "../../awsApis";
 const Members = (pageProps: PageProps) => {
   const {
     data: members,

@@ -5,6 +5,7 @@ import { isMemberContains } from "../../utils/member-utils";
 import { dateFromString } from "../../utils/date-utils";
 import CSVReader from "react-csv-reader";
 import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
+import { Member } from "../../../../awsApis";
 
 const MembersDataTable: FC<DataTableProps<Member>> = ({
   data,
@@ -15,38 +16,23 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
   const columns = useMemo(() => {
     return [
       {
-        name: "User ID",
-        selector: (row) => row.ID,
-        sortable: true,
-      },
-      {
-        name: "Status",
-        selector: (row) => row.Status,
-        sortable: true,
-      },
-      {
         name: "Customer Name",
-        selector: (row) => row["Customer name"],
+        selector: (row) => row.name,
         sortable: true,
       },
       {
         name: "Customer Email",
-        selector: (row) => row["Customer email"],
+        selector: (row) => row.email,
         sortable: true,
       },
       {
-        name: "Payment method brand",
-        selector: (row) => row["Payment method brand"],
+        name: "Phone No.",
+        selector: (row) => row.phone,
         sortable: true,
       },
       {
-        name: "Created At",
-        selector: (row) => dateFromString(row["Created at"]),
-        sortable: true,
-      },
-      {
-        name: "Last Order Date",
-        selector: (row) => dateFromString(row["Last order date"]),
+        name: "City",
+        selector: (row) => row.city,
         sortable: true,
       },
     ];

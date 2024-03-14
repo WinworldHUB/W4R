@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Product } from "../../../awsApis";
-
+import { Member } from "../../../awsApis";
 const DEFAULT_ORDER: Order = {
   id: uuidv4(),
   orderDate: DateTime.now().toString(),
