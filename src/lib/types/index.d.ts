@@ -1,7 +1,7 @@
 interface AppState {
-  isUserLoggedIn: boolean;
-  accessToken: string;
-  refreshToken: string;
+  isUserLoggedIn?: boolean;
+  accessToken?: string;
+  refreshToken?: string;
 
   setAppState: ({
     isUserLoggedIn,

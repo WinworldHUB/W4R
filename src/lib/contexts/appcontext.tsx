@@ -1,5 +1,9 @@
-import { Dispatch, SetStateAction, createContext, useState } from "react";
-import { DEFAULT_APP_STATE } from "../constants";
+import { createContext, useState } from "react";
+import {
+  DEFAULT_APP_STATE,
+  DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE,
+} from "../constants";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 interface AppContextProviderProps {
   children: React.ReactNode;
@@ -7,12 +11,35 @@ interface AppContextProviderProps {
 
 interface UseAppStateProps {
   appState: AppState;
-  setAppState: Dispatch<SetStateAction<AppState>>;
+  updateAppState: ({
+    isUserLoggedIn,
+    accessToken,
+    refreshToken,
+  }: AppState) => void;
 }
 
 const useAppState = (): UseAppStateProps => {
-  const [appState, setAppState] = useState<AppState>(DEFAULT_APP_STATE);
-  return { appState, setAppState };
+  const { setValue: saveAppState, getValue: getSavedAppState } =
+    useLocalStorage<AppState>();
+  const [appState, setAppState] = useState<AppState>(
+    getSavedAppState(DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE) ??
+      DEFAULT_APP_STATE
+  );
+
+  const updateAppState = ({
+    isUserLoggedIn,
+    accessToken,
+    refreshToken,
+  }: AppState) => {
+    const updatedAppState = appState;
+    updatedAppState.isUserLoggedIn = isUserLoggedIn ?? false;
+    updatedAppState.accessToken = accessToken ?? "";
+    updatedAppState.refreshToken = refreshToken ?? "";
+    setAppState(updatedAppState);
+
+    saveAppState(DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE, updatedAppState);
+  };
+  return { appState, updateAppState };
 };
 
 const AppContext = createContext<UseAppStateProps>(null);

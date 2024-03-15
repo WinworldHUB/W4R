@@ -28,6 +28,8 @@ export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
   transition: "background-color 0.3s",
 };
 
+export const DEFAULT_LOCAL_STORAGE_KEY_FOR_APP_STATE = "W4R_LS_APP_STATE";
+
 export const APP_CONVERSION_DATE_FORMAT = "dd/MM/yyyy";
 export const APP_SHORT_DATE_FORMAT = "dd MMM yyyy";
 export const APP_LONG_DATE_FORMAT = "DDDD";

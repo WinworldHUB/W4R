@@ -12,10 +12,10 @@ const SignIn = () => {
     signOutUser,
   } = useAuthentication();
 
-  const { appState, setAppState } = useContext(AppContext);
+  const { appState, updateAppState } = useContext(AppContext);
 
   useEffect(() => {
-    setAppState({ ...appState, isUserLoggedIn: isUserSignedIn });
+    updateAppState({ ...appState, isUserLoggedIn: isUserSignedIn });
   }, [isUserSignedIn]);
 
   const [credentials, setCredentials] = useState<Credentials>({
