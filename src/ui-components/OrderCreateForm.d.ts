@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -27,6 +27,9 @@ export declare type OrderCreateFormInputValues = {
     orderValue?: number;
     products?: string;
     deliveryDetails?: string;
+    status?: string;
+    trackingStatus?: string;
+    trackingNumber?: string;
 };
 export declare type OrderCreateFormValidationValues = {
     orderNumber?: ValidationFunction<string>;
@@ -34,6 +37,9 @@ export declare type OrderCreateFormValidationValues = {
     orderValue?: ValidationFunction<number>;
     products?: ValidationFunction<string>;
     deliveryDetails?: ValidationFunction<string>;
+    status?: ValidationFunction<string>;
+    trackingStatus?: ValidationFunction<string>;
+    trackingNumber?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type OrderCreateFormOverridesProps = {
@@ -43,6 +49,9 @@ export declare type OrderCreateFormOverridesProps = {
     orderValue?: PrimitiveOverrideProps<TextFieldProps>;
     products?: PrimitiveOverrideProps<TextFieldProps>;
     deliveryDetails?: PrimitiveOverrideProps<TextFieldProps>;
+    status?: PrimitiveOverrideProps<SelectFieldProps>;
+    trackingStatus?: PrimitiveOverrideProps<TextFieldProps>;
+    trackingNumber?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type OrderCreateFormProps = React.PropsWithChildren<{
     overrides?: OrderCreateFormOverridesProps | undefined | null;

@@ -9,7 +9,18 @@ export type CreateOrderInput = {
   orderValue: number,
   products: string,
   deliveryDetails: string,
+  status: OrderStatus,
+  trackingStatus?: string | null,
+  trackingNumber?: string | null,
 };
+
+export enum OrderStatus {
+  UNPAID = "UNPAID",
+  PAID = "PAID",
+  PROCESSING = "PROCESSING",
+  DONE = "DONE",
+}
+
 
 export type ModelOrderConditionInput = {
   orderNumber?: ModelStringInput | null,
@@ -17,6 +28,9 @@ export type ModelOrderConditionInput = {
   orderValue?: ModelFloatInput | null,
   products?: ModelStringInput | null,
   deliveryDetails?: ModelStringInput | null,
+  status?: ModelOrderStatusInput | null,
+  trackingStatus?: ModelStringInput | null,
+  trackingNumber?: ModelStringInput | null,
   and?: Array< ModelOrderConditionInput | null > | null,
   or?: Array< ModelOrderConditionInput | null > | null,
   not?: ModelOrderConditionInput | null,
@@ -74,6 +88,11 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type ModelOrderStatusInput = {
+  eq?: OrderStatus | null,
+  ne?: OrderStatus | null,
+};
+
 export type Order = {
   __typename: "Order",
   id: string,
@@ -82,6 +101,9 @@ export type Order = {
   orderValue: number,
   products: string,
   deliveryDetails: string,
+  status: OrderStatus,
+  trackingStatus?: string | null,
+  trackingNumber?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -93,6 +115,9 @@ export type UpdateOrderInput = {
   orderValue?: number | null,
   products?: string | null,
   deliveryDetails?: string | null,
+  status?: OrderStatus | null,
+  trackingStatus?: string | null,
+  trackingNumber?: string | null,
 };
 
 export type DeleteOrderInput = {
@@ -279,6 +304,9 @@ export type ModelOrderFilterInput = {
   orderValue?: ModelFloatInput | null,
   products?: ModelStringInput | null,
   deliveryDetails?: ModelStringInput | null,
+  status?: ModelOrderStatusInput | null,
+  trackingStatus?: ModelStringInput | null,
+  trackingNumber?: ModelStringInput | null,
   and?: Array< ModelOrderFilterInput | null > | null,
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
@@ -365,6 +393,9 @@ export type ModelSubscriptionOrderFilterInput = {
   orderValue?: ModelSubscriptionFloatInput | null,
   products?: ModelSubscriptionStringInput | null,
   deliveryDetails?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
+  trackingStatus?: ModelSubscriptionStringInput | null,
+  trackingNumber?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
 };
@@ -480,6 +511,9 @@ export type CreateOrderMutation = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -499,6 +533,9 @@ export type UpdateOrderMutation = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -518,6 +555,9 @@ export type DeleteOrderMutation = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -698,6 +738,9 @@ export type GetOrderQuery = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -720,6 +763,9 @@ export type ListOrdersQuery = {
       orderValue: number,
       products: string,
       deliveryDetails: string,
+      status: OrderStatus,
+      trackingStatus?: string | null,
+      trackingNumber?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -856,6 +902,9 @@ export type OnCreateOrderSubscription = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -874,6 +923,9 @@ export type OnUpdateOrderSubscription = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -892,6 +944,9 @@ export type OnDeleteOrderSubscription = {
     orderValue: number,
     products: string,
     deliveryDetails: string,
+    status: OrderStatus,
+    trackingStatus?: string | null,
+    trackingNumber?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -16,6 +16,9 @@ export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: 
     orderValue
     products
     deliveryDetails
+    status
+    trackingStatus
+    trackingNumber
     createdAt
     updatedAt
     __typename
@@ -33,6 +36,9 @@ export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: 
     orderValue
     products
     deliveryDetails
+    status
+    trackingStatus
+    trackingNumber
     createdAt
     updatedAt
     __typename
@@ -50,6 +56,9 @@ export const onDeleteOrder = /* GraphQL */ `subscription OnDeleteOrder($filter: 
     orderValue
     products
     deliveryDetails
+    status
+    trackingStatus
+    trackingNumber
     createdAt
     updatedAt
     __typename

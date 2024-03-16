@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createOrder } from "../graphql/mutations";
@@ -28,6 +34,9 @@ export default function OrderCreateForm(props) {
     orderValue: "",
     products: "",
     deliveryDetails: "",
+    status: "",
+    trackingStatus: "",
+    trackingNumber: "",
   };
   const [orderNumber, setOrderNumber] = React.useState(
     initialValues.orderNumber
@@ -38,6 +47,13 @@ export default function OrderCreateForm(props) {
   const [deliveryDetails, setDeliveryDetails] = React.useState(
     initialValues.deliveryDetails
   );
+  const [status, setStatus] = React.useState(initialValues.status);
+  const [trackingStatus, setTrackingStatus] = React.useState(
+    initialValues.trackingStatus
+  );
+  const [trackingNumber, setTrackingNumber] = React.useState(
+    initialValues.trackingNumber
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setOrderNumber(initialValues.orderNumber);
@@ -45,6 +61,9 @@ export default function OrderCreateForm(props) {
     setOrderValue(initialValues.orderValue);
     setProducts(initialValues.products);
     setDeliveryDetails(initialValues.deliveryDetails);
+    setStatus(initialValues.status);
+    setTrackingStatus(initialValues.trackingStatus);
+    setTrackingNumber(initialValues.trackingNumber);
     setErrors({});
   };
   const validations = {
@@ -53,6 +72,9 @@ export default function OrderCreateForm(props) {
     orderValue: [{ type: "Required" }],
     products: [{ type: "Required" }],
     deliveryDetails: [{ type: "Required" }],
+    status: [{ type: "Required" }],
+    trackingStatus: [],
+    trackingNumber: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -85,6 +107,9 @@ export default function OrderCreateForm(props) {
           orderValue,
           products,
           deliveryDetails,
+          status,
+          trackingStatus,
+          trackingNumber,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -152,6 +177,9 @@ export default function OrderCreateForm(props) {
               orderValue,
               products,
               deliveryDetails,
+              status,
+              trackingStatus,
+              trackingNumber,
             };
             const result = onChange(modelFields);
             value = result?.orderNumber ?? value;
@@ -181,6 +209,9 @@ export default function OrderCreateForm(props) {
               orderValue,
               products,
               deliveryDetails,
+              status,
+              trackingStatus,
+              trackingNumber,
             };
             const result = onChange(modelFields);
             value = result?.orderDate ?? value;
@@ -213,6 +244,9 @@ export default function OrderCreateForm(props) {
               orderValue: value,
               products,
               deliveryDetails,
+              status,
+              trackingStatus,
+              trackingNumber,
             };
             const result = onChange(modelFields);
             value = result?.orderValue ?? value;
@@ -241,6 +275,9 @@ export default function OrderCreateForm(props) {
               orderValue,
               products: value,
               deliveryDetails,
+              status,
+              trackingStatus,
+              trackingNumber,
             };
             const result = onChange(modelFields);
             value = result?.products ?? value;
@@ -269,6 +306,9 @@ export default function OrderCreateForm(props) {
               orderValue,
               products,
               deliveryDetails: value,
+              status,
+              trackingStatus,
+              trackingNumber,
             };
             const result = onChange(modelFields);
             value = result?.deliveryDetails ?? value;
@@ -282,6 +322,120 @@ export default function OrderCreateForm(props) {
         errorMessage={errors.deliveryDetails?.errorMessage}
         hasError={errors.deliveryDetails?.hasError}
         {...getOverrideProps(overrides, "deliveryDetails")}
+      ></TextField>
+      <SelectField
+        label="Status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              orderNumber,
+              orderDate,
+              orderValue,
+              products,
+              deliveryDetails,
+              status: value,
+              trackingStatus,
+              trackingNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      >
+        <option
+          children="Unpaid"
+          value="UNPAID"
+          {...getOverrideProps(overrides, "statusoption0")}
+        ></option>
+        <option
+          children="Paid"
+          value="PAID"
+          {...getOverrideProps(overrides, "statusoption1")}
+        ></option>
+        <option
+          children="Processing"
+          value="PROCESSING"
+          {...getOverrideProps(overrides, "statusoption2")}
+        ></option>
+        <option
+          children="Done"
+          value="DONE"
+          {...getOverrideProps(overrides, "statusoption3")}
+        ></option>
+      </SelectField>
+      <TextField
+        label="Tracking status"
+        isRequired={false}
+        isReadOnly={false}
+        value={trackingStatus}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              orderNumber,
+              orderDate,
+              orderValue,
+              products,
+              deliveryDetails,
+              status,
+              trackingStatus: value,
+              trackingNumber,
+            };
+            const result = onChange(modelFields);
+            value = result?.trackingStatus ?? value;
+          }
+          if (errors.trackingStatus?.hasError) {
+            runValidationTasks("trackingStatus", value);
+          }
+          setTrackingStatus(value);
+        }}
+        onBlur={() => runValidationTasks("trackingStatus", trackingStatus)}
+        errorMessage={errors.trackingStatus?.errorMessage}
+        hasError={errors.trackingStatus?.hasError}
+        {...getOverrideProps(overrides, "trackingStatus")}
+      ></TextField>
+      <TextField
+        label="Tracking number"
+        isRequired={false}
+        isReadOnly={false}
+        value={trackingNumber}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              orderNumber,
+              orderDate,
+              orderValue,
+              products,
+              deliveryDetails,
+              status,
+              trackingStatus,
+              trackingNumber: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.trackingNumber ?? value;
+          }
+          if (errors.trackingNumber?.hasError) {
+            runValidationTasks("trackingNumber", value);
+          }
+          setTrackingNumber(value);
+        }}
+        onBlur={() => runValidationTasks("trackingNumber", trackingNumber)}
+        errorMessage={errors.trackingNumber?.errorMessage}
+        hasError={errors.trackingNumber?.hasError}
+        {...getOverrideProps(overrides, "trackingNumber")}
       ></TextField>
       <Flex
         justifyContent="space-between"
