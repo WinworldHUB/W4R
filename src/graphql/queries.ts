@@ -11,13 +11,11 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
   getOrder(id: $id) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -32,13 +30,11 @@ export const listOrders = /* GraphQL */ `query ListOrders(
   listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      products
       orderNumber
-      value
-      valueCurrency
+      orderDate
+      orderValue
+      products
       deliveryDetails
-      status
-      memberEmail
       createdAt
       updatedAt
       __typename
@@ -110,8 +106,8 @@ export const listProducts = /* GraphQL */ `query ListProducts(
 export const getMember = /* GraphQL */ `query GetMember($id: ID!) {
   getMember(id: $id) {
     id
-    email
     name
+    email
     phone
     active
     province
@@ -138,8 +134,8 @@ export const listMembers = /* GraphQL */ `query ListMembers(
   listMembers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      email
       name
+      email
       phone
       active
       province

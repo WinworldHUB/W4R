@@ -21,8 +21,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getProduct } from "../graphql/queries";
-import { updateProduct } from "../graphql/mutations";
+import { createProduct } from "../graphql/mutations";
 const client = generateClient();
 function ArrayField({
   items = [],
@@ -179,10 +178,9 @@ function ArrayField({
     </React.Fragment>
   );
 }
-export default function ProductUpdateForm(props) {
+export default function ProductCreateForm(props) {
   const {
-    id: idProp,
-    product: productModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -192,7 +190,6 @@ export default function ProductUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    id: "",
     title: "",
     body: "",
     variants: "",
@@ -206,7 +203,6 @@ export default function ProductUpdateForm(props) {
     size: "",
     available: false,
   };
-  const [id, setId] = React.useState(initialValues.id);
   const [title, setTitle] = React.useState(initialValues.title);
   const [body, setBody] = React.useState(initialValues.body);
   const [variants, setVariants] = React.useState(initialValues.variants);
@@ -225,46 +221,25 @@ export default function ProductUpdateForm(props) {
   const [available, setAvailable] = React.useState(initialValues.available);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = productRecord
-      ? { ...initialValues, ...productRecord }
-      : initialValues;
-    setId(cleanValues.id);
-    setTitle(cleanValues.title);
-    setBody(cleanValues.body);
-    setVariants(cleanValues.variants);
-    setQuantity(cleanValues.quantity);
-    setCategory(cleanValues.category);
-    setPrice(cleanValues.price);
-    setTaxable(cleanValues.taxable);
-    setPublished(cleanValues.published);
-    setFeaturedImage(cleanValues.featuredImage);
-    setOtherImages(cleanValues.otherImages ?? []);
+    setTitle(initialValues.title);
+    setBody(initialValues.body);
+    setVariants(initialValues.variants);
+    setQuantity(initialValues.quantity);
+    setCategory(initialValues.category);
+    setPrice(initialValues.price);
+    setTaxable(initialValues.taxable);
+    setPublished(initialValues.published);
+    setFeaturedImage(initialValues.featuredImage);
+    setOtherImages(initialValues.otherImages);
     setCurrentOtherImagesValue("");
-    setSize(cleanValues.size);
-    setAvailable(cleanValues.available);
+    setSize(initialValues.size);
+    setAvailable(initialValues.available);
     setErrors({});
   };
-  const [productRecord, setProductRecord] = React.useState(productModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getProduct.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getProduct
-        : productModelProp;
-      setProductRecord(record);
-    };
-    queryData();
-  }, [idProp, productModelProp]);
-  React.useEffect(resetStateValues, [productRecord]);
   const [currentOtherImagesValue, setCurrentOtherImagesValue] =
     React.useState("");
   const otherImagesRef = React.createRef();
   const validations = {
-    id: [{ type: "Required" }],
     title: [],
     body: [],
     variants: [],
@@ -304,19 +279,18 @@ export default function ProductUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          id,
-          title: title ?? null,
-          body: body ?? null,
-          variants: variants ?? null,
-          quantity: quantity ?? null,
-          category: category ?? null,
-          price: price ?? null,
-          taxable: taxable ?? null,
-          published: published ?? null,
-          featuredImage: featuredImage ?? null,
-          otherImages: otherImages ?? null,
-          size: size ?? null,
-          available: available ?? null,
+          title,
+          body,
+          variants,
+          quantity,
+          category,
+          price,
+          taxable,
+          published,
+          featuredImage,
+          otherImages,
+          size,
+          available,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -347,16 +321,18 @@ export default function ProductUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateProduct.replaceAll("__typename", ""),
+            query: createProduct.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: productRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -365,45 +341,9 @@ export default function ProductUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ProductUpdateForm")}
+      {...getOverrideProps(overrides, "ProductCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Id"
-        isRequired={true}
-        isReadOnly={true}
-        value={id}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              id: value,
-              title,
-              body,
-              variants,
-              quantity,
-              category,
-              price,
-              taxable,
-              published,
-              featuredImage,
-              otherImages,
-              size,
-              available,
-            };
-            const result = onChange(modelFields);
-            value = result?.id ?? value;
-          }
-          if (errors.id?.hasError) {
-            runValidationTasks("id", value);
-          }
-          setId(value);
-        }}
-        onBlur={() => runValidationTasks("id", id)}
-        errorMessage={errors.id?.errorMessage}
-        hasError={errors.id?.hasError}
-        {...getOverrideProps(overrides, "id")}
-      ></TextField>
       <TextField
         label="Title"
         isRequired={false}
@@ -413,7 +353,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title: value,
               body,
               variants,
@@ -449,7 +388,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body: value,
               variants,
@@ -485,7 +423,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants: value,
@@ -525,7 +462,6 @@ export default function ProductUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -561,7 +497,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -601,7 +536,6 @@ export default function ProductUpdateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -637,7 +571,6 @@ export default function ProductUpdateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -673,7 +606,6 @@ export default function ProductUpdateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -709,7 +641,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -741,7 +672,6 @@ export default function ProductUpdateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -804,7 +734,6 @@ export default function ProductUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -840,7 +769,6 @@ export default function ProductUpdateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              id,
               title,
               body,
               variants,
@@ -872,14 +800,13 @@ export default function ProductUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || productModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -889,10 +816,7 @@ export default function ProductUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || productModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

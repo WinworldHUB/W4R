@@ -3,6 +3,10 @@
   height: 50px;
 }
 
+.remove-bg {
+  mix-blend-mode: multiply !important;
+}
+
 .w-90 {
   width: 90% !important;
 }

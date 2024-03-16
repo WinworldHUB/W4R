@@ -14,13 +14,11 @@ export const createOrder = /* GraphQL */ `mutation CreateOrder(
 ) {
   createOrder(input: $input, condition: $condition) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -36,13 +34,11 @@ export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
 ) {
   updateOrder(input: $input, condition: $condition) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -58,13 +54,11 @@ export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
 ) {
   deleteOrder(input: $input, condition: $condition) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -161,8 +155,8 @@ export const createMember = /* GraphQL */ `mutation CreateMember(
 ) {
   createMember(input: $input, condition: $condition) {
     id
-    email
     name
+    email
     phone
     active
     province
@@ -190,8 +184,8 @@ export const updateMember = /* GraphQL */ `mutation UpdateMember(
 ) {
   updateMember(input: $input, condition: $condition) {
     id
-    email
     name
+    email
     phone
     active
     province
@@ -219,8 +213,8 @@ export const deleteMember = /* GraphQL */ `mutation DeleteMember(
 ) {
   deleteMember(input: $input, condition: $condition) {
     id
-    email
     name
+    email
     phone
     active
     province

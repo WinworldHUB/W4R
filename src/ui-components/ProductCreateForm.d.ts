@@ -6,7 +6,6 @@
 
 import * as React from "react";
 import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Product } from "../../awsApis.ts";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -22,8 +21,7 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type ProductUpdateFormInputValues = {
-    id?: string;
+export declare type ProductCreateFormInputValues = {
     title?: string;
     body?: string;
     variants?: string;
@@ -37,8 +35,7 @@ export declare type ProductUpdateFormInputValues = {
     size?: string;
     available?: boolean;
 };
-export declare type ProductUpdateFormValidationValues = {
-    id?: ValidationFunction<string>;
+export declare type ProductCreateFormValidationValues = {
     title?: ValidationFunction<string>;
     body?: ValidationFunction<string>;
     variants?: ValidationFunction<string>;
@@ -53,9 +50,8 @@ export declare type ProductUpdateFormValidationValues = {
     available?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type ProductUpdateFormOverridesProps = {
-    ProductUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    id?: PrimitiveOverrideProps<TextFieldProps>;
+export declare type ProductCreateFormOverridesProps = {
+    ProductCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
     body?: PrimitiveOverrideProps<TextFieldProps>;
     variants?: PrimitiveOverrideProps<TextFieldProps>;
@@ -69,15 +65,14 @@ export declare type ProductUpdateFormOverridesProps = {
     size?: PrimitiveOverrideProps<TextFieldProps>;
     available?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
-export declare type ProductUpdateFormProps = React.PropsWithChildren<{
-    overrides?: ProductUpdateFormOverridesProps | undefined | null;
+export declare type ProductCreateFormProps = React.PropsWithChildren<{
+    overrides?: ProductCreateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
-    product?: Product;
-    onSubmit?: (fields: ProductUpdateFormInputValues) => ProductUpdateFormInputValues;
-    onSuccess?: (fields: ProductUpdateFormInputValues) => void;
-    onError?: (fields: ProductUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: ProductUpdateFormInputValues) => ProductUpdateFormInputValues;
-    onValidate?: ProductUpdateFormValidationValues;
+    clearOnSuccess?: boolean;
+    onSubmit?: (fields: ProductCreateFormInputValues) => ProductCreateFormInputValues;
+    onSuccess?: (fields: ProductCreateFormInputValues) => void;
+    onError?: (fields: ProductCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: ProductCreateFormInputValues) => ProductCreateFormInputValues;
+    onValidate?: ProductCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function ProductUpdateForm(props: ProductUpdateFormProps): React.ReactElement;
+export default function ProductCreateForm(props: ProductCreateFormProps): React.ReactElement;

@@ -22,10 +22,14 @@ const filters: string[] = [KEY_ALL];
 const columns: TableColumn<Product>[] = [
   {
     name: "Featured Image",
-    selector: (row) => row.featuredImage,
-    sortable: true,
+    width: "150px",
+    center: true,
     cell: (row) => (
-      <img src={row.featuredImage} alt="Featured" className="thumbnail-50" />
+      <img
+        src={row.featuredImage}
+        alt="Featured"
+        className="thumbnail-50 remove-bg"
+      />
     ),
   },
   {
@@ -37,10 +41,14 @@ const columns: TableColumn<Product>[] = [
   },
   {
     name: "Description",
-    selector: (row) => row.body,
-    sortable: true,
     wrap: true,
-    cell: (row) => <div>{row.body}</div>, // Custom cell styling
+    cell: (row) => (
+      <div
+        dangerouslySetInnerHTML={{
+          __html: row.body.replaceAll("\n", "<br />"),
+        }}
+      ></div>
+    ), // Custom cell styling
   },
 ];
 

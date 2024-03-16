@@ -11,13 +11,11 @@ type GeneratedSubscription<InputType, OutputType> = string & {
 export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
   onCreateOrder(filter: $filter) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -30,13 +28,11 @@ export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: 
 export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: ModelSubscriptionOrderFilterInput) {
   onUpdateOrder(filter: $filter) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -49,13 +45,11 @@ export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: 
 export const onDeleteOrder = /* GraphQL */ `subscription OnDeleteOrder($filter: ModelSubscriptionOrderFilterInput) {
   onDeleteOrder(filter: $filter) {
     id
-    products
     orderNumber
-    value
-    valueCurrency
+    orderDate
+    orderValue
+    products
     deliveryDetails
-    status
-    memberEmail
     createdAt
     updatedAt
     __typename
@@ -140,8 +134,8 @@ export const onDeleteProduct = /* GraphQL */ `subscription OnDeleteProduct($filt
 export const onCreateMember = /* GraphQL */ `subscription OnCreateMember($filter: ModelSubscriptionMemberFilterInput) {
   onCreateMember(filter: $filter) {
     id
-    email
     name
+    email
     phone
     active
     province
@@ -166,8 +160,8 @@ export const onCreateMember = /* GraphQL */ `subscription OnCreateMember($filter
 export const onUpdateMember = /* GraphQL */ `subscription OnUpdateMember($filter: ModelSubscriptionMemberFilterInput) {
   onUpdateMember(filter: $filter) {
     id
-    email
     name
+    email
     phone
     active
     province
@@ -192,8 +186,8 @@ export const onUpdateMember = /* GraphQL */ `subscription OnUpdateMember($filter
 export const onDeleteMember = /* GraphQL */ `subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
   onDeleteMember(filter: $filter) {
     id
-    email
     name
+    email
     phone
     active
     province

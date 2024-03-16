@@ -22,7 +22,7 @@ const AddMemberSlide: FC<AddMemberSlideProps> = ({
           <Typeahead
             id="select-member-slide-typeahead"
             options={members}
-            labelKey="Customer name"
+            labelKey="name"
             onChange={(selected: unknown[]) => {
               const member = selected[0] as Member;
 
@@ -43,28 +43,22 @@ const AddMemberSlide: FC<AddMemberSlideProps> = ({
               <Card.Body>
                 <ListGroup>
                   <ListGroup.Item>
-                    Name: <strong>{selectedMember?.["Customer name"]}</strong>
+                    Name: <strong>{selectedMember?.name}</strong>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    Email: <strong>{selectedMember?.["Customer email"]}</strong>
+                    Email: <strong>{selectedMember?.email}</strong>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    Phone: <strong>{selectedMember?.["Customer phone"]}</strong>
+                    Phone: <strong>{selectedMember?.phone ?? "NA"}</strong>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     Membership:{" "}
-                    <strong>{selectedMember?.["Line 0 title"]}</strong>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    Last order date:{" "}
                     <strong>
-                      {dateFromString(selectedMember?.["Last order date"]) ??
-                        selectedMember?.["Last order date"]}
+                      {selectedMember?.active ? "Active" : "Inactive"}
                     </strong>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    Last order amount:{" "}
-                    <strong>{selectedMember?.["Last order amount"]}</strong>
+                    Postal Code: <strong>{selectedMember?.zip ?? "NA"}</strong>
                   </ListGroup.Item>
                 </ListGroup>
               </Card.Body>

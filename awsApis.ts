@@ -4,29 +4,19 @@
 
 export type CreateOrderInput = {
   id?: string | null,
-  products: string,
   orderNumber: string,
-  value?: number | null,
-  valueCurrency?: string | null,
-  deliveryDetails?: string | null,
-  status?: OrderStatus | null,
-  memberEmail: string,
+  orderDate: string,
+  orderValue: number,
+  products: string,
+  deliveryDetails: string,
 };
 
-export enum OrderStatus {
-  UNPAID = "UNPAID",
-  PAID = "PAID",
-}
-
-
 export type ModelOrderConditionInput = {
-  products?: ModelStringInput | null,
   orderNumber?: ModelStringInput | null,
-  value?: ModelFloatInput | null,
-  valueCurrency?: ModelStringInput | null,
+  orderDate?: ModelStringInput | null,
+  orderValue?: ModelFloatInput | null,
+  products?: ModelStringInput | null,
   deliveryDetails?: ModelStringInput | null,
-  status?: ModelOrderStatusInput | null,
-  memberEmail?: ModelStringInput | null,
   and?: Array< ModelOrderConditionInput | null > | null,
   or?: Array< ModelOrderConditionInput | null > | null,
   not?: ModelOrderConditionInput | null,
@@ -84,34 +74,25 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type ModelOrderStatusInput = {
-  eq?: OrderStatus | null,
-  ne?: OrderStatus | null,
-};
-
 export type Order = {
   __typename: "Order",
   id: string,
-  products: string,
   orderNumber: string,
-  value?: number | null,
-  valueCurrency?: string | null,
-  deliveryDetails?: string | null,
-  status?: OrderStatus | null,
-  memberEmail: string,
+  orderDate: string,
+  orderValue: number,
+  products: string,
+  deliveryDetails: string,
   createdAt: string,
   updatedAt: string,
 };
 
 export type UpdateOrderInput = {
   id: string,
-  products?: string | null,
   orderNumber?: string | null,
-  value?: number | null,
-  valueCurrency?: string | null,
+  orderDate?: string | null,
+  orderValue?: number | null,
+  products?: string | null,
   deliveryDetails?: string | null,
-  status?: OrderStatus | null,
-  memberEmail?: string | null,
 };
 
 export type DeleteOrderInput = {
@@ -212,8 +193,8 @@ export type DeleteProductInput = {
 
 export type CreateMemberInput = {
   id?: string | null,
-  email: string,
   name: string,
+  email: string,
   phone?: string | null,
   active: boolean,
   province?: string | null,
@@ -229,8 +210,8 @@ export type CreateMemberInput = {
 };
 
 export type ModelMemberConditionInput = {
-  email?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   active?: ModelBooleanInput | null,
   province?: ModelStringInput | null,
@@ -251,8 +232,8 @@ export type ModelMemberConditionInput = {
 export type Member = {
   __typename: "Member",
   id: string,
-  email: string,
   name: string,
+  email: string,
   phone?: string | null,
   active: boolean,
   province?: string | null,
@@ -271,8 +252,8 @@ export type Member = {
 
 export type UpdateMemberInput = {
   id: string,
-  email?: string | null,
   name?: string | null,
+  email?: string | null,
   phone?: string | null,
   active?: boolean | null,
   province?: string | null,
@@ -293,13 +274,11 @@ export type DeleteMemberInput = {
 
 export type ModelOrderFilterInput = {
   id?: ModelIDInput | null,
-  products?: ModelStringInput | null,
   orderNumber?: ModelStringInput | null,
-  value?: ModelFloatInput | null,
-  valueCurrency?: ModelStringInput | null,
+  orderDate?: ModelStringInput | null,
+  orderValue?: ModelFloatInput | null,
+  products?: ModelStringInput | null,
   deliveryDetails?: ModelStringInput | null,
-  status?: ModelOrderStatusInput | null,
-  memberEmail?: ModelStringInput | null,
   and?: Array< ModelOrderFilterInput | null > | null,
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
@@ -354,8 +333,8 @@ export type ModelProductConnection = {
 
 export type ModelMemberFilterInput = {
   id?: ModelIDInput | null,
-  email?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   active?: ModelBooleanInput | null,
   province?: ModelStringInput | null,
@@ -381,13 +360,11 @@ export type ModelMemberConnection = {
 
 export type ModelSubscriptionOrderFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  products?: ModelSubscriptionStringInput | null,
   orderNumber?: ModelSubscriptionStringInput | null,
-  value?: ModelSubscriptionFloatInput | null,
-  valueCurrency?: ModelSubscriptionStringInput | null,
+  orderDate?: ModelSubscriptionStringInput | null,
+  orderValue?: ModelSubscriptionFloatInput | null,
+  products?: ModelSubscriptionStringInput | null,
   deliveryDetails?: ModelSubscriptionStringInput | null,
-  status?: ModelSubscriptionStringInput | null,
-  memberEmail?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
 };
@@ -471,8 +448,8 @@ export type ModelSubscriptionBooleanInput = {
 
 export type ModelSubscriptionMemberFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  email?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
   phone?: ModelSubscriptionStringInput | null,
   active?: ModelSubscriptionBooleanInput | null,
   province?: ModelSubscriptionStringInput | null,
@@ -498,13 +475,11 @@ export type CreateOrderMutation = {
   createOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -519,13 +494,11 @@ export type UpdateOrderMutation = {
   updateOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -540,13 +513,11 @@ export type DeleteOrderMutation = {
   deleteOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -639,8 +610,8 @@ export type CreateMemberMutation = {
   createMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -667,8 +638,8 @@ export type UpdateMemberMutation = {
   updateMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -695,8 +666,8 @@ export type DeleteMemberMutation = {
   deleteMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -722,13 +693,11 @@ export type GetOrderQuery = {
   getOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -746,13 +715,11 @@ export type ListOrdersQuery = {
     items:  Array< {
       __typename: "Order",
       id: string,
-      products: string,
       orderNumber: string,
-      value?: number | null,
-      valueCurrency?: string | null,
-      deliveryDetails?: string | null,
-      status?: OrderStatus | null,
-      memberEmail: string,
+      orderDate: string,
+      orderValue: number,
+      products: string,
+      deliveryDetails: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -824,8 +791,8 @@ export type GetMemberQuery = {
   getMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -855,8 +822,8 @@ export type ListMembersQuery = {
     items:  Array< {
       __typename: "Member",
       id: string,
-      email: string,
       name: string,
+      email: string,
       phone?: string | null,
       active: boolean,
       province?: string | null,
@@ -884,13 +851,11 @@ export type OnCreateOrderSubscription = {
   onCreateOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -904,13 +869,11 @@ export type OnUpdateOrderSubscription = {
   onUpdateOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -924,13 +887,11 @@ export type OnDeleteOrderSubscription = {
   onDeleteOrder?:  {
     __typename: "Order",
     id: string,
-    products: string,
     orderNumber: string,
-    value?: number | null,
-    valueCurrency?: string | null,
-    deliveryDetails?: string | null,
-    status?: OrderStatus | null,
-    memberEmail: string,
+    orderDate: string,
+    orderValue: number,
+    products: string,
+    deliveryDetails: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1019,8 +980,8 @@ export type OnCreateMemberSubscription = {
   onCreateMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -1046,8 +1007,8 @@ export type OnUpdateMemberSubscription = {
   onUpdateMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,
@@ -1073,8 +1034,8 @@ export type OnDeleteMemberSubscription = {
   onDeleteMember?:  {
     __typename: "Member",
     id: string,
-    email: string,
     name: string,
+    email: string,
     phone?: string | null,
     active: boolean,
     province?: string | null,

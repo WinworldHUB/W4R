@@ -19,7 +19,7 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
   const [selectedProduct, setSelectedProduct] = useState<Product>();
 
   const variants = useMemo(
-    () => JSON.parse(selectedProduct.variants) as ProductVariant[],
+    () => JSON.parse(selectedProduct?.variants ?? "[]") as ProductVariant[],
     [selectedProduct]
   );
 
