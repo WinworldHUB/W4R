@@ -9,7 +9,7 @@ projects:
     extensions:
       amplify:
         codeGenTarget: typescript
-        generatedFileName: awsApis.ts
+        generatedFileName: ./src/lib/awsApis.ts
         docsFilePath: src/graphql
         region: eu-west-2
         apiId: qmdzqgioxvfznepgw726p6vsnm

@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { Card } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { Product } from "../../../../awsApis";
+import { Product } from "../../awsApis";
+import { GBP_SYMBOL } from "../../constants";
+import { formatCurrency } from "../../utils/utils";
 
 interface ProductsPreviewTableProps {
   products: Product[];
@@ -38,18 +40,23 @@ const columns: TableColumn<Product>[] = [
   {
     maxWidth: "100px",
     name: "Price",
-    selector: (row) => row.price,
+    selector: (row) => `${GBP_SYMBOL} ${formatCurrency(row.price)}`,
   },
 ];
 
 const ProductsPreviewTable: FC<ProductsPreviewTableProps> = ({ products }) => {
-  const total = products.reduce((total, product) => total + product.price, 0);
+  const total = products.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0
+  );
 
   return (
     <Card>
       <Card.Header className="d-flex justify-content-between">
         <Card.Title>Products</Card.Title>
-        <Card.Title>Total: {total}</Card.Title>
+        <Card.Title>
+          Total: {GBP_SYMBOL} {formatCurrency(total)}
+        </Card.Title>
       </Card.Header>
       <Card.Body>
         <DataTable

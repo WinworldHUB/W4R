@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col, Card } from "react-bootstrap";
 
 import Slider from "../slider";
@@ -6,12 +6,11 @@ import AddMemberSlide from "./add-member-slide";
 import AddProductSlide from "./add-product-slide";
 import useOrder from "../../hooks/useOrder";
 import AddPackagingSlide from "./add-packaging-slide";
-import { CreateOrderSlides, DEFAULT_PACKAGINGS } from "../../constants";
+import { CreateOrderSlides, DEFAULT_PACKAGES } from "../../constants";
 import AddProductQuantitySlide from "./add-product-quantities-slide";
 import OrderPreviewSlide from "./order-preview-slide";
 import CannotProceed from "./caanot-proceed";
-import { Product } from "../../../../awsApis";
-import { Member } from "../../../../awsApis";
+import { Member, Product } from "../../awsApis";
 const TOTAL_SLIDES = 5;
 const SLIDE_TITLES = [
   "STEP 1: Select packaging type",
@@ -116,7 +115,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({
               <Slider slideTo={slideIndex}>
                 <AddPackagingSlide
                   selectedPackagingId={order.packaging?.id}
-                  packagings={DEFAULT_PACKAGINGS}
+                  packagings={DEFAULT_PACKAGES}
                   onSelectPackaging={(packaging) => addPackaging(packaging)}
                 />
                 <AddMemberSlide
@@ -134,7 +133,9 @@ const CreateOrder: React.FC<CreateOrderProps> = ({
                   minQuantity={order.packaging?.minQuantity}
                   maxQuantity={order.packaging?.maxQuantity}
                   products={order.products}
-                  onProductUpdate={(product) => updateProduct(product)}
+                  onProductUpdate={(product, index) =>
+                    updateProduct(product, index)
+                  }
                 />
                 <OrderPreviewSlide order={order} />
                 <div className="bg-primary">Slide 5</div>

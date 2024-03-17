@@ -3,7 +3,8 @@ import PageLayout from "../lib/components/page-layout";
 import MembersDataTable from "../lib/components/member/members-data-table";
 import useApi from "../lib/hooks/useApi";
 import { MEMBERS_APIS } from "../lib/constants/api-constants";
-import { Member } from "../../awsApis";
+import { Member } from "../lib/awsApis";
+import PageLoading from "../lib/components/pageLoading";
 const Members = (pageProps: PageProps) => {
   const {
     data: members,
@@ -17,16 +18,20 @@ const Members = (pageProps: PageProps) => {
 
   return (
     <PageLayout {...pageProps}>
-      <MembersDataTable
-        data={members}
-        onDataImport={(data) => {
-          if (data && data.length > 0) {
-            addMembers(MEMBERS_APIS.IMPORT_MEMBERS_API, data).then(() => {
-              getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
-            })
-          }
-        }}
-      />
+      {members ? (
+        <MembersDataTable
+          data={members}
+          onDataImport={(data) => {
+            if (data && data.length > 0) {
+              addMembers(MEMBERS_APIS.IMPORT_MEMBERS_API, data).then(() => {
+                getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
+              });
+            }
+          }}
+        />
+      ) : (
+        <PageLoading />
+      )}
     </PageLayout>
   );
 };

@@ -1,16 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import PageLayout from "../lib/components/page-layout";
-import data from "../lib/data/orders.json";
 import OrdersDataTable from "../lib/components/order/orders-data-table";
 import CreateOrder from "../lib/components/order/create-order";
 import useApi from "../lib/hooks/useApi";
 import { MEMBERS_APIS, PRODUCTS_APIS } from "../lib/constants/api-constants";
-import { Product } from "../../awsApis";
-import { Member } from "../../awsApis";
+import { Product, Member, Order } from "../lib/awsApis";
+import PageLoading from "../lib/components/pageLoading";
 const Home: FC<PageProps> = (pageProps) => {
   const { data: members, getData: getAllMembers } = useApi<Member[]>();
   const { data: products, getData: getAllProducts } = useApi<Product[]>();
+  const { data: orders, getData: getAllOrders } = useApi<Order[]>();
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
@@ -20,6 +20,13 @@ const Home: FC<PageProps> = (pageProps) => {
     getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
     getAllProducts(PRODUCTS_APIS.GET_ALL_PRODUCTS_API);
   }, []);
+
+  if (!members || !products)
+    return (
+      <PageLayout {...pageProps}>
+        <PageLoading />
+      </PageLayout>
+    );
 
   return (
     <PageLayout {...pageProps}>
@@ -37,7 +44,7 @@ const Home: FC<PageProps> = (pageProps) => {
       </Modal>
 
       <OrdersDataTable
-        data={data}
+        data={orders}
         onRowClicked={() => {}}
         onCreateClick={handleShow}
       />

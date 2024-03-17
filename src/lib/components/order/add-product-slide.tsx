@@ -3,7 +3,7 @@ import { Card, Col, Container, ListGroup, Row, Image } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Product } from "../../../../awsApis";
+import { Product } from "../../awsApis";
 
 interface AddProductSlideProps {
   products: Product[];
@@ -31,6 +31,7 @@ const AddProductSlide: FC<AddProductSlideProps> = ({
               const product = selected[0] as Product;
 
               if (product) {
+                product.quantity = 1;
                 onSelectedProduct(product);
               }
             }}

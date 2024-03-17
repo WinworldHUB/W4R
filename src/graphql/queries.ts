@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../../awsApis";
+import * as APITypes from "../lib/awsApis";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -19,6 +19,7 @@ export const getOrder = /* GraphQL */ `query GetOrder($id: ID!) {
     status
     trackingStatus
     trackingNumber
+    packagingType
     createdAt
     updatedAt
     __typename
@@ -41,6 +42,7 @@ export const listOrders = /* GraphQL */ `query ListOrders(
       status
       trackingStatus
       trackingNumber
+      packagingType
       createdAt
       updatedAt
       __typename

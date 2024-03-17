@@ -18,6 +18,7 @@ import {
   KEY_UNPAID,
 } from "../../constants";
 import { isOrderContains } from "../../utils/order-utils";
+import { Order, OrderStatus } from "../../awsApis";
 
 const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
 
@@ -38,25 +39,20 @@ const columns: TableColumn<Order>[] = [
     sortable: true,
   },
   {
-    name: "Payment Date",
-    selector: (row) => row.paymentDate ?? "N/A",
-    sortable: true,
-  },
-  {
     name: "Status",
     selector: (row) => row.status,
     sortable: true,
     center: true,
     conditionalCellStyles: [
       {
-        when: (row) => row.status === "Paid",
+        when: (row) => row.status === OrderStatus.PAID,
         style: {
           backgroundColor: "rgba(63, 195, 128, 0.9)",
           color: "white",
         },
       },
       {
-        when: (row) => row.status === "Un-paid",
+        when: (row) => row.status === OrderStatus.UNPAID,
         style: {
           backgroundColor: "rgba(242, 38, 19, 0.9)",
           color: "white",
@@ -88,7 +84,7 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
       case KEY_UNPAID:
         return (data ?? []).filter(
           (order) =>
-            order.status === "Un-paid" &&
+            order.status === OrderStatus.UNPAID &&
             isOrderContains(order, filterText.trim())
         );
       case KEY_ALL:
@@ -118,7 +114,7 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
             >
               {filters.map((filterKey, index) => (
                 <Dropdown.Item
-                  key={index}
+                  key={`${filterKey}-${index}`}
                   onClick={() => setActiveKey(filters[index])}
                 >
                   {filterKey}

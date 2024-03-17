@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { dateFromString } from "../../utils/date-utils";
-import { Member } from "../../../../awsApis";
+import { Member } from "../../awsApis";
 interface AddMemberSlideProps {
   selectedMember: Member;
   members: Member[];

@@ -5,82 +5,101 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Member } from "../../awsApis.ts";
+import {
+  GridProps,
+  SwitchFieldProps,
+  TextFieldProps,
+} from "@aws-amplify/ui-react";
+import { Member } from "../lib/awsApis.js";
 export declare type EscapeHatchProps = {
-    [elementHierarchy: string]: Record<string, unknown>;
+  [elementHierarchy: string]: Record<string, unknown>;
 } | null;
 export declare type VariantValues = {
-    [key: string]: string;
+  [key: string]: string;
 };
 export declare type Variant = {
-    variantValues: VariantValues;
-    overrides: EscapeHatchProps;
+  variantValues: VariantValues;
+  overrides: EscapeHatchProps;
 };
 export declare type ValidationResponse = {
-    hasError: boolean;
-    errorMessage?: string;
+  hasError: boolean;
+  errorMessage?: string;
 };
-export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
+export declare type ValidationFunction<T> = (
+  value: T,
+  validationResponse: ValidationResponse
+) => ValidationResponse | Promise<ValidationResponse>;
 export declare type MemberUpdateFormInputValues = {
-    name?: string;
-    email?: string;
-    phone?: string;
-    active?: boolean;
-    province?: string;
-    city?: string;
-    zip?: string;
-    country?: string;
-    address1?: string;
-    address2?: string;
-    deliveryPerson?: string;
-    deliveryEmail?: string;
-    deliveryAddress1?: string;
-    deliveryAddress2?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  active?: boolean;
+  province?: string;
+  city?: string;
+  zip?: string;
+  country?: string;
+  address1?: string;
+  address2?: string;
+  deliveryPerson?: string;
+  deliveryEmail?: string;
+  deliveryAddress1?: string;
+  deliveryAddress2?: string;
 };
 export declare type MemberUpdateFormValidationValues = {
-    name?: ValidationFunction<string>;
-    email?: ValidationFunction<string>;
-    phone?: ValidationFunction<string>;
-    active?: ValidationFunction<boolean>;
-    province?: ValidationFunction<string>;
-    city?: ValidationFunction<string>;
-    zip?: ValidationFunction<string>;
-    country?: ValidationFunction<string>;
-    address1?: ValidationFunction<string>;
-    address2?: ValidationFunction<string>;
-    deliveryPerson?: ValidationFunction<string>;
-    deliveryEmail?: ValidationFunction<string>;
-    deliveryAddress1?: ValidationFunction<string>;
-    deliveryAddress2?: ValidationFunction<string>;
+  name?: ValidationFunction<string>;
+  email?: ValidationFunction<string>;
+  phone?: ValidationFunction<string>;
+  active?: ValidationFunction<boolean>;
+  province?: ValidationFunction<string>;
+  city?: ValidationFunction<string>;
+  zip?: ValidationFunction<string>;
+  country?: ValidationFunction<string>;
+  address1?: ValidationFunction<string>;
+  address2?: ValidationFunction<string>;
+  deliveryPerson?: ValidationFunction<string>;
+  deliveryEmail?: ValidationFunction<string>;
+  deliveryAddress1?: ValidationFunction<string>;
+  deliveryAddress2?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> &
+  React.DOMAttributes<HTMLDivElement>;
 export declare type MemberUpdateFormOverridesProps = {
-    MemberUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    email?: PrimitiveOverrideProps<TextFieldProps>;
-    phone?: PrimitiveOverrideProps<TextFieldProps>;
-    active?: PrimitiveOverrideProps<SwitchFieldProps>;
-    province?: PrimitiveOverrideProps<TextFieldProps>;
-    city?: PrimitiveOverrideProps<TextFieldProps>;
-    zip?: PrimitiveOverrideProps<TextFieldProps>;
-    country?: PrimitiveOverrideProps<TextFieldProps>;
-    address1?: PrimitiveOverrideProps<TextFieldProps>;
-    address2?: PrimitiveOverrideProps<TextFieldProps>;
-    deliveryPerson?: PrimitiveOverrideProps<TextFieldProps>;
-    deliveryEmail?: PrimitiveOverrideProps<TextFieldProps>;
-    deliveryAddress1?: PrimitiveOverrideProps<TextFieldProps>;
-    deliveryAddress2?: PrimitiveOverrideProps<TextFieldProps>;
+  MemberUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+  name?: PrimitiveOverrideProps<TextFieldProps>;
+  email?: PrimitiveOverrideProps<TextFieldProps>;
+  phone?: PrimitiveOverrideProps<TextFieldProps>;
+  active?: PrimitiveOverrideProps<SwitchFieldProps>;
+  province?: PrimitiveOverrideProps<TextFieldProps>;
+  city?: PrimitiveOverrideProps<TextFieldProps>;
+  zip?: PrimitiveOverrideProps<TextFieldProps>;
+  country?: PrimitiveOverrideProps<TextFieldProps>;
+  address1?: PrimitiveOverrideProps<TextFieldProps>;
+  address2?: PrimitiveOverrideProps<TextFieldProps>;
+  deliveryPerson?: PrimitiveOverrideProps<TextFieldProps>;
+  deliveryEmail?: PrimitiveOverrideProps<TextFieldProps>;
+  deliveryAddress1?: PrimitiveOverrideProps<TextFieldProps>;
+  deliveryAddress2?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type MemberUpdateFormProps = React.PropsWithChildren<{
+export declare type MemberUpdateFormProps = React.PropsWithChildren<
+  {
     overrides?: MemberUpdateFormOverridesProps | undefined | null;
-} & {
+  } & {
     id?: string;
     member?: Member;
-    onSubmit?: (fields: MemberUpdateFormInputValues) => MemberUpdateFormInputValues;
+    onSubmit?: (
+      fields: MemberUpdateFormInputValues
+    ) => MemberUpdateFormInputValues;
     onSuccess?: (fields: MemberUpdateFormInputValues) => void;
-    onError?: (fields: MemberUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: MemberUpdateFormInputValues) => MemberUpdateFormInputValues;
+    onError?: (
+      fields: MemberUpdateFormInputValues,
+      errorMessage: string
+    ) => void;
+    onChange?: (
+      fields: MemberUpdateFormInputValues
+    ) => MemberUpdateFormInputValues;
     onValidate?: MemberUpdateFormValidationValues;
-} & React.CSSProperties>;
-export default function MemberUpdateForm(props: MemberUpdateFormProps): React.ReactElement;
+  } & React.CSSProperties
+>;
+export default function MemberUpdateForm(
+  props: MemberUpdateFormProps
+): React.ReactElement;

@@ -3,7 +3,8 @@ import ProductsDataTable from "../lib/components/product/products-data-table";
 import useApi from "../lib/hooks/useApi";
 import { useEffect } from "react";
 import { PRODUCTS_APIS } from "../lib/constants/api-constants";
-import { Product } from "../../awsApis";
+import { Product } from "../lib/awsApis";
+import PageLoading from "../lib/components/pageLoading";
 
 const Products = (pageProps: PageProps) => {
   const { data: products, getData: getAllProducts } = useApi<Product[]>();
@@ -22,14 +23,18 @@ const Products = (pageProps: PageProps) => {
   return (
     <div>
       <PageLayout {...pageProps}>
-        <ProductsDataTable
-          data={products ?? []}
-          onDataImport={(products) => {
-            if (products && products.length > 0) {
-              addProducts(PRODUCTS_APIS.IMPORT_PRODUCTS_API, products);
-            }
-          }}
-        />
+        {products ? (
+          <ProductsDataTable
+            data={products ?? []}
+            onDataImport={(products) => {
+              if (products && products.length > 0) {
+                addProducts(PRODUCTS_APIS.IMPORT_PRODUCTS_API, products);
+              }
+            }}
+          />
+        ) : (
+          <PageLoading />
+        )}
       </PageLayout>
     </div>
   );

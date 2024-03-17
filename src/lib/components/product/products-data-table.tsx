@@ -15,7 +15,7 @@ import DataTable, {
 import { DATA_TABLE_DEFAULT_STYLE, KEY_ALL } from "../../constants";
 import { isProductContains } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
-import { Product } from "../../../../awsApis";
+import { Product } from "../../awsApis";
 
 const filters: string[] = [KEY_ALL];
 

@@ -5,7 +5,7 @@ import { isMemberContains } from "../../utils/member-utils";
 import { dateFromString } from "../../utils/date-utils";
 import CSVReader from "react-csv-reader";
 import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
-import { Member } from "../../../../awsApis";
+import { Member } from "../../awsApis";
 
 const MembersDataTable: FC<DataTableProps<Member>> = ({
   data,
@@ -39,10 +39,10 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
   }, []);
 
   const filteredData = useMemo(() => {
-    if (!Array.isArray(data)) return [];  
+    if (!Array.isArray(data)) return [];
     return data.filter((member) => isMemberContains(member, filterText.trim()));
   }, [data, filterText]);
-  
+
   return (
     <Card>
       <Card.Header>

@@ -1,13 +1,13 @@
 import { FC, useMemo, useState } from "react";
 import { Accordion, Col, Form, Row, Image, Container } from "react-bootstrap";
 import { getArrayFromTo } from "../../utils/array-utils";
-import { Product } from "../../../../awsApis";
+import { Product } from "../../awsApis";
 
 interface AddProductQuantitySlideProps {
   minQuantity: number;
   maxQuantity: number;
   products: Product[];
-  onProductUpdate: (product: Product) => void;
+  onProductUpdate: (product: Product, index: number) => void;
 }
 
 const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
@@ -29,15 +29,17 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
         onSelect={(activeEventKey) => {
           if (activeEventKey) {
             setSelectedProduct(
-              products.filter((product) => product.id === activeEventKey)[0]
+              products.filter(
+                (product, index) => product.id + `${index}` === activeEventKey
+              )[0]
             );
           }
         }}
         defaultActiveKey={selectedProduct?.id}
         alwaysOpen={false}
       >
-        {products.map((product) => (
-          <Accordion.Item eventKey={product.id} key={product.id}>
+        {products.map((product, index) => (
+          <Accordion.Item eventKey={product.id + `${index}`} key={product.id}>
             <Accordion.Header>
               <div className="w-50">
                 <Image
@@ -45,6 +47,7 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                   src={product["featuredImage"]}
                   width="32px"
                   loading="lazy"
+                  className="remove-bg"
                 />
                 &nbsp;{product.title}
               </div>
@@ -71,10 +74,13 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                         ...selectedProduct,
                         size: variants[parseInt(e.target.value)].size,
                       });
-                      onProductUpdate({
-                        ...selectedProduct,
-                        size: variants[parseInt(e.target.value)].size,
-                      });
+                      onProductUpdate(
+                        {
+                          ...selectedProduct,
+                          size: variants[parseInt(e.target.value)].size,
+                        },
+                        index
+                      );
                     }}
                   >
                     {variants.map((variant, vIndex) => (
@@ -102,10 +108,13 @@ const AddProductQuantitySlide: FC<AddProductQuantitySlideProps> = ({
                         ...selectedProduct,
                         quantity: parseInt(e.target.value),
                       });
-                      onProductUpdate({
-                        ...selectedProduct,
-                        quantity: parseInt(e.target.value),
-                      });
+                      onProductUpdate(
+                        {
+                          ...selectedProduct,
+                          quantity: parseInt(e.target.value),
+                        },
+                        index
+                      );
                     }}
                   >
                     {getArrayFromTo(1, maxQuantity).map((quantity) => (

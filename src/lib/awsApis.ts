@@ -12,6 +12,7 @@ export type CreateOrderInput = {
   status: OrderStatus,
   trackingStatus?: string | null,
   trackingNumber?: string | null,
+  packagingType: PackagingType,
 };
 
 export enum OrderStatus {
@@ -19,6 +20,12 @@ export enum OrderStatus {
   PAID = "PAID",
   PROCESSING = "PROCESSING",
   DONE = "DONE",
+}
+
+
+export enum PackagingType {
+  BOX_PACK = "BOX_PACK",
+  FLAT_PACK = "FLAT_PACK",
 }
 
 
@@ -31,6 +38,7 @@ export type ModelOrderConditionInput = {
   status?: ModelOrderStatusInput | null,
   trackingStatus?: ModelStringInput | null,
   trackingNumber?: ModelStringInput | null,
+  packagingType?: ModelPackagingTypeInput | null,
   and?: Array< ModelOrderConditionInput | null > | null,
   or?: Array< ModelOrderConditionInput | null > | null,
   not?: ModelOrderConditionInput | null,
@@ -93,6 +101,11 @@ export type ModelOrderStatusInput = {
   ne?: OrderStatus | null,
 };
 
+export type ModelPackagingTypeInput = {
+  eq?: PackagingType | null,
+  ne?: PackagingType | null,
+};
+
 export type Order = {
   __typename: "Order",
   id: string,
@@ -104,6 +117,7 @@ export type Order = {
   status: OrderStatus,
   trackingStatus?: string | null,
   trackingNumber?: string | null,
+  packagingType: PackagingType,
   createdAt: string,
   updatedAt: string,
 };
@@ -118,6 +132,7 @@ export type UpdateOrderInput = {
   status?: OrderStatus | null,
   trackingStatus?: string | null,
   trackingNumber?: string | null,
+  packagingType?: PackagingType | null,
 };
 
 export type DeleteOrderInput = {
@@ -307,6 +322,7 @@ export type ModelOrderFilterInput = {
   status?: ModelOrderStatusInput | null,
   trackingStatus?: ModelStringInput | null,
   trackingNumber?: ModelStringInput | null,
+  packagingType?: ModelPackagingTypeInput | null,
   and?: Array< ModelOrderFilterInput | null > | null,
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
@@ -396,6 +412,7 @@ export type ModelSubscriptionOrderFilterInput = {
   status?: ModelSubscriptionStringInput | null,
   trackingStatus?: ModelSubscriptionStringInput | null,
   trackingNumber?: ModelSubscriptionStringInput | null,
+  packagingType?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
 };
@@ -514,6 +531,7 @@ export type CreateOrderMutation = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -536,6 +554,7 @@ export type UpdateOrderMutation = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -558,6 +577,7 @@ export type DeleteOrderMutation = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -741,6 +761,7 @@ export type GetOrderQuery = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -766,6 +787,7 @@ export type ListOrdersQuery = {
       status: OrderStatus,
       trackingStatus?: string | null,
       trackingNumber?: string | null,
+      packagingType: PackagingType,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -905,6 +927,7 @@ export type OnCreateOrderSubscription = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -926,6 +949,7 @@ export type OnUpdateOrderSubscription = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -947,6 +971,7 @@ export type OnDeleteOrderSubscription = {
     status: OrderStatus,
     trackingStatus?: string | null,
     trackingNumber?: string | null,
+    packagingType: PackagingType,
     createdAt: string,
     updatedAt: string,
   } | null,
