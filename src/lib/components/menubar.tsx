@@ -14,7 +14,7 @@ interface MenuBarProps {
 const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
   const [currentMenuId, setCurrentMenuId] = useState<number>(0);
   const { appState } = useContext(AppContext);
-  const { signOutUser } = useAuthentication();
+  const { signOutUser, username } = useAuthentication();
 
   useEffect(() => {
     setCurrentMenuId(selectedItemId);
@@ -52,7 +52,7 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
               <Nav.Link href="/" onClick={signOutUser}>
                 Logout{" "}
                 <strong className="text-white">
-                  <em>Mark Otto</em>
+                  <em>{username ?? "user"}</em>
                 </strong>
               </Nav.Link>
             </Nav>

@@ -53,12 +53,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={PageRoutes.Login}
-          element={
-            <Home menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
-          }
-        />
+        <Route path={PageRoutes.Login} element={<SignIn />} />
         <Route
           path={PageRoutes.Home}
           element={

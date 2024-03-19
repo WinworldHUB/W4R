@@ -18,6 +18,7 @@ export const PRODUCTS_APIS = {
 
 export const MEMBERS_APIS = {
   GET_ALL_MEMBERS_API: "/members",
+  GET_MEMBER_BY_EMAIL_API: "/members",
   ADD_MEMBER_API: "/members",
   IMPORT_MEMBERS_API: "/members/imports",
 };

@@ -8,6 +8,9 @@ import {
   signIn,
   signOut,
 } from "aws-amplify/auth";
+import useApi from "./useApi";
+import { Member } from "../awsApis";
+import { MEMBERS_APIS } from "../constants/api-constants";
 
 Amplify.configure(config);
 
@@ -16,6 +19,7 @@ interface UseAuthenticationState {
   accessToken: string;
   refreshToken: string;
   isUserSignedIn: boolean;
+  username: string;
   signInUser: (credentials: Credentials) => void;
   signOutUser: VoidFunction;
 }
@@ -26,6 +30,14 @@ const useAuthentication = (): UseAuthenticationState => {
   const [refreshToken, setRefreshToken] = useState<string>(null);
   const [error, setError] = useState<string>(null);
   const [isSignInDone, setIsSignInDone] = useState<boolean>(false);
+  const { data: memberDetails, getData: getMemberByEmail } = useApi<Member>();
+  const [username, setUsername] = useState<string>(null);
+
+  useEffect(() => {
+    if (memberDetails) {
+      setUsername(memberDetails.name);
+    }
+  }, [memberDetails]);
 
   const getUserData = (ignoreError: boolean) => {
     getCurrentUser()
@@ -66,6 +78,10 @@ const useAuthentication = (): UseAuthenticationState => {
       .then((value) => {
         setIsSignInDone(value.isSignedIn);
 
+        getMemberByEmail(
+          `${MEMBERS_APIS.GET_MEMBER_BY_EMAIL_API}/${credentials.email}`
+        );
+
         if (value.isSignedIn) {
           setError(null);
         } else {
@@ -95,6 +111,7 @@ const useAuthentication = (): UseAuthenticationState => {
     refreshToken,
     isUserSignedIn: signedInUser !== null,
     error,
+    username,
     signInUser,
     signOutUser,
   };
