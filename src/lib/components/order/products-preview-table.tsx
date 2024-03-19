@@ -7,6 +7,7 @@ import { formatCurrency } from "../../utils/utils";
 
 interface ProductsPreviewTableProps {
   products: Product[];
+  orderValue: number;
 }
 
 const columns: TableColumn<Product>[] = [
@@ -40,22 +41,20 @@ const columns: TableColumn<Product>[] = [
   {
     maxWidth: "100px",
     name: "Price",
-    selector: (row) => `${GBP_SYMBOL} ${formatCurrency(row.price)}`,
+    selector: (row) => `${GBP_SYMBOL} ${formatCurrency(row.price.toFixed(2))}`,
   },
 ];
 
-const ProductsPreviewTable: FC<ProductsPreviewTableProps> = ({ products }) => {
-  const total = products.reduce(
-    (total, product) => total + product.price * product.quantity,
-    0
-  );
-
+const ProductsPreviewTable: FC<ProductsPreviewTableProps> = ({
+  products,
+  orderValue,
+}) => {
   return (
     <Card>
       <Card.Header className="d-flex justify-content-between">
         <Card.Title>Products</Card.Title>
         <Card.Title>
-          Total: {GBP_SYMBOL} {formatCurrency(total)}
+          Total: {GBP_SYMBOL} {formatCurrency(orderValue.toFixed(2))}
         </Card.Title>
       </Card.Header>
       <Card.Body>

@@ -3,6 +3,7 @@ export const DEFAULT_POST_API_HEADER = {
   "Content-Type": "application/json",
 };
 export const API_BASE_URL = "https://main.d20i40zf49k8k8.amplifyapp.com";
+//export const API_BASE_URL = "http://localhost:3000";
 
 export const TEST_APIS = {
   GET_API: "https://reqres.in/api/users?page=2",
@@ -19,6 +20,12 @@ export const MEMBERS_APIS = {
   GET_ALL_MEMBERS_API: "/members",
   ADD_MEMBER_API: "/members",
   IMPORT_MEMBERS_API: "/members/imports",
+};
+
+export const ORDERS_APIS = {
+  GET_ALL_ORDERS_API: "/orders",
+  ADD_ORDER_API: "/orders",
+  UPDATE_ORDER_API: "/orders",
 };
 
 export const COGNITO_ERROR_CODE = [

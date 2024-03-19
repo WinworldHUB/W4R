@@ -3,17 +3,8 @@ import { useEffect, useState } from "react";
 
 import { OrderVM } from "../vms/order";
 import { Member, OrderStatus, PackagingType, Product } from "../awsApis";
-const DEFAULT_ORDER: OrderVM = {
-  orderDate: DateTime.now().toString(),
-  orderValue: 0,
-  status: OrderStatus.UNPAID,
-  products: [],
-  orderNumber: "",
-  deliveryDetails: "",
-  packagingType: PackagingType.BOX_PACK,
-  member: null,
-  packaging: null,
-};
+import { toAWSDateFormat } from "../utils/date-utils";
+import { generateOrderNumber } from "../utils/order-utils";
 
 interface OrderState {
   order: OrderVM;
@@ -22,9 +13,24 @@ interface OrderState {
   addProduct: (product: Product) => void;
   removeProduct: (productId: string) => void;
   updateProduct: (product: Product, index: number) => void;
+  updateDeliveryDetails: (deliveryDetails: OrderDeliveryDetails) => void;
+  updateOrderNumber: (orderNumber: string) => void;
+  updateOrderValue: (orderValue: number) => void;
 }
 
-const useOrder = (): OrderState => {
+const useNewOrder = (totalOrders: number): OrderState => {
+  const DEFAULT_ORDER: OrderVM = {
+    orderDate: toAWSDateFormat(DateTime.now()),
+    orderValue: 0,
+    status: OrderStatus.UNPAID,
+    products: [],
+    orderNumber: generateOrderNumber(totalOrders),
+    deliveryDetails: "",
+    packagingType: PackagingType.BOX_PACK,
+    member: null,
+    packaging: null,
+  };
+
   const [order, setOrder] = useState<OrderVM>(DEFAULT_ORDER);
   const [products, setProducts] = useState<Product[]>(order.products);
 
@@ -53,6 +59,15 @@ const useOrder = (): OrderState => {
       ),
     ]);
 
+  const updateDeliveryDetails = (deliveryDetails: OrderDeliveryDetails) =>
+    setOrder({ ...order, deliveryDetails: JSON.stringify(deliveryDetails) });
+
+  const updateOrderNumber = (orderNumber: string) =>
+    setOrder({ ...order, orderNumber: orderNumber });
+
+  const updateOrderValue = (orderValue: number) =>
+    setOrder({ ...order, orderValue: orderValue });
+
   return {
     order,
     addPackaging,
@@ -60,7 +75,10 @@ const useOrder = (): OrderState => {
     addProduct,
     removeProduct,
     updateProduct,
+    updateDeliveryDetails,
+    updateOrderNumber,
+    updateOrderValue,
   };
 };
 
-export default useOrder;
+export default useNewOrder;

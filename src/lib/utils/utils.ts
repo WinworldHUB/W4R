@@ -1,2 +1,2 @@
-export const formatCurrency = (x: number): string =>
-  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const formatCurrency = (x: string): string =>
+  x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");

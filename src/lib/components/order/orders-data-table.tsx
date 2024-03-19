@@ -15,22 +15,24 @@ import {
   DATA_TABLE_DEFAULT_STYLE,
   KEY_ALL,
   KEY_LATEST,
+  KEY_PAID,
+  KEY_PROCESSING,
   KEY_UNPAID,
 } from "../../constants";
 import { isOrderContains } from "../../utils/order-utils";
 import { Order, OrderStatus } from "../../awsApis";
 
-const filters: string[] = [KEY_LATEST, KEY_UNPAID, KEY_ALL];
+const filters: string[] = [KEY_UNPAID, KEY_PAID, KEY_PROCESSING, KEY_ALL];
 
 const columns: TableColumn<Order>[] = [
   {
     name: "Order#",
-    selector: (row) => row.id,
+    selector: (row) => row.orderNumber,
     sortable: true,
   },
   {
     name: "Order Value",
-    selector: (row) => row.orderValue,
+    selector: (row) => row.orderValue.toFixed(2),
     sortable: true,
   },
   {
@@ -45,9 +47,16 @@ const columns: TableColumn<Order>[] = [
     center: true,
     conditionalCellStyles: [
       {
-        when: (row) => row.status === OrderStatus.PAID,
+        when: (row) => row.status === OrderStatus.DONE,
         style: {
           backgroundColor: "rgba(63, 195, 128, 0.9)",
+          color: "white",
+        },
+      },
+      {
+        when: (row) => row.status === OrderStatus.CANCELLED,
+        style: {
+          backgroundColor: "rgba(200, 200, 200, 0.9)",
           color: "white",
         },
       },
@@ -84,9 +93,24 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
       case KEY_UNPAID:
         return (data ?? []).filter(
           (order) =>
-            order.status === OrderStatus.UNPAID &&
+            order?.status === OrderStatus.UNPAID &&
             isOrderContains(order, filterText.trim())
         );
+
+      case KEY_PAID:
+        return (data ?? []).filter(
+          (order) =>
+            order?.status === OrderStatus.PAID &&
+            isOrderContains(order, filterText.trim())
+        );
+
+      case KEY_PROCESSING:
+        return (data ?? []).filter(
+          (order) =>
+            order?.status === OrderStatus.PROCESSING &&
+            isOrderContains(order, filterText.trim())
+        );
+
       case KEY_ALL:
         return (data ?? []).filter((order) =>
           isOrderContains(order, filterText.trim())

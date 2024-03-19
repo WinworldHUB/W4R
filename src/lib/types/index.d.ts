@@ -31,6 +31,7 @@ type MenuItem = {
 };
 
 type OrderDeliveryDetails = {
+  memberName: string;
   memberPhone: string;
   memberEmail: string;
   deliverTo: string;

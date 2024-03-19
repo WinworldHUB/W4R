@@ -1,28 +1,79 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import ProductsPreviewTable from "./products-preview-table";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import { OrderVM } from "../../vms/order";
+import {
+  generateOrderNumber,
+  getDeliveryDetails,
+} from "../../utils/order-utils";
+import { EMPTY_STRING } from "../../constants";
 
 interface OrderPreviewSlideProps {
   order: OrderVM;
+  onReady: (isReady: boolean) => void;
+  onUpdate: (deliveryDetails: OrderDeliveryDetails) => void;
+  onOrderNumberUpdate: (orderNumber: string) => void;
+  onOrderValueUpdate: (orderValue: number) => void;
+  totalOrders: number;
 }
 
-const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({ order }) => {
-  const [deliveryDetails, setDeliveryDetails] = useState<OrderDeliveryDetails>({
-    memberPhone: order.member?.phone,
-    memberEmail: order.member?.email,
-    deliverAt: order.member?.deliveryAddress1,
-    deliverTo: order.member?.deliveryPerson,
-  });
+const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
+  order,
+  onReady,
+  onUpdate,
+  onOrderNumberUpdate,
+  onOrderValueUpdate,
+  totalOrders,
+}) => {
+  const [deliveryDetails, setDeliveryDetails] = useState<OrderDeliveryDetails>(
+    getDeliveryDetails(order)
+  );
+  const [orderNumber, setOrderNumber] = useState<string>(
+    order.orderNumber === EMPTY_STRING
+      ? generateOrderNumber(totalOrders)
+      : order.orderNumber
+  );
+
+  useEffect(() => {
+    onReady(
+      deliveryDetails.memberName !== EMPTY_STRING &&
+        deliveryDetails.deliverAt !== EMPTY_STRING &&
+        deliveryDetails.memberPhone !== EMPTY_STRING
+    );
+    onUpdate(deliveryDetails);
+  }, [deliveryDetails]);
+
+  const orderValue = useMemo(
+    () =>
+      order.products.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
+      ),
+    [order]
+  );
+
+  onOrderValueUpdate(orderValue);
+
   return (
     <Row>
       <Col xs="6">
         <Row>
           <Col xs={4}>
+            <strong>Order #:</strong>
+          </Col>
+          <Col xs={8}>
+            <Form.Control
+              type="text"
+              placeholder="Order #"
+              value={orderNumber}
+              onChange={(e) => onOrderNumberUpdate(e.target.value)}
+            />
+          </Col>
+          <Col xs={4}>
             <strong>Order in name of:</strong>
           </Col>
           <Col xs={8}>
-            <p>{order.member?.name}</p>
+            <p>{deliveryDetails.memberName}</p>
           </Col>
           <Col xs={4}>
             <strong>Deliver To:</strong>
@@ -41,7 +92,7 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({ order }) => {
         <Form>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={4}>
-              Email
+              Email:
             </Form.Label>
             <Col sm={8}>
               <Form.Control
@@ -59,7 +110,7 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({ order }) => {
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalPhone">
             <Form.Label column sm={4}>
-              Phone
+              Phone:
             </Form.Label>
             <Col sm={8}>
               <Form.Control
@@ -114,7 +165,10 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({ order }) => {
         </Form>
       </Col>
       <Col xs="12" className="pt-3">
-        <ProductsPreviewTable products={order.products ?? []} />
+        <ProductsPreviewTable
+          products={order.products ?? []}
+          orderValue={orderValue}
+        />
       </Col>
       <Col xs="12" className="pt-3">
         <Card>

@@ -41,12 +41,6 @@ export const APP_MENU: MenuItem[] = [
     icon: <MdOutlineProductionQuantityLimits />,
     route: "/products",
   },
-  {
-    id: 5,
-    label: "Test",
-    icon: <FaBug />,
-    route: "/test",
-  },
 ];
 
 function App() {
