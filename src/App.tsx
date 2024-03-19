@@ -46,42 +46,71 @@ export const APP_MENU: MenuItem[] = [
 function App() {
   const { appState } = useContext(AppContext);
 
-  if (!appState.isUserLoggedIn) {
-    return <SignIn />;
-  }
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={PageRoutes.Login} element={<SignIn />} />
+        <Route
+          path={PageRoutes.Login}
+          element={
+            appState?.isUserLoggedIn ? (
+              <Home
+                menuItems={APP_MENU}
+                selectedMenuId={APP_MENU[0].id}
+                username={appState.username}
+              />
+            ) : (
+              <SignIn />
+            )
+          }
+        />
         <Route
           path={PageRoutes.Home}
           element={
-            <Home menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
+            <Home
+              menuItems={APP_MENU}
+              selectedMenuId={APP_MENU[0].id}
+              username={appState.username}
+            />
           }
         />
         <Route
           path={PageRoutes.Invoices}
           element={
-            <Invoices menuItems={APP_MENU} selectedMenuId={APP_MENU[1].id} />
+            <Invoices
+              menuItems={APP_MENU}
+              selectedMenuId={APP_MENU[1].id}
+              username={appState.username}
+            />
           }
         />
         <Route
           path={PageRoutes.Members}
           element={
-            <Members menuItems={APP_MENU} selectedMenuId={APP_MENU[2].id} />
+            <Members
+              menuItems={APP_MENU}
+              selectedMenuId={APP_MENU[2].id}
+              username={appState.username}
+            />
           }
         />
         <Route
           path={PageRoutes.Products}
           element={
-            <Products menuItems={APP_MENU} selectedMenuId={APP_MENU[3].id} />
+            <Products
+              menuItems={APP_MENU}
+              selectedMenuId={APP_MENU[3].id}
+              username={appState.username}
+            />
           }
         />
         <Route
           path={PageRoutes.Test}
           element={
-            <TestPage menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
+            <TestPage
+              menuItems={APP_MENU}
+              selectedMenuId={APP_MENU[0].id}
+              username={appState.username}
+            />
           }
         />
       </Routes>

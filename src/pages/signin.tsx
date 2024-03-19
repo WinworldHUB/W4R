@@ -10,13 +10,22 @@ const SignIn = () => {
     isUserSignedIn,
     signInUser,
     signOutUser,
+    username,
   } = useAuthentication();
 
   const { appState, updateAppState } = useContext(AppContext);
 
   useEffect(() => {
-    updateAppState({ ...appState, isUserLoggedIn: isUserSignedIn });
-  }, [isUserSignedIn]);
+    updateAppState({
+      ...appState,
+      isUserLoggedIn: isUserSignedIn,
+      username: username,
+    });
+
+    if (isUserSignedIn) {
+      window.location.reload();
+    }
+  }, [isUserSignedIn, username]);
 
   const [credentials, setCredentials] = useState<Credentials>({
     email: "",
@@ -24,7 +33,12 @@ const SignIn = () => {
   });
 
   return (
-    <PageLayout menuItems={[]} selectedMenuId={0} isShowSideMenu={false}>
+    <PageLayout
+      menuItems={[]}
+      selectedMenuId={0}
+      isShowSideMenu={false}
+      username=""
+    >
       <Row className="d-flex justify-content-center">
         <Col xs="12" sm="6" md="4">
           {!isUserSignedIn && (

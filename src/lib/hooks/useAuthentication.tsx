@@ -25,24 +25,16 @@ interface UseAuthenticationState {
 }
 
 const useAuthentication = (): UseAuthenticationState => {
-  const [signedInUser, setSignedInUser] = useState<AuthUser>(null);
   const [accessToken, setAccessToken] = useState<string>(null);
   const [refreshToken, setRefreshToken] = useState<string>(null);
   const [error, setError] = useState<string>(null);
-  const [isSignInDone, setIsSignInDone] = useState<boolean>(false);
-  const { data: memberDetails, getData: getMemberByEmail } = useApi<Member>();
+  const [isUserSignedIn, setIsSignInDone] = useState<boolean>(false);
+  const { getData: getMemberByEmail } = useApi<Member>();
   const [username, setUsername] = useState<string>(null);
-
-  useEffect(() => {
-    if (memberDetails) {
-      setUsername(memberDetails.name);
-    }
-  }, [memberDetails]);
 
   const getUserData = (ignoreError: boolean) => {
     getCurrentUser()
       .then((user) => {
-        setSignedInUser(user);
         fetchAuthSession()
           .then((session) => {
             setAccessToken(session.tokens?.accessToken.toString());
@@ -50,15 +42,15 @@ const useAuthentication = (): UseAuthenticationState => {
           })
           .catch((reason) => {
             if (!ignoreError) {
-              setSignedInUser(null);
               setError(reason.message);
+              setIsSignInDone(false);
             }
           });
       })
       .catch((reason) => {
         if (!ignoreError) {
-          setSignedInUser(null);
           setError(reason.message);
+          setIsSignInDone(false);
         }
       });
   };
@@ -68,40 +60,42 @@ const useAuthentication = (): UseAuthenticationState => {
   }, []);
 
   useEffect(() => {
-    if (isSignInDone) {
+    if (isUserSignedIn) {
       getUserData(false);
     }
-  }, [isSignInDone]);
+  }, [isUserSignedIn]);
 
   const signInUser = (credentials: Credentials) => {
     signIn({ username: credentials.email, password: credentials.password })
       .then((value) => {
-        setIsSignInDone(value.isSignedIn);
-
         getMemberByEmail(
           `${MEMBERS_APIS.GET_MEMBER_BY_EMAIL_API}/${credentials.email}`
-        );
+        ).then((member) => {
+          setUsername(member.name);
 
-        if (value.isSignedIn) {
-          setError(null);
-        } else {
-          setError(value.nextStep?.signInStep);
-        }
+          setIsSignInDone(value.isSignedIn);
+
+          if (value.isSignedIn) {
+            setError(null);
+          } else {
+            setError(value.nextStep?.signInStep);
+            setIsSignInDone(false);
+          }
+        });
       })
       .catch((reason) => {
-        setSignedInUser(null);
         setError(reason.message);
+        setIsSignInDone(false);
       });
   };
 
   const signOutUser = () => {
     signOut()
       .then(() => {
-        setSignedInUser(null);
         setError(null);
+        setIsSignInDone(true);
       })
       .catch((reason) => {
-        setSignedInUser(null);
         setError(reason.message);
       });
   };
@@ -109,7 +103,7 @@ const useAuthentication = (): UseAuthenticationState => {
   return {
     accessToken,
     refreshToken,
-    isUserSignedIn: signedInUser !== null,
+    isUserSignedIn,
     error,
     username,
     signInUser,

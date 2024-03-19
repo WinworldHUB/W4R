@@ -9,16 +9,27 @@ interface MenuBarProps {
   onClick?: (menuIndex: number) => void;
   menuItems: MenuItem[];
   selectedItemId: number;
+  username: string;
 }
 
-const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
+const MenuBar = ({
+  onClick,
+  menuItems,
+  selectedItemId,
+  username,
+}: MenuBarProps) => {
   const [currentMenuId, setCurrentMenuId] = useState<number>(0);
-  const { appState } = useContext(AppContext);
-  const { signOutUser, username } = useAuthentication();
+  const { appState, updateAppState } = useContext(AppContext);
+  const { signOutUser } = useAuthentication();
 
   useEffect(() => {
     setCurrentMenuId(selectedItemId);
   }, [selectedItemId]);
+
+  const handleLogout = () => {
+    signOutUser();
+    updateAppState({ ...appState, isUserLoggedIn: false });
+  };
 
   return (
     <Navbar
@@ -49,7 +60,7 @@ const MenuBar = ({ onClick, menuItems, selectedItemId }: MenuBarProps) => {
           </Nav>
           {appState?.isUserLoggedIn && (
             <Nav className="ms-auto">
-              <Nav.Link href="/" onClick={signOutUser}>
+              <Nav.Link href="/" onClick={handleLogout}>
                 Logout{" "}
                 <strong className="text-white">
                   <em>{username ?? "user"}</em>

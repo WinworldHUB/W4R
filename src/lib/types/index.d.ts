@@ -15,6 +15,7 @@ interface AppState {
 interface PageProps {
   selectedMenuId: number;
   menuItems: MenuItem[];
+  username: string;
 }
 
 interface DataTableProps<T> {
