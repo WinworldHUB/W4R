@@ -86,7 +86,7 @@ function App() {
         <Route
           path={PageRoutes.Test}
           element={
-            <TestPage menuItems={APP_MENU} selectedMenuId={APP_MENU[4].id} />
+            <TestPage menuItems={APP_MENU} selectedMenuId={APP_MENU[0].id} />
           }
         />
       </Routes>
