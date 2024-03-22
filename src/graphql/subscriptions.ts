@@ -20,6 +20,7 @@ export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: 
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename
@@ -41,6 +42,7 @@ export const onUpdateOrder = /* GraphQL */ `subscription OnUpdateOrder($filter: 
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename
@@ -62,6 +64,7 @@ export const onDeleteOrder = /* GraphQL */ `subscription OnDeleteOrder($filter: 
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename

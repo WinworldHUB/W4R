@@ -13,6 +13,7 @@ export type CreateOrderInput = {
   trackingStatus?: string | null,
   trackingNumber?: string | null,
   packagingType: PackagingType,
+  memberId?: string | null,
 };
 
 export enum OrderStatus {
@@ -40,6 +41,7 @@ export type ModelOrderConditionInput = {
   trackingStatus?: ModelStringInput | null,
   trackingNumber?: ModelStringInput | null,
   packagingType?: ModelPackagingTypeInput | null,
+  memberId?: ModelStringInput | null,
   and?: Array< ModelOrderConditionInput | null > | null,
   or?: Array< ModelOrderConditionInput | null > | null,
   not?: ModelOrderConditionInput | null,
@@ -119,6 +121,7 @@ export type Order = {
   trackingStatus?: string | null,
   trackingNumber?: string | null,
   packagingType: PackagingType,
+  memberId?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -134,6 +137,7 @@ export type UpdateOrderInput = {
   trackingStatus?: string | null,
   trackingNumber?: string | null,
   packagingType?: PackagingType | null,
+  memberId?: string | null,
 };
 
 export type DeleteOrderInput = {
@@ -324,6 +328,7 @@ export type ModelOrderFilterInput = {
   trackingStatus?: ModelStringInput | null,
   trackingNumber?: ModelStringInput | null,
   packagingType?: ModelPackagingTypeInput | null,
+  memberId?: ModelStringInput | null,
   and?: Array< ModelOrderFilterInput | null > | null,
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
@@ -414,6 +419,7 @@ export type ModelSubscriptionOrderFilterInput = {
   trackingStatus?: ModelSubscriptionStringInput | null,
   trackingNumber?: ModelSubscriptionStringInput | null,
   packagingType?: ModelSubscriptionStringInput | null,
+  memberId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
 };
@@ -533,6 +539,7 @@ export type CreateOrderMutation = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -556,6 +563,7 @@ export type UpdateOrderMutation = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -579,6 +587,7 @@ export type DeleteOrderMutation = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -763,6 +772,7 @@ export type GetOrderQuery = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -789,6 +799,7 @@ export type ListOrdersQuery = {
       trackingStatus?: string | null,
       trackingNumber?: string | null,
       packagingType: PackagingType,
+      memberId?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -929,6 +940,7 @@ export type OnCreateOrderSubscription = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -951,6 +963,7 @@ export type OnUpdateOrderSubscription = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -973,6 +986,7 @@ export type OnDeleteOrderSubscription = {
     trackingStatus?: string | null,
     trackingNumber?: string | null,
     packagingType: PackagingType,
+    memberId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

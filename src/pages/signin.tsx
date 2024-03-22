@@ -11,6 +11,8 @@ const SignIn = () => {
     signInUser,
     signOutUser,
     username,
+    accessToken,
+    refreshToken,
   } = useAuthentication();
 
   const { appState, updateAppState } = useContext(AppContext);
@@ -20,6 +22,8 @@ const SignIn = () => {
       ...appState,
       isUserLoggedIn: isUserSignedIn,
       username: username,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     });
 
     if (isUserSignedIn) {

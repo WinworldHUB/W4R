@@ -23,6 +23,7 @@ export const createOrder = /* GraphQL */ `mutation CreateOrder(
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename
@@ -47,6 +48,7 @@ export const updateOrder = /* GraphQL */ `mutation UpdateOrder(
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename
@@ -71,6 +73,7 @@ export const deleteOrder = /* GraphQL */ `mutation DeleteOrder(
     trackingStatus
     trackingNumber
     packagingType
+    memberId
     createdAt
     updatedAt
     __typename
