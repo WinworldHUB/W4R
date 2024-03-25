@@ -53,14 +53,14 @@ const useApi = <T,>(): APIState<T> => {
       });
       const data = await response.json();
       setData(data);
-
+  
       return Promise.resolve(data);
     } catch (error) {
       console.error(error);
-      Promise.reject(error);
+      return Promise.reject(error);
     }
   };
-
+  
   /**
    * API Post Method.
    * @param url: Url of the endpoint starting with '/'
