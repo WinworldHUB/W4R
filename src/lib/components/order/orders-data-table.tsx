@@ -84,39 +84,52 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
   const filteredData = useMemo(() => {
     switch (activeKey) {
       case KEY_LATEST:
-        return (data ?? []).filter(
-          (order) =>
-            order.orderDate ===
-              DateTime.now().toFormat(APP_CONVERSION_DATE_FORMAT) &&
-            isOrderContains(order, filterText.trim())
-        );
+        return Array.isArray(data)
+          ? data.filter(
+              (order) =>
+                order.orderDate ===
+                  DateTime.now().toFormat(APP_CONVERSION_DATE_FORMAT) &&
+                isOrderContains(order, filterText.trim())
+            )
+          : [];
       case KEY_UNPAID:
-        return (data ?? []).filter(
-          (order) =>
-            order?.status === OrderStatus.UNPAID &&
-            isOrderContains(order, filterText.trim())
-        );
-
+        return Array.isArray(data)
+          ? data.filter(
+              (order) =>
+                order?.status === OrderStatus.UNPAID &&
+                isOrderContains(order, filterText.trim())
+            )
+          : [];
+  
       case KEY_PAID:
-        return (data ?? []).filter(
-          (order) =>
-            order?.status === OrderStatus.PAID &&
-            isOrderContains(order, filterText.trim())
-        );
-
+        return Array.isArray(data)
+          ? data.filter(
+              (order) =>
+                order?.status === OrderStatus.PAID &&
+                isOrderContains(order, filterText.trim())
+            )
+          : [];
+  
       case KEY_PROCESSING:
-        return (data ?? []).filter(
-          (order) =>
-            order?.status === OrderStatus.PROCESSING &&
-            isOrderContains(order, filterText.trim())
-        );
-
+        return Array.isArray(data)
+          ? data.filter(
+              (order) =>
+                order?.status === OrderStatus.PROCESSING &&
+                isOrderContains(order, filterText.trim())
+            )
+          : [];
+  
       case KEY_ALL:
-        return (data ?? []).filter((order) =>
-          isOrderContains(order, filterText.trim())
-        );
+        return Array.isArray(data)
+          ? data.filter((order) =>
+              isOrderContains(order, filterText.trim())
+            )
+          : [];
+      default:
+        return [];
     }
   }, [data, activeKey, filterText]);
+  
   return (
     <Card>
       <Card.Header>
