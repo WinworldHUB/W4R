@@ -71,7 +71,7 @@ const useAuthentication = (): UseAuthenticationState => {
         getMemberByEmail(
           `${MEMBERS_APIS.GET_MEMBER_BY_EMAIL_API}/${credentials.email}`
         ).then((member) => {
-          setUsername(member.name);
+          setUsername(member.name ?? "User");
 
           setIsSignInDone(value.isSignedIn);
 
@@ -94,9 +94,10 @@ const useAuthentication = (): UseAuthenticationState => {
     signOut()
       .then(() => {
         setError(null);
-        setIsSignInDone(true);
+        setIsSignInDone(false);
       })
       .catch((reason) => {
+        setIsSignInDone(true);
         setError(reason.message);
       });
   };
