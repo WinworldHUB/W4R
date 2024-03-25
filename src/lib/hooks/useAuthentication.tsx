@@ -84,6 +84,7 @@ const useAuthentication = (): UseAuthenticationState => {
         });
       })
       .catch((reason) => {
+        signOutUser();
         setError(reason.message);
         setIsSignInDone(false);
       });
