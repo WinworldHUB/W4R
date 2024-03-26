@@ -8,6 +8,54 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateInvoice = /* GraphQL */ `subscription OnCreateInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
+  onCreateInvoice(filter: $filter) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateInvoiceSubscriptionVariables,
+  APITypes.OnCreateInvoiceSubscription
+>;
+export const onUpdateInvoice = /* GraphQL */ `subscription OnUpdateInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
+  onUpdateInvoice(filter: $filter) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateInvoiceSubscriptionVariables,
+  APITypes.OnUpdateInvoiceSubscription
+>;
+export const onDeleteInvoice = /* GraphQL */ `subscription OnDeleteInvoice($filter: ModelSubscriptionInvoiceFilterInput) {
+  onDeleteInvoice(filter: $filter) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteInvoiceSubscriptionVariables,
+  APITypes.OnDeleteInvoiceSubscription
+>;
 export const onCreateOrder = /* GraphQL */ `subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
   onCreateOrder(filter: $filter) {
     id

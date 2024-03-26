@@ -8,6 +8,63 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createInvoice = /* GraphQL */ `mutation CreateInvoice(
+  $input: CreateInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  createInvoice(input: $input, condition: $condition) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateInvoiceMutationVariables,
+  APITypes.CreateInvoiceMutation
+>;
+export const updateInvoice = /* GraphQL */ `mutation UpdateInvoice(
+  $input: UpdateInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  updateInvoice(input: $input, condition: $condition) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateInvoiceMutationVariables,
+  APITypes.UpdateInvoiceMutation
+>;
+export const deleteInvoice = /* GraphQL */ `mutation DeleteInvoice(
+  $input: DeleteInvoiceInput!
+  $condition: ModelInvoiceConditionInput
+) {
+  deleteInvoice(input: $input, condition: $condition) {
+    id
+    orderId
+    invoiceDate
+    paymentDate
+    memberId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteInvoiceMutationVariables,
+  APITypes.DeleteInvoiceMutation
+>;
 export const createOrder = /* GraphQL */ `mutation CreateOrder(
   $input: CreateOrderInput!
   $condition: ModelOrderConditionInput
