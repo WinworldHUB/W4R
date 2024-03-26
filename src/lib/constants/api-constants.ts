@@ -1,8 +1,15 @@
-export const DEFAULT_GET_API_HEADER = {};
-export const DEFAULT_POST_API_HEADER = {
-  "Content-Type": "application/json",
+export const DEFAULT_GET_API_HEADER = (accessToken: string) => {
+  return {
+    Authorization: `Bearer ${accessToken}`,
+  };
 };
-export const API_BASE_URL = "https://main.d20i40zf49k8k8.amplifyapp.com";
+export const DEFAULT_POST_API_HEADER = (accessToken: string) => {
+  return {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  };
+};
+export const API_BASE_URL = "https://apis.wholesale4resale.com";
 //export const API_BASE_URL = "http://localhost:3000";
 
 export const TEST_APIS = {

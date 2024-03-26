@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import config from "../../amplifyconfiguration.json";
 import { Amplify } from "aws-amplify";
 import {
-  AuthUser,
   fetchAuthSession,
   getCurrentUser,
   signIn,
@@ -19,7 +18,6 @@ interface UseAuthenticationState {
   accessToken: string;
   refreshToken: string;
   isUserSignedIn: boolean;
-  username: string;
   signInUser: (credentials: Credentials) => void;
   signOutUser: VoidFunction;
 }
@@ -28,9 +26,8 @@ const useAuthentication = (): UseAuthenticationState => {
   const [accessToken, setAccessToken] = useState<string>(null);
   const [refreshToken, setRefreshToken] = useState<string>(null);
   const [error, setError] = useState<string>(null);
-  const [isUserSignedIn, setIsSignInDone] = useState<boolean>(false);
+  const [isUserSignedIn, setIsUserSignedIn] = useState<boolean>(false);
   const { getData: getMemberByEmail } = useApi<Member>();
-  const [username, setUsername] = useState<string>(null);
 
   const getUserData = (ignoreError: boolean) => {
     getCurrentUser()
@@ -43,14 +40,14 @@ const useAuthentication = (): UseAuthenticationState => {
           .catch((reason) => {
             if (!ignoreError) {
               setError(reason.message);
-              setIsSignInDone(false);
+              setIsUserSignedIn(false);
             }
           });
       })
       .catch((reason) => {
         if (!ignoreError) {
           setError(reason.message);
-          setIsSignInDone(false);
+          setIsUserSignedIn(false);
         }
       });
   };
@@ -68,25 +65,19 @@ const useAuthentication = (): UseAuthenticationState => {
   const signInUser = (credentials: Credentials) => {
     signIn({ username: credentials.email, password: credentials.password })
       .then((value) => {
-        getMemberByEmail(
-          `${MEMBERS_APIS.GET_MEMBER_BY_EMAIL_API}/${credentials.email}`
-        ).then((member) => {
-          setUsername(member.name ?? "User");
+        setIsUserSignedIn(value.isSignedIn);
 
-          setIsSignInDone(value.isSignedIn);
-
-          if (value.isSignedIn) {
-            setError(null);
-          } else {
-            setError(value.nextStep?.signInStep);
-            setIsSignInDone(false);
-          }
-        });
+        if (value.isSignedIn) {
+          setError(null);
+        } else {
+          setError(value.nextStep?.signInStep);
+          setIsUserSignedIn(false);
+        }
       })
       .catch((reason) => {
         signOutUser();
         setError(reason.message);
-        setIsSignInDone(false);
+        setIsUserSignedIn(false);
       });
   };
 
@@ -94,10 +85,10 @@ const useAuthentication = (): UseAuthenticationState => {
     signOut()
       .then(() => {
         setError(null);
-        setIsSignInDone(false);
+        setIsUserSignedIn(false);
       })
       .catch((reason) => {
-        setIsSignInDone(true);
+        setIsUserSignedIn(true);
         setError(reason.message);
       });
   };
@@ -107,7 +98,6 @@ const useAuthentication = (): UseAuthenticationState => {
     refreshToken,
     isUserSignedIn,
     error,
-    username,
     signInUser,
     signOutUser,
   };

@@ -1,6 +1,7 @@
 interface UseLocalStorageState<T> {
   setValue: (key: string, value: T) => void;
   getValue: (key: string) => T;
+  clearAll: VoidFunction;
 }
 
 const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
@@ -13,9 +14,14 @@ const useLocalStorage = <T,>(): UseLocalStorageState<T> => {
     return value ? (JSON.parse(value) as T) : null;
   };
 
+  const clearAll = () => {
+    localStorage.clear();
+  };
+
   return {
     getValue,
     setValue,
+    clearAll,
   };
 };
 

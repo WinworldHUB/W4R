@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import {
   API_BASE_URL,
   DEFAULT_GET_API_HEADER,
   DEFAULT_POST_API_HEADER,
 } from "../constants/api-constants";
+import { AppContext } from "../contexts/appcontext";
 
 interface APIState<T> {
   data: T;
@@ -39,6 +40,7 @@ interface APIState<T> {
 
 const useApi = <T,>(): APIState<T> => {
   const [data, setData] = useState<T>();
+  const { appState } = useContext(AppContext);
 
   /**
    * API Get method.
@@ -49,7 +51,7 @@ const useApi = <T,>(): APIState<T> => {
     try {
       const response = await fetch(`${API_BASE_URL}${url}`, {
         method: "GET",
-        headers: DEFAULT_GET_API_HEADER,
+        headers: DEFAULT_GET_API_HEADER(appState.accessToken),
       });
       const data = await response.json();
       setData(data);
@@ -72,7 +74,7 @@ const useApi = <T,>(): APIState<T> => {
       const response = await fetch(`${API_BASE_URL}${url}`, {
         method: "POST",
         body: JSON.stringify(body),
-        headers: DEFAULT_POST_API_HEADER,
+        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
       });
       const data = await response.json();
       setData(data);
@@ -95,7 +97,7 @@ const useApi = <T,>(): APIState<T> => {
       const response = await fetch(`${API_BASE_URL}${url}`, {
         method: "PUT",
         body: JSON.stringify(body),
-        headers: DEFAULT_POST_API_HEADER,
+        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
       });
       const data = await response.json();
       setData(data);
@@ -118,7 +120,7 @@ const useApi = <T,>(): APIState<T> => {
     try {
       const response = await fetch(`${API_BASE_URL}${url}`, {
         method: "DELETE",
-        headers: DEFAULT_POST_API_HEADER,
+        headers: DEFAULT_POST_API_HEADER(appState.accessToken),
       });
       const data = await response.json();
       setData(data);
