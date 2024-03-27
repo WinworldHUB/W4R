@@ -7,9 +7,6 @@ import {
   signIn,
   signOut,
 } from "aws-amplify/auth";
-import useApi from "./useApi";
-import { Member } from "../awsApis";
-import { MEMBERS_APIS } from "../constants/api-constants";
 
 Amplify.configure(config);
 
@@ -27,7 +24,6 @@ const useAuthentication = (): UseAuthenticationState => {
   const [refreshToken, setRefreshToken] = useState<string>(null);
   const [error, setError] = useState<string>(null);
   const [isUserSignedIn, setIsUserSignedIn] = useState<boolean>(false);
-  const { getData: getMemberByEmail } = useApi<Member>();
 
   const getUserData = (ignoreError: boolean) => {
     getCurrentUser()
