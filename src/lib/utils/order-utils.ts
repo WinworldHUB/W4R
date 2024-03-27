@@ -32,6 +32,7 @@ export const trimOrder = (order: Order, isTrimId: boolean = false): unknown => {
       status: order.status,
       trackingNumber: order.trackingNumber,
       trackingStatus: order.trackingStatus,
+      memberId: order.memberId,
     };
   }
 
@@ -45,6 +46,7 @@ export const trimOrder = (order: Order, isTrimId: boolean = false): unknown => {
     status: order.status,
     trackingNumber: order.trackingNumber,
     trackingStatus: order.trackingStatus,
+    memberId: order.memberId,
   };
 };
 

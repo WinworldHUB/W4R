@@ -126,6 +126,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({
           createdAt: null,
           updatedAt: null,
           id: null,
+          memberId: order.member.id,
         });
         break;
 
