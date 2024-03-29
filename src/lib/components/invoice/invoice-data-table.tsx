@@ -9,7 +9,7 @@ import {
 import { DateTime } from "luxon";
 import { Invoice } from "../../awsApis";
 
-const filters: string[] = [KEY_LATEST, KEY_ALL];
+const filters: string[] = [ KEY_ALL];
 
 const columns: TableColumn<Invoice>[] = [
   {
