@@ -36,9 +36,8 @@ const columns: TableColumn<Invoice>[] = [
     sortable: true,
   },
   {
-    name: "Invoice Date",
-    selector: (row) =>
-      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+    name: "Member",
+    selector: (row) => row.memberId,
     sortable: true,
   },
   {
@@ -95,7 +94,7 @@ const InvoiceDataTable = ({
           <Col>
             <Card.Title>Orders</Card.Title>
           </Col>
-          <Col lg="3">
+          <Col lg="5">
             <Form.Control
               type="text"
               placeholder="Search"
@@ -106,6 +105,7 @@ const InvoiceDataTable = ({
             <DropdownButton
               id="dropdown-basic-button"
               title={`Filters (${activeKey})`}
+              style={{ width: "200px" }}
             >
               {filters.map((filterKey, index) => (
                 <Dropdown.Item
