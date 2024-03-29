@@ -42,7 +42,7 @@ const SignIn = () => {
     if (isUserSignedIn && userDetails) {
       window.location.reload();
     }
-  }, [isUserSignedIn, userDetails]);
+  }, [isUserSignedIn, accessToken, userDetails]);
 
   return (
     <PageLayout
