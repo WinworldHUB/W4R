@@ -2,7 +2,8 @@ import { FC, useState } from "react";
 import { Order, OrderStatus, Product } from "../../awsApis";
 import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import ProductsPreviewTable from "./products-preview-table";
-import { DEFAULT_PACKAGES } from "../../constants";
+import { DEFAULT_PACKAGES, TIMELINE_STATUSES } from "../../constants";
+import HorizontalTimeline from "../horizontal-timeline";
 
 interface EditOrderProps {
   order: Order;
@@ -135,14 +136,15 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
       {currentOrder.status === OrderStatus.PROCESSING && (
         <Col xs="12" className="pt-3">
           <Card>
-            <Card.Header>
+            <Card.Header className="d-flex justify-content-between align-items-center">
               <Card.Title>Order tracking status</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <p className={currentOrder.trackingStatus ? "" : "text-muted"}>
+              <Card.Title className="fw-bold text-primary">
                 {currentOrder.trackingStatus ??
                   "Status will be updated here when available ..."}
-              </p>
+              </Card.Title>
+            </Card.Header>
+            <Card.Body className="d-flex justify-content-center">
+              <HorizontalTimeline items={TIMELINE_STATUSES} />
             </Card.Body>
           </Card>
         </Col>

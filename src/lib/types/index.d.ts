@@ -41,17 +41,6 @@ type OrderDeliveryDetails = {
   deliverAt: string;
 };
 
-// type Order = {
-//   id: string;
-//   orderValue: number;
-//   status: string;
-//   orderDate: string;
-//   paymentDate?: string;
-//   products?: Product[];
-//   member?: Member;
-//   packaging?: Packaging;
-// };
-
 type Invoice = {
   id: number;
   orderId: number;
@@ -61,22 +50,6 @@ type Invoice = {
   orderValue: number;
   status: string;
 };
-
-// type ProductVM = {
-//   id: string;
-//   internalId?: string;
-//   title: string;
-//   body: string;
-//   category: string;
-//   published: boolean;
-//   size: string;
-//   variants: ProductVariant[];
-//   quantity: number;
-//   price: number;
-//   taxable: boolean;
-//   featuredImage: string;
-//   otherImages: string;
-// };
 
 type ProductVariant = {
   size: string;
@@ -130,3 +103,8 @@ interface Credentials {
   email: string;
   password: string;
 }
+
+type TimelineItem = {
+  status: string;
+  title: string;
+};

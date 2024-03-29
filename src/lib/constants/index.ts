@@ -28,6 +28,12 @@ export enum CreateOrderSlides {
   Submit = 5,
 }
 
+export enum TimelineStatus {
+  Active = "active",
+  Completed = "completed",
+  Pending = "pending",
+}
+
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
   transition: "background-color 0.3s",
 };
@@ -100,3 +106,26 @@ export const EMPTY_DELIVERY_DETAILS: OrderDeliveryDetails = {
   memberEmail: EMPTY_STRING,
   memberPhone: EMPTY_STRING,
 };
+
+export const TIMELINE_STATUSES = [
+  {
+    status: TimelineStatus.Completed,
+    title: "Order placed",
+  },
+  {
+    status: TimelineStatus.Completed,
+    title: "Payment completed",
+  },
+  {
+    status: TimelineStatus.Active,
+    title: "Order shipped",
+  },
+  {
+    status: TimelineStatus.Pending,
+    title: "Arrived in UK",
+  },
+  {
+    status: TimelineStatus.Pending,
+    title: "Delivered",
+  },
+] as TimelineItem[];
