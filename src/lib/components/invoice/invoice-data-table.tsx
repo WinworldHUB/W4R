@@ -92,7 +92,7 @@ const InvoiceDataTable = ({
        <Card.Header>
         <Row>
           <Col>
-            <Card.Title>Orders</Card.Title>
+            <Card.Title>Invoices</Card.Title>
           </Col>
           <Col lg="5">
             <Form.Control
