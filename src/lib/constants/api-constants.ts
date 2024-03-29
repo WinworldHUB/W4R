@@ -36,6 +36,11 @@ export const ORDERS_APIS = {
   UPDATE_ORDER_API: "/orders",
 };
 
+export const INVOICES_APIS = {
+  GET_ALL_INVOICES_API: "/invoices",
+  UPDATE_INVOICE_API: "/invoices",
+};
+
 export const COGNITO_ERROR_CODE = [
   "CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED",
 ];
