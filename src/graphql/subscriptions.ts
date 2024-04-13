@@ -137,6 +137,8 @@ export const onCreateProduct = /* GraphQL */ `subscription OnCreateProduct($filt
     otherImages
     size
     available
+    tag
+    brand
     createdAt
     updatedAt
     __typename
@@ -161,6 +163,8 @@ export const onUpdateProduct = /* GraphQL */ `subscription OnUpdateProduct($filt
     otherImages
     size
     available
+    tag
+    brand
     createdAt
     updatedAt
     __typename
@@ -185,6 +189,8 @@ export const onDeleteProduct = /* GraphQL */ `subscription OnDeleteProduct($filt
     otherImages
     size
     available
+    tag
+    brand
     createdAt
     updatedAt
     __typename

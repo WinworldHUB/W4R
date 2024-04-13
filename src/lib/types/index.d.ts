@@ -109,3 +109,9 @@ type TimelineItem = {
   status: string;
   title: string;
 };
+
+type ProductFilter = {
+  filter: string;
+  count: number;
+  productIds: string[];
+};

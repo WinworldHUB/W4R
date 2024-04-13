@@ -47,7 +47,6 @@ export const KEY_UNPAID = "Unpaid";
 export const KEY_PAID = "Paid";
 export const KEY_PROCESSING = "Processing";
 export const KEY_ALL = "All";
-
 export const DEFAULT_PACKAGES: Packaging[] = [
   {
     id: PackagingType.BOX_PACK,
@@ -150,3 +149,12 @@ export const TIMELINE_STATUSES = [
   },
 
 ] as TimelineItem[];
+export const DEFAULT_BRAND = "wholesale4resale.com";
+export const BEST_SELLER = "best seller";
+
+export const PRODUCTS_APIS = {
+  GET_ALL_PRODUCTS_API: "/products",
+  GET_PRODUCT_BY_ID: "/products/",
+  ADD_PRODUCT_API: "/products",
+  IMPORT_PRODUCTS_API: "/products/imports",
+};

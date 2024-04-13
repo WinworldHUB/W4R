@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
   Card,
   Col,
@@ -12,12 +12,15 @@ import DataTable, {
   ExpanderComponentProps,
   TableColumn,
 } from "react-data-table-component";
-import { DATA_TABLE_DEFAULT_STYLE, KEY_ALL } from "../../constants";
-import { isProductContains } from "../../utils/product-utils";
+import {
+  DATA_TABLE_DEFAULT_STYLE,
+  PRODUCTS_APIS,
+} from "../../constants";
+import { getAllBrands } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
 import { Product } from "../../awsApis";
+import useApi from "../../hooks/useApi";
 
-const filters: string[] = [KEY_ALL];
 
 const columns: TableColumn<Product>[] = [
   {
@@ -82,17 +85,44 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
   onDataImport,
   onCreateClick,
 }: DataTableProps<Product>) => {
+  const { data: products, getData: getProducts } = useApi<Product[]>();
   const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>(filters[0]);
+  const [selectedBrandFilters, setselectedBrandFilters] = useState<
+    ProductFilter[]
+  >([]);
 
-  const filteredData = useMemo(
-    () =>
-      (data ?? []).filter((order) =>
-        isProductContains(order, filterText.trim())
-      ),
-    [data, filterText]
-  );
+  useEffect(() => {
+    getProducts(PRODUCTS_APIS.GET_ALL_PRODUCTS_API);
+  }, []);
+  const brandsFilter = useMemo(() => getAllBrands(products ?? []), [products]);
 
+  const filteredProducts = useMemo(() => {
+    if (selectedBrandFilters.length === 0) {
+      return products;
+    }
+    return products?.filter((p) =>
+      selectedBrandFilters.some((f) => f.productIds.includes(p.id))
+    );
+  }, [products, selectedBrandFilters]);
+
+  const handleFilterChange = (
+    filter: ProductFilter,
+    applied: boolean,
+    isShowAll: boolean = false,
+    isApplySingle: boolean = false
+  ) => {
+    if (isShowAll) {
+      setselectedBrandFilters([]);
+    } else if (applied) {
+      setselectedBrandFilters(
+        isApplySingle ? [filter] : [...selectedBrandFilters, filter]
+      );
+    } else {
+      setselectedBrandFilters(
+        selectedBrandFilters.filter((f) => f.filter !== filter.filter)
+      );
+    }
+  };
   return (
     <Card>
       <Card.Header>
@@ -108,19 +138,24 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
             />
           </Col>
           <Col lg="auto" className="text-end">
-            <DropdownButton
-              id="dropdown-basic-button"
-              title={`Filters (${activeKey})`}
-            >
-              {filters.map((filterKey, index) => (
-                <Dropdown.Item
-                  key={index}
-                  onClick={() => setActiveKey(filters[index])}
-                >
-                  {filterKey}
-                </Dropdown.Item>
-              ))}
-            </DropdownButton>
+          <select
+                className="form-control"
+                title="Filter by brand"
+                onChange={(e) =>
+                  handleFilterChange(
+                    brandsFilter?.[e.target.selectedIndex],
+                    true,
+                    e.target.selectedIndex === 0,
+                    true
+                  )
+                }
+              >
+                {(brandsFilter ?? []).map((sizeFilter, index) => (
+                  <option key={`${sizeFilter.productIds}-${index}`}>
+                    {sizeFilter.filter}
+                  </option>
+                ))}
+              </select>
           </Col>
           <Col lg="auto" className="text-end">
             <label
@@ -135,7 +170,7 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
       <Card.Body>
         <DataTable
           columns={columns}
-          data={filteredData}
+          data={filteredProducts}
           customStyles={DATA_TABLE_DEFAULT_STYLE}
           striped
           highlightOnHover
