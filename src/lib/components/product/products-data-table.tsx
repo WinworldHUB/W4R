@@ -6,21 +6,16 @@ import {
   DropdownButton,
   Form,
   Row,
-  Table,
 } from "react-bootstrap";
 import DataTable, {
-  ExpanderComponentProps,
   TableColumn,
 } from "react-data-table-component";
-import {
-  DATA_TABLE_DEFAULT_STYLE,
-  PRODUCTS_APIS,
-} from "../../constants";
+import { DATA_TABLE_DEFAULT_STYLE, PRODUCTS_APIS } from "../../constants";
 import { getAllBrands } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
 import { Product } from "../../awsApis";
 import useApi from "../../hooks/useApi";
-
+import VariantsTableComponent from "./product-variant-table";
 
 const columns: TableColumn<Product>[] = [
   {
@@ -55,38 +50,14 @@ const columns: TableColumn<Product>[] = [
   },
 ];
 
-const VariantsTableComponent = (product: ExpanderComponentProps<Product>) => {
-  const variants = JSON.parse(
-    product.data.variants ?? "[]"
-  ) as ProductVariant[];
-  return (
-    <Table bordered hover>
-      <thead>
-        <tr>
-          <th className="bg-primary text-white shadow">Size</th>
-          <th className="bg-primary text-white shadow">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {(variants ?? []).map((variant) => (
-          <tr key={variant.size}>
-            <td>{variant.size}</td>
-            <td>{variant.price}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  );
-};
+
 
 const ProductsDataTable: FC<DataTableProps<Product>> = ({
-  data,
   onRowClicked,
   onDataImport,
-  onCreateClick,
 }: DataTableProps<Product>) => {
   const { data: products, getData: getProducts } = useApi<Product[]>();
-  const [filterText, setFilterText] = useState<string>("");
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const [selectedBrandFilters, setselectedBrandFilters] = useState<
     ProductFilter[]
   >([]);
@@ -113,7 +84,9 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
   ) => {
     if (isShowAll) {
       setselectedBrandFilters([]);
+      setSelectedFilter("All");
     } else if (applied) {
+      setSelectedFilter(filter.filter);
       setselectedBrandFilters(
         isApplySingle ? [filter] : [...selectedBrandFilters, filter]
       );
@@ -134,28 +107,30 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
             <Form.Control
               type="text"
               placeholder="Search"
-              onChange={(e) => setFilterText(e.target.value)}
+              onChange={(e) => setSelectedFilter(e.target.value)}
             />
           </Col>
           <Col lg="auto" className="text-end">
-          <select
-                className="form-control"
-                title="Filter by brand"
-                onChange={(e) =>
-                  handleFilterChange(
-                    brandsFilter?.[e.target.selectedIndex],
-                    true,
-                    e.target.selectedIndex === 0,
-                    true
-                  )
-                }
-              >
-                {(brandsFilter ?? []).map((sizeFilter, index) => (
-                  <option key={`${sizeFilter.productIds}-${index}`}>
-                    {sizeFilter.filter}
-                  </option>
-                ))}
-              </select>
+            <DropdownButton
+              title={selectedFilter}
+              onSelect={(eventKey) =>
+                handleFilterChange(
+                  brandsFilter?.[parseInt(eventKey, 10)],
+                  true,
+                  parseInt(eventKey, 10) === 0,
+                  true
+                )
+              }
+            >
+              {(brandsFilter ?? []).map((brandFilter, index) => (
+                <Dropdown.Item
+                  key={`${brandFilter.productIds}-${index}`}
+                  eventKey={(index).toString()}
+                >
+                  {brandFilter.filter}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
           </Col>
           <Col lg="auto" className="text-end">
             <label
