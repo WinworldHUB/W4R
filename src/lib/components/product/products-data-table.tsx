@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
   Card,
   Col,
@@ -6,18 +6,16 @@ import {
   DropdownButton,
   Form,
   Row,
-  Table,
 } from "react-bootstrap";
 import DataTable, {
-  ExpanderComponentProps,
   TableColumn,
 } from "react-data-table-component";
-import { DATA_TABLE_DEFAULT_STYLE, KEY_ALL } from "../../constants";
-import { isProductContains } from "../../utils/product-utils";
+import { DATA_TABLE_DEFAULT_STYLE, PRODUCTS_APIS } from "../../constants";
+import { getAllBrands } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
 import { Product } from "../../awsApis";
-
-const filters: string[] = [KEY_ALL];
+import useApi from "../../hooks/useApi";
+import VariantsTableComponent from "./product-variant-table";
 
 const columns: TableColumn<Product>[] = [
   {
@@ -52,47 +50,52 @@ const columns: TableColumn<Product>[] = [
   },
 ];
 
-const VariantsTableComponent = (product: ExpanderComponentProps<Product>) => {
-  const variants = JSON.parse(
-    product.data.variants ?? "[]"
-  ) as ProductVariant[];
-  return (
-    <Table bordered hover>
-      <thead>
-        <tr>
-          <th className="bg-primary text-white shadow">Size</th>
-          <th className="bg-primary text-white shadow">Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {(variants ?? []).map((variant) => (
-          <tr key={variant.size}>
-            <td>{variant.size}</td>
-            <td>{variant.price}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  );
-};
+
 
 const ProductsDataTable: FC<DataTableProps<Product>> = ({
-  data,
   onRowClicked,
   onDataImport,
-  onCreateClick,
 }: DataTableProps<Product>) => {
-  const [filterText, setFilterText] = useState<string>("");
-  const [activeKey, setActiveKey] = useState<string>(filters[0]);
+  const { data: products, getData: getProducts } = useApi<Product[]>();
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
+  const [selectedBrandFilters, setselectedBrandFilters] = useState<
+    ProductFilter[]
+  >([]);
 
-  const filteredData = useMemo(
-    () =>
-      (data ?? []).filter((order) =>
-        isProductContains(order, filterText.trim())
-      ),
-    [data, filterText]
-  );
+  useEffect(() => {
+    getProducts(PRODUCTS_APIS.GET_ALL_PRODUCTS_API);
+  }, []);
+  const brandsFilter = useMemo(() => getAllBrands(products ?? []), [products]);
 
+  const filteredProducts = useMemo(() => {
+    if (selectedBrandFilters.length === 0) {
+      return products;
+    }
+    return products?.filter((p) =>
+      selectedBrandFilters.some((f) => f.productIds.includes(p.id))
+    );
+  }, [products, selectedBrandFilters]);
+
+  const handleFilterChange = (
+    filter: ProductFilter,
+    applied: boolean,
+    isShowAll: boolean = false,
+    isApplySingle: boolean = false
+  ) => {
+    if (isShowAll) {
+      setselectedBrandFilters([]);
+      setSelectedFilter("All");
+    } else if (applied) {
+      setSelectedFilter(filter.filter);
+      setselectedBrandFilters(
+        isApplySingle ? [filter] : [...selectedBrandFilters, filter]
+      );
+    } else {
+      setselectedBrandFilters(
+        selectedBrandFilters.filter((f) => f.filter !== filter.filter)
+      );
+    }
+  };
   return (
     <Card>
       <Card.Header>
@@ -104,20 +107,27 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
             <Form.Control
               type="text"
               placeholder="Search"
-              onChange={(e) => setFilterText(e.target.value)}
+              onChange={(e) => setSelectedFilter(e.target.value)}
             />
           </Col>
           <Col lg="auto" className="text-end">
             <DropdownButton
-              id="dropdown-basic-button"
-              title={`Filters (${activeKey})`}
+              title={selectedFilter}
+              onSelect={(eventKey) =>
+                handleFilterChange(
+                  brandsFilter?.[parseInt(eventKey, 10)],
+                  true,
+                  parseInt(eventKey, 10) === 0,
+                  true
+                )
+              }
             >
-              {filters.map((filterKey, index) => (
+              {(brandsFilter ?? []).map((brandFilter, index) => (
                 <Dropdown.Item
-                  key={index}
-                  onClick={() => setActiveKey(filters[index])}
+                  key={`${brandFilter.productIds}-${index}`}
+                  eventKey={(index).toString()}
                 >
-                  {filterKey}
+                  {brandFilter.filter}
                 </Dropdown.Item>
               ))}
             </DropdownButton>
@@ -135,7 +145,7 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
       <Card.Body>
         <DataTable
           columns={columns}
-          data={filteredData}
+          data={filteredProducts}
           customStyles={DATA_TABLE_DEFAULT_STYLE}
           striped
           highlightOnHover

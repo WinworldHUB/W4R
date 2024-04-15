@@ -18,6 +18,8 @@ export type ModelInvoiceConditionInput = {
   and?: Array< ModelInvoiceConditionInput | null > | null,
   or?: Array< ModelInvoiceConditionInput | null > | null,
   not?: ModelInvoiceConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelIDInput = {
@@ -142,6 +144,8 @@ export type ModelOrderConditionInput = {
   and?: Array< ModelOrderConditionInput | null > | null,
   or?: Array< ModelOrderConditionInput | null > | null,
   not?: ModelOrderConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelFloatInput = {
@@ -215,6 +219,8 @@ export type CreateProductInput = {
   otherImages?: Array< string | null > | null,
   size?: string | null,
   available?: boolean | null,
+  tag?: string | null,
+  brand?: string | null,
 };
 
 export type ModelProductConditionInput = {
@@ -230,9 +236,13 @@ export type ModelProductConditionInput = {
   otherImages?: ModelStringInput | null,
   size?: ModelStringInput | null,
   available?: ModelBooleanInput | null,
+  tag?: ModelStringInput | null,
+  brand?: ModelStringInput | null,
   and?: Array< ModelProductConditionInput | null > | null,
   or?: Array< ModelProductConditionInput | null > | null,
   not?: ModelProductConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type ModelIntInput = {
@@ -269,6 +279,8 @@ export type Product = {
   otherImages?: Array< string | null > | null,
   size?: string | null,
   available?: boolean | null,
+  tag?: string | null,
+  brand?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -287,6 +299,8 @@ export type UpdateProductInput = {
   otherImages?: Array< string | null > | null,
   size?: string | null,
   available?: boolean | null,
+  tag?: string | null,
+  brand?: string | null,
 };
 
 export type DeleteProductInput = {
@@ -329,6 +343,8 @@ export type ModelMemberConditionInput = {
   and?: Array< ModelMemberConditionInput | null > | null,
   or?: Array< ModelMemberConditionInput | null > | null,
   not?: ModelMemberConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
 };
 
 export type Member = {
@@ -380,6 +396,8 @@ export type ModelInvoiceFilterInput = {
   invoiceDate?: ModelStringInput | null,
   paymentDate?: ModelStringInput | null,
   memberId?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelInvoiceFilterInput | null > | null,
   or?: Array< ModelInvoiceFilterInput | null > | null,
   not?: ModelInvoiceFilterInput | null,
@@ -403,6 +421,8 @@ export type ModelOrderFilterInput = {
   trackingNumber?: ModelStringInput | null,
   packagingType?: ModelPackagingTypeInput | null,
   memberId?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelOrderFilterInput | null > | null,
   or?: Array< ModelOrderFilterInput | null > | null,
   not?: ModelOrderFilterInput | null,
@@ -428,6 +448,10 @@ export type ModelProductFilterInput = {
   otherImages?: ModelStringInput | null,
   size?: ModelStringInput | null,
   available?: ModelBooleanInput | null,
+  tag?: ModelStringInput | null,
+  brand?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelProductFilterInput | null > | null,
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
@@ -455,6 +479,8 @@ export type ModelMemberFilterInput = {
   deliveryEmail?: ModelStringInput | null,
   deliveryAddress1?: ModelStringInput | null,
   deliveryAddress2?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelMemberFilterInput | null > | null,
   or?: Array< ModelMemberFilterInput | null > | null,
   not?: ModelMemberFilterInput | null,
@@ -472,6 +498,8 @@ export type ModelSubscriptionInvoiceFilterInput = {
   invoiceDate?: ModelSubscriptionStringInput | null,
   paymentDate?: ModelSubscriptionStringInput | null,
   memberId?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionInvoiceFilterInput | null > | null,
   or?: Array< ModelSubscriptionInvoiceFilterInput | null > | null,
 };
@@ -518,6 +546,8 @@ export type ModelSubscriptionOrderFilterInput = {
   trackingNumber?: ModelSubscriptionStringInput | null,
   packagingType?: ModelSubscriptionStringInput | null,
   memberId?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionOrderFilterInput | null > | null,
   or?: Array< ModelSubscriptionOrderFilterInput | null > | null,
 };
@@ -548,6 +578,10 @@ export type ModelSubscriptionProductFilterInput = {
   otherImages?: ModelSubscriptionStringInput | null,
   size?: ModelSubscriptionStringInput | null,
   available?: ModelSubscriptionBooleanInput | null,
+  tag?: ModelSubscriptionStringInput | null,
+  brand?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionProductFilterInput | null > | null,
   or?: Array< ModelSubscriptionProductFilterInput | null > | null,
 };
@@ -585,6 +619,8 @@ export type ModelSubscriptionMemberFilterInput = {
   deliveryEmail?: ModelSubscriptionStringInput | null,
   deliveryAddress1?: ModelSubscriptionStringInput | null,
   deliveryAddress2?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionMemberFilterInput | null > | null,
   or?: Array< ModelSubscriptionMemberFilterInput | null > | null,
 };
@@ -736,6 +772,8 @@ export type CreateProductMutation = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -762,6 +800,8 @@ export type UpdateProductMutation = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -788,6 +828,8 @@ export type DeleteProductMutation = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -989,6 +1031,8 @@ export type GetProductQuery = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1018,6 +1062,8 @@ export type ListProductsQuery = {
       otherImages?: Array< string | null > | null,
       size?: string | null,
       available?: boolean | null,
+      tag?: string | null,
+      brand?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1225,6 +1271,8 @@ export type OnCreateProductSubscription = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1250,6 +1298,8 @@ export type OnUpdateProductSubscription = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1275,6 +1325,8 @@ export type OnDeleteProductSubscription = {
     otherImages?: Array< string | null > | null,
     size?: string | null,
     available?: boolean | null,
+    tag?: string | null,
+    brand?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

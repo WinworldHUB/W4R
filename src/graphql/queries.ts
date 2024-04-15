@@ -112,6 +112,8 @@ export const getProduct = /* GraphQL */ `query GetProduct($id: ID!) {
     otherImages
     size
     available
+    tag
+    brand
     createdAt
     updatedAt
     __typename
@@ -141,6 +143,8 @@ export const listProducts = /* GraphQL */ `query ListProducts(
       otherImages
       size
       available
+      tag
+      brand
       createdAt
       updatedAt
       __typename

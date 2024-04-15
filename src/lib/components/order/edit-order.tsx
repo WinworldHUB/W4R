@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Order, OrderStatus, Product } from "../../awsApis";
 import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import ProductsPreviewTable from "./products-preview-table";
-import { DEFAULT_PACKAGES, TIMELINE_STATUSES } from "../../constants";
+import { DEFAULT_PACKAGES, GBP_SYMBOL, TIMELINE_STATUSES } from "../../constants";
 import HorizontalTimeline from "../horizontal-timeline";
 
 interface EditOrderProps {
@@ -123,8 +123,9 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
       </Col>
       <Col xs="12" className="pt-3">
         <Card>
-          <Card.Header>
+          <Card.Header className="d-flex justify-content-between align-items-center">
             <Card.Title>{packaging.title ?? ""}</Card.Title>
+            <Card.Title>{GBP_SYMBOL}{packaging.cost ?? 0}</Card.Title>
           </Card.Header>
           <Card.Body>
             <p>{packaging.description ?? ""}</p>
@@ -144,7 +145,7 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="d-flex justify-content-center">
-              <HorizontalTimeline items={TIMELINE_STATUSES} />
+            <HorizontalTimeline items={TIMELINE_STATUSES} orderStatus={order?.status} deliveryStatus={order?.trackingStatus} />
             </Card.Body>
           </Card>
         </Col>

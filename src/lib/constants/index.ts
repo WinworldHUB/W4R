@@ -28,12 +28,6 @@ export enum CreateOrderSlides {
   Submit = 5,
 }
 
-export enum TimelineStatus {
-  Active = "active",
-  Completed = "completed",
-  Pending = "pending",
-}
-
 export const BACKGROUND_ANIMATION_STYLE: React.CSSProperties = {
   transition: "background-color 0.3s",
 };
@@ -53,7 +47,6 @@ export const KEY_UNPAID = "Unpaid";
 export const KEY_PAID = "Paid";
 export const KEY_PROCESSING = "Processing";
 export const KEY_ALL = "All";
-
 export const DEFAULT_PACKAGES: Packaging[] = [
   {
     id: PackagingType.BOX_PACK,
@@ -63,6 +56,7 @@ export const DEFAULT_PACKAGES: Packaging[] = [
     minQuantity: 6,
     maxQuantity: 10,
     available: true,
+    cost: 20,
   },
   {
     id: PackagingType.FLAT_PACK,
@@ -72,6 +66,7 @@ export const DEFAULT_PACKAGES: Packaging[] = [
     minQuantity: 6,
     maxQuantity: 12,
     available: true,
+    cost: 14,
   },
 ];
 
@@ -106,26 +101,60 @@ export const EMPTY_DELIVERY_DETAILS: OrderDeliveryDetails = {
   memberEmail: EMPTY_STRING,
   memberPhone: EMPTY_STRING,
 };
+export enum DeliveryStatus {
+  InTransit = "IN TRANSIT",
+  ArrivedInUK = "READY FOR DELIVERY",
+  Delivered = "DELIVERED",
+}
+
+export enum TimelineStatus {
+  Active = "active",
+  Completed = "completed",
+  Pending = "pending",
+}
+
+enum TimeLineStatusTitle {
+  OrderPlaced = "Order placed",
+  PaymentCompleted = "Payment completed",
+  PreparingOrder = "Preparing order",
+  OrderShipped = "Order shipped",
+  ArrivedInUK = "Arrived in UK",
+  Delivered = "Delivered",
+}
 
 export const TIMELINE_STATUSES = [
   {
-    status: TimelineStatus.Completed,
-    title: "Order placed",
-  },
-  {
-    status: TimelineStatus.Completed,
-    title: "Payment completed",
-  },
-  {
-    status: TimelineStatus.Active,
-    title: "Order shipped",
+    status: TimelineStatus.Pending,
+    title: TimeLineStatusTitle.OrderPlaced,
   },
   {
     status: TimelineStatus.Pending,
-    title: "Arrived in UK",
+    title: TimeLineStatusTitle.PaymentCompleted,
   },
   {
     status: TimelineStatus.Pending,
-    title: "Delivered",
+    title: TimeLineStatusTitle.PreparingOrder,
   },
+  {
+    status: TimelineStatus.Pending,
+    title: TimeLineStatusTitle.OrderShipped,
+  },
+  {
+    status: TimelineStatus.Pending,
+    title: TimeLineStatusTitle.ArrivedInUK,
+  },
+  {
+    status: TimelineStatus.Pending,
+    title: TimeLineStatusTitle.Delivered,
+  },
+
 ] as TimelineItem[];
+export const DEFAULT_BRAND = "wholesale4resale.com";
+export const BEST_SELLER = "best seller";
+
+export const PRODUCTS_APIS = {
+  GET_ALL_PRODUCTS_API: "/products",
+  GET_PRODUCT_BY_ID: "/products/",
+  ADD_PRODUCT_API: "/products",
+  IMPORT_PRODUCTS_API: "/products/imports",
+};
