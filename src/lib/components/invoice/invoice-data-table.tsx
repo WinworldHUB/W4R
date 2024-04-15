@@ -1,8 +1,9 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
-import { Button, Card, Col, Dropdown, DropdownButton, Form, Nav, Row } from "react-bootstrap";
+import { Card, Col, Dropdown, DropdownButton, Form, Row } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
+  DATA_TABLE_DEFAULT_STYLE,
   KEY_ALL,
   KEY_LATEST,
 } from "../../constants";
@@ -18,26 +19,9 @@ const columns: TableColumn<Invoice>[] = [
     sortable: true,
   },
   {
-    name: "Order#",
-    selector: (row) => row.orderId,
-    sortable: true,
-  },
-
-  {
-    name: "Order Date",
-    selector: (row) =>
-      DateTime.fromISO(row.paymentDate).toFormat(APP_CONVERSION_DATE_FORMAT),
-    sortable: true,
-  },
-  {
     name: "Invoice Date",
     selector: (row) =>
       DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
-    sortable: true,
-  },
-  {
-    name: "Member",
-    selector: (row) => row.memberId,
     sortable: true,
   },
   {
@@ -124,6 +108,7 @@ const InvoiceDataTable = ({
           columns={columns}
           data={filteredData}
           striped
+          customStyles={DATA_TABLE_DEFAULT_STYLE}
           highlightOnHover
           pagination
           onRowClicked={onRowClicked}
