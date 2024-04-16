@@ -2,7 +2,11 @@ import { FC, useState } from "react";
 import { Order, OrderStatus, Product } from "../../awsApis";
 import { Row, Col, Card, Form, InputGroup, Button } from "react-bootstrap";
 import ProductsPreviewTable from "./products-preview-table";
-import { DEFAULT_PACKAGES, GBP_SYMBOL, TIMELINE_STATUSES } from "../../constants";
+import {
+  DEFAULT_PACKAGES,
+  GBP_SYMBOL,
+  TIMELINE_STATUSES,
+} from "../../constants";
 import HorizontalTimeline from "../horizontal-timeline";
 
 interface EditOrderProps {
@@ -92,13 +96,6 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
                   }
                   disabled={currentOrder.status !== OrderStatus.PROCESSING}
                 />
-                <Button
-                  variant="primary"
-                  id="button-addon2"
-                  disabled={currentOrder.status !== OrderStatus.PROCESSING}
-                >
-                  Track
-                </Button>
               </InputGroup>
             </Col>
           </Form.Group>
@@ -108,9 +105,14 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
               Tracking status:
             </Form.Label>
             <Col sm={8}>
-              <Form.Label column sm={8} className="fw-bold">
-                {currentOrder.trackingStatus ?? "NA"}
-              </Form.Label>
+              <Form.Select
+                disabled={currentOrder.status !== OrderStatus.PROCESSING}
+              >
+                <option value="IN TRANSIT">IN TRANSIT</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </Form.Select>
             </Col>
           </Form.Group>
         </Form>
@@ -125,7 +127,10 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
         <Card>
           <Card.Header className="d-flex justify-content-between align-items-center">
             <Card.Title>{packaging.title ?? ""}</Card.Title>
-            <Card.Title>{GBP_SYMBOL}{packaging.cost ?? 0}</Card.Title>
+            <Card.Title>
+              {GBP_SYMBOL}
+              {packaging.cost ?? 0}
+            </Card.Title>
           </Card.Header>
           <Card.Body>
             <p>{packaging.description ?? ""}</p>
@@ -145,7 +150,11 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
               </Card.Title>
             </Card.Header>
             <Card.Body className="d-flex justify-content-center">
-            <HorizontalTimeline items={TIMELINE_STATUSES} orderStatus={order?.status} deliveryStatus={order?.trackingStatus} />
+              <HorizontalTimeline
+                items={TIMELINE_STATUSES}
+                orderStatus={order?.status}
+                deliveryStatus={order?.trackingStatus}
+              />
             </Card.Body>
           </Card>
         </Col>
