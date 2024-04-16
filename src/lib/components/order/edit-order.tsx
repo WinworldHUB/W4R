@@ -6,6 +6,7 @@ import {
   DEFAULT_PACKAGES,
   GBP_SYMBOL,
   TIMELINE_STATUSES,
+  DeliveryStatus
 } from "../../constants";
 import HorizontalTimeline from "../horizontal-timeline";
 
@@ -106,12 +107,19 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
             </Form.Label>
             <Col sm={8}>
               <Form.Select
+               value={currentOrder?.trackingStatus ?? ""}
+               onChange={(e) =>
+                setCurrentOrder({
+                  ...currentOrder,
+                  trackingStatus: e.target.value,
+                })
+              }
+              
                 disabled={currentOrder.status !== OrderStatus.PROCESSING}
               >
-                <option value="IN TRANSIT">IN TRANSIT</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {Object.values(DeliveryStatus).map((status, index) => (
+                  <option key={`${status}-${index}`}>{status}</option>
+                ))}
               </Form.Select>
             </Col>
           </Form.Group>
