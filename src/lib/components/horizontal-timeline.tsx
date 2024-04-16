@@ -48,6 +48,21 @@ const HorizontalTimeline: FC<HorizontalTimelineProps> = ({
               deliveryStatus === DeliveryStatus.ArrivedInUK
             ) {
               return { ...item, status: TimelineStatus.Active };
+            } else if (
+              index < 4 &&
+              deliveryStatus === DeliveryStatus.ArrivedInUK
+            ) {
+              return { ...item, status: TimelineStatus.Completed };
+            } else if (
+              index === 5 &&
+              deliveryStatus === DeliveryStatus.Delivered
+            ) {
+              return { ...item, status: TimelineStatus.Active };
+            } else if (
+              index < 5 &&
+              deliveryStatus === DeliveryStatus.Delivered
+            ) {
+              return { ...item, status: TimelineStatus.Completed };
             } else {
               return item;
             }
