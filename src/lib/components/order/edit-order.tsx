@@ -6,9 +6,10 @@ import {
   DEFAULT_PACKAGES,
   GBP_SYMBOL,
   TIMELINE_STATUSES,
-  DeliveryStatus
+  DeliveryStatus,
 } from "../../constants";
 import HorizontalTimeline from "../horizontal-timeline";
+import { getOrderStatus } from "../../utils/order-utils";
 
 interface EditOrderProps {
   order: Order;
@@ -72,7 +73,9 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
                 }
               >
                 {Object.values(OrderStatus).map((status, index) => (
-                  <option key={`${status}-${index}`}>{status}</option>
+                  <option key={`${status}-${index}`} value={status}>
+                    {getOrderStatus(status)}
+                  </option>
                 ))}
               </Form.Select>
             </Col>
@@ -107,14 +110,13 @@ const EditOrder: FC<EditOrderProps> = ({ order, onClose, onUpdate }) => {
             </Form.Label>
             <Col sm={8}>
               <Form.Select
-               value={currentOrder?.trackingStatus ?? ""}
-               onChange={(e) =>
-                setCurrentOrder({
-                  ...currentOrder,
-                  trackingStatus: e.target.value,
-                })
-              }
-              
+                value={currentOrder?.trackingStatus ?? ""}
+                onChange={(e) =>
+                  setCurrentOrder({
+                    ...currentOrder,
+                    trackingStatus: e.target.value,
+                  })
+                }
                 disabled={currentOrder.status !== OrderStatus.PROCESSING}
               >
                 {Object.values(DeliveryStatus).map((status, index) => (

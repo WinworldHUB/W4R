@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { Order, Product } from "../awsApis";
+import { Order, OrderStatus, Product } from "../awsApis";
 import {
   APP_AWS_DATE_FORMAT,
   EMPTY_DELIVERY_DETAILS,
@@ -83,3 +83,10 @@ export const calculateOrderValue = (products: Product[]): number =>
 
 export const generateOrderNumber = (totalOrders: number) =>
   `${toFormattedDate(DateTime.now(), APP_AWS_DATE_FORMAT)}-${totalOrders + 1}`;
+
+export const getOrderStatus = (status: OrderStatus): string => {
+  if (status === OrderStatus.PROCESSING) return "ORDER SHIPPED";
+  if (status === OrderStatus.DONE) return "DELIVERED";
+
+  return status.toString();
+};
