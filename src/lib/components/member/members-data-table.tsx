@@ -1,8 +1,7 @@
-import React, { FC, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import { isMemberContains } from "../../utils/member-utils";
-import { dateFromString } from "../../utils/date-utils";
 import CSVReader from "react-csv-reader";
 import { DATA_TABLE_DEFAULT_STYLE } from "../../constants";
 import { Member } from "../../awsApis";
@@ -10,6 +9,8 @@ import { Member } from "../../awsApis";
 const MembersDataTable: FC<DataTableProps<Member>> = ({
   data,
   onDataImport,
+  isEditable = true,
+  title = "Users",
 }) => {
   const [filterText, setFilterText] = useState<string>("");
 
@@ -48,7 +49,7 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
       <Card.Header>
         <Row>
           <Col>
-            <Card.Title>Users</Card.Title>
+            <Card.Title>{title}</Card.Title>
           </Col>
           <Col xs="3">
             <Form.Control
@@ -57,14 +58,16 @@ const MembersDataTable: FC<DataTableProps<Member>> = ({
               onChange={(e) => setFilterText(e.target.value)}
             />
           </Col>
-          <Col xs="auto">
-            <label
-              className="btn btn-warning cursor-hand"
-              htmlFor="importMember"
-            >
-              Import
-            </label>
-          </Col>
+          {isEditable && (
+            <Col xs="auto">
+              <label
+                className="btn btn-warning cursor-hand"
+                htmlFor="importMember"
+              >
+                Import
+              </label>
+            </Col>
+          )}
         </Row>
       </Card.Header>
       <Card.Body>

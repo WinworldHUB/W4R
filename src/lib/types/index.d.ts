@@ -19,6 +19,7 @@ interface PageProps {
 }
 
 interface DataTableProps<T> {
+  title?: string;
   isEditable?: boolean;
   data: T[];
   onCreateClick?: VoidFunction;

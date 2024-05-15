@@ -1,4 +1,4 @@
-import { PackagingType } from "../awsApis";
+import { Member, PackagingType } from "../awsApis";
 
 export const EMPTY_STRING = "";
 
@@ -147,7 +147,6 @@ export const TIMELINE_STATUSES = [
     status: TimelineStatus.Pending,
     title: TimeLineStatusTitle.Delivered,
   },
-
 ] as TimelineItem[];
 export const DEFAULT_BRAND = "wholesale4resale.com";
 export const BEST_SELLER = "best seller";
@@ -158,3 +157,8 @@ export const PRODUCTS_APIS = {
   ADD_PRODUCT_API: "/products",
   IMPORT_PRODUCTS_API: "/products/imports",
 };
+
+export interface MemberImportLog {
+  failedImport: Member[];
+  successImport: Member[];
+}
