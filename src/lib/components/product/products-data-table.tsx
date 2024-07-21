@@ -7,9 +7,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
-import DataTable, {
-  TableColumn,
-} from "react-data-table-component";
+import DataTable, { TableColumn } from "react-data-table-component";
 import { DATA_TABLE_DEFAULT_STYLE, PRODUCTS_APIS } from "../../constants";
 import { getAllBrands } from "../../utils/product-utils";
 import CSVReader from "react-csv-reader";
@@ -49,8 +47,6 @@ const columns: TableColumn<Product>[] = [
     ), // Custom cell styling
   },
 ];
-
-
 
 const ProductsDataTable: FC<DataTableProps<Product>> = ({
   onRowClicked,
@@ -125,7 +121,7 @@ const ProductsDataTable: FC<DataTableProps<Product>> = ({
               {(brandsFilter ?? []).map((brandFilter, index) => (
                 <Dropdown.Item
                   key={`${brandFilter.productIds}-${index}`}
-                  eventKey={(index).toString()}
+                  eventKey={index.toString()}
                 >
                   {brandFilter.filter}
                 </Dropdown.Item>

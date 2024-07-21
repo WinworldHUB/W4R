@@ -5,12 +5,7 @@ import Invoices from "./pages/Invoices";
 import Home from "./pages/home";
 import Members from "./pages/members";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
-import {
-  FaOpencart,
-  FaFileInvoiceDollar,
-  FaUsers,
-  FaBug,
-} from "react-icons/fa";
+import { FaOpencart, FaFileInvoiceDollar, FaUsers } from "react-icons/fa";
 import Products from "./pages/products";
 import TestPage from "./pages/test";
 import { useContext } from "react";

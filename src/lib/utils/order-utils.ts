@@ -12,10 +12,10 @@ export const isOrderContains = (order: Order, value: string): boolean => {
   if (!order) return false;
 
   return (
-    order.id.toString().includes(value) ||
-    order.orderDate.includes(value) ||
-    order.status.includes(value) ||
-    order.orderValue.toString().includes(value)
+    order.orderNumber?.toString().includes(value) ||
+    order.orderDate?.includes(value) ||
+    order.status?.includes(value) ||
+    order.orderValue?.toString().includes(value)
   );
 };
 
@@ -81,8 +81,11 @@ export const calculateOrderValue = (products: Product[]): number =>
     0
   );
 
+// export const generateOrderNumber = (totalOrders: number) =>
+//   `${toFormattedDate(DateTime.now(), APP_AWS_DATE_FORMAT)}-${totalOrders + 1}`;
+
 export const generateOrderNumber = (totalOrders: number) =>
-  `${toFormattedDate(DateTime.now(), APP_AWS_DATE_FORMAT)}-${totalOrders + 1}`;
+  "will be assigned once you submit";
 
 export const getOrderStatus = (status: OrderStatus): string => {
   if (status === OrderStatus.PROCESSING) return "ORDER SHIPPED";

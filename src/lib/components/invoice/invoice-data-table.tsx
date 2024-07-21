@@ -1,5 +1,12 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
-import { Card, Col, Dropdown, DropdownButton, Form, Row } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Row,
+} from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
 import {
   APP_CONVERSION_DATE_FORMAT,
@@ -10,7 +17,7 @@ import {
 import { DateTime } from "luxon";
 import { Invoice } from "../../awsApis";
 
-const filters: string[] = [ KEY_ALL];
+const filters: string[] = [KEY_ALL];
 
 const columns: TableColumn<Invoice>[] = [
   {
@@ -28,7 +35,7 @@ const columns: TableColumn<Invoice>[] = [
     name: "Payment Date",
     selector: (row) => row.paymentDate ?? "N/A",
     sortable: true,
-  }
+  },
 ];
 
 interface DataTableProps {
@@ -53,18 +60,18 @@ const InvoiceDataTable = ({
         return (data ?? []).filter(
           (invoice) =>
             invoice.invoiceDate === currentDate &&
-            (invoice.id.toString().includes(searchTextLower) ||
-              invoice.orderId.toString().includes(searchTextLower) ||
-              invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
-              invoice.invoiceDate.toLowerCase().includes(searchTextLower))
+            (invoice.id?.toString().includes(searchTextLower) ||
+              invoice.orderId?.toString().includes(searchTextLower) ||
+              invoice.paymentDate?.toLowerCase().includes(searchTextLower) ||
+              invoice.invoiceDate?.toLowerCase().includes(searchTextLower))
         );
       case KEY_ALL:
         return (data ?? []).filter(
           (invoice) =>
-            invoice.id.toString().includes(searchTextLower) ||
-            invoice.orderId.toString().includes(searchTextLower) ||
-            invoice.paymentDate.toLowerCase().includes(searchTextLower) ||
-            invoice.invoiceDate.toLowerCase().includes(searchTextLower)
+            invoice.id?.toString().includes(searchTextLower) ||
+            invoice.orderId?.toString().includes(searchTextLower) ||
+            invoice.paymentDate?.toLowerCase().includes(searchTextLower) ||
+            invoice.invoiceDate?.toLowerCase().includes(searchTextLower)
         );
       default:
         return [];
@@ -73,7 +80,7 @@ const InvoiceDataTable = ({
 
   return (
     <Card>
-       <Card.Header>
+      <Card.Header>
         <Row>
           <Col>
             <Card.Title>Invoices</Card.Title>

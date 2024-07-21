@@ -10,16 +10,17 @@ import {
   PRODUCTS_APIS,
 } from "../lib/constants/api-constants";
 import { Product, Member, Order } from "../lib/awsApis";
-import PageLoading from "../lib/components/pageLoading";
 import EditOrder from "../lib/components/order/edit-order";
 import useExistingOrder from "../lib/hooks/useExistingOrder";
 import { trimOrder } from "../lib/utils/order-utils";
+import PageLoading from "../lib/components/pageLoading";
 const Home: FC<PageProps> = (pageProps) => {
   const { data: members, getData: getAllMembers } = useApi<Member[]>();
   const { data: products, getData: getAllProducts } = useApi<Product[]>();
   const { data: orders, getData: getAllOrders } = useApi<Order[]>();
   const { postData: createOrder } = useApi<Order[]>();
   const [showNewOrderModal, setShowNewOrderModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>(null);
 
   const {
     order: selectedOrder,
@@ -35,7 +36,9 @@ const Home: FC<PageProps> = (pageProps) => {
   }, [isShouldReload]);
 
   useEffect(() => {
-    getAllOrders(ORDERS_APIS.GET_ALL_ORDERS_API);
+    getAllOrders(ORDERS_APIS.GET_ALL_ORDERS_API).then((response) =>
+      setErrorMessage(!response ? "Please try logging in" : null)
+    );
     getAllMembers(MEMBERS_APIS.GET_ALL_MEMBERS_API);
     getAllProducts(PRODUCTS_APIS.GET_ALL_PRODUCTS_API);
   }, []);
@@ -59,7 +62,7 @@ const Home: FC<PageProps> = (pageProps) => {
         </Modal.Header>
         <Modal.Body>
           <CreateOrder
-            totalOrders={orders.length}
+            totalOrders={orders?.length}
             members={members ?? []}
             products={products ?? []}
             handleClose={() => setShowNewOrderModal(false)}
@@ -97,10 +100,11 @@ const Home: FC<PageProps> = (pageProps) => {
       </Modal>
 
       <OrdersDataTable
-        data={orders}
+        data={orders ?? []}
         onRowClicked={(clickedOrder) => updateOrder(clickedOrder)}
         onCreateClick={() => setShowNewOrderModal(true)}
       />
+      <p className="text-center text-danger">{errorMessage}</p>
     </PageLayout>
   );
 };

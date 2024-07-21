@@ -71,7 +71,7 @@ const HorizontalTimeline: FC<HorizontalTimelineProps> = ({
             return { ...item, status: TimelineStatus.Completed };
         }
       }),
-    [items, orderStatus]
+    [deliveryStatus, items, orderStatus]
   );
   return (
     <div className="timeline">

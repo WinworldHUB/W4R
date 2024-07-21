@@ -28,11 +28,6 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
   const [deliveryDetails, setDeliveryDetails] = useState<OrderDeliveryDetails>(
     getDeliveryDetails(order)
   );
-  const [orderNumber, setOrderNumber] = useState<string>(
-    order.orderNumber === EMPTY_STRING
-      ? generateOrderNumber(totalOrders)
-      : order.orderNumber
-  );
 
   useEffect(() => {
     onReady(
@@ -41,7 +36,7 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
         deliveryDetails.memberPhone !== EMPTY_STRING
     );
     onUpdate(deliveryDetails);
-  }, [deliveryDetails]);
+  }, [deliveryDetails, onReady, onUpdate]);
 
   const orderValue = useMemo(
     () =>
@@ -65,7 +60,12 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
             <Form.Control
               type="text"
               placeholder="Order #"
-              value={orderNumber}
+              disabled
+              value={
+                order.orderNumber === EMPTY_STRING
+                  ? generateOrderNumber(totalOrders)
+                  : order.orderNumber
+              }
               onChange={(e) => onOrderNumberUpdate(e.target.value)}
             />
           </Col>

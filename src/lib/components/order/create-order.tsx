@@ -134,7 +134,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({
         setIsPageValid(true);
         break;
     }
-  }, [order, slideIndex]);
+  }, [onOrderReady, order, slideIndex]);
 
   if (members.length === 0) {
     return <CannotProceed message="Cannot proceed since, no members loaded" />;

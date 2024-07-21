@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import {
   API_BASE_URL,
   DEFAULT_GET_API_HEADER,
@@ -53,7 +53,11 @@ const useApi = <T,>(): APIState<T> => {
         method: "GET",
         headers: DEFAULT_GET_API_HEADER(appState.accessToken),
       });
+
       const data = await response.json();
+      if (data["message"] === "Authorization token is missing")
+        return Promise.resolve(null);
+
       setData(data);
 
       return Promise.resolve(data);
