@@ -36,7 +36,7 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
         deliveryDetails.memberPhone !== EMPTY_STRING
     );
     onUpdate(deliveryDetails);
-  }, [deliveryDetails, onReady, onUpdate]);
+  }, [deliveryDetails]);
 
   const orderValue = useMemo(
     () =>
@@ -60,7 +60,7 @@ const OrderPreviewSlide: FC<OrderPreviewSlideProps> = ({
             <Form.Control
               type="text"
               placeholder="Order #"
-              disabled
+              readOnly
               value={
                 order.orderNumber === EMPTY_STRING
                   ? generateOrderNumber(totalOrders)

@@ -41,7 +41,10 @@ const columns: TableColumn<Product>[] = [
   {
     maxWidth: "100px",
     name: "Price",
-    selector: (row) => `${GBP_SYMBOL} ${formatCurrency(parseFloat(row?.price?.toString() ?? "").toFixed(2))}`,
+    selector: (row) =>
+      `${GBP_SYMBOL} ${formatCurrency(
+        parseFloat(row?.price?.toString() ?? "").toFixed(2)
+      )}`,
   },
 ];
 
@@ -49,8 +52,6 @@ const ProductsPreviewTable: FC<ProductsPreviewTableProps> = ({
   products,
   orderValue,
 }) => {
-  console.log(products);
-  
   return (
     <Card>
       <Card.Header className="d-flex justify-content-between">
