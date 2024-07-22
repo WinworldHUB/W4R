@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import {
+  Badge,
   Card,
   Col,
   Dropdown,
@@ -8,14 +9,10 @@ import {
   Row,
 } from "react-bootstrap";
 import DataTable, { TableColumn } from "react-data-table-component";
-import {
-  APP_CONVERSION_DATE_FORMAT,
-  DATA_TABLE_DEFAULT_STYLE,
-  KEY_ALL,
-  KEY_LATEST,
-} from "../../constants";
+import { DATA_TABLE_DEFAULT_STYLE, KEY_ALL, KEY_LATEST } from "../../constants";
 import { DateTime } from "luxon";
 import { Invoice } from "../../awsApis";
+import { isLatest, sortByDate } from "../../utils/date-utils";
 
 const filters: string[] = [KEY_ALL];
 
@@ -24,11 +21,17 @@ const columns: TableColumn<Invoice>[] = [
     name: "Invoice#",
     selector: (row) => row.id,
     sortable: true,
+    cell: (row) => (
+      <p>
+        {row.orderId}&nbsp;
+        {isLatest(row.invoiceDate) && <Badge bg="primary">recent</Badge>}
+      </p>
+    ),
   },
   {
     name: "Invoice Date",
-    selector: (row) =>
-      DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
+    selector: (row) => row.invoiceDate,
+    //DateTime.fromISO(row.invoiceDate).toFormat(APP_CONVERSION_DATE_FORMAT),
     sortable: true,
   },
   {
@@ -55,9 +58,11 @@ const InvoiceDataTable = ({
   const filteredData = useMemo(() => {
     const searchTextLower = filterText.toLowerCase();
     const currentDate = DateTime.now().toISODate();
+    var data2Use: Invoice[] = [];
+
     switch (activeKey) {
       case KEY_LATEST:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (invoice) =>
             invoice.invoiceDate === currentDate &&
             (invoice.id?.toString().includes(searchTextLower) ||
@@ -65,17 +70,25 @@ const InvoiceDataTable = ({
               invoice.paymentDate?.toLowerCase().includes(searchTextLower) ||
               invoice.invoiceDate?.toLowerCase().includes(searchTextLower))
         );
+        break;
+
       case KEY_ALL:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (invoice) =>
             invoice.id?.toString().includes(searchTextLower) ||
             invoice.orderId?.toString().includes(searchTextLower) ||
             invoice.paymentDate?.toLowerCase().includes(searchTextLower) ||
             invoice.invoiceDate?.toLowerCase().includes(searchTextLower)
         );
+        break;
+
       default:
-        return [];
+        data2Use = [];
+        break;
     }
+
+    (data2Use ?? []).sort((a, b) => sortByDate(a.invoiceDate, b.invoiceDate));
+    return data2Use;
   }, [activeKey, filterText, data]);
 
   return (

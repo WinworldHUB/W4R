@@ -39,6 +39,7 @@ export const APP_SHORT_DATE_FORMAT = "dd MMM yyyy";
 export const APP_AWS_DATE_FORMAT = "yyyy-MM-dd";
 export const APP_LONG_DATE_FORMAT = "DDDD";
 export const APP_ORDER_NUMBER_FORMAT = "yyyy/dd/#";
+export const APP_RECENT_NUMBER_OF_DAYS = 3;
 
 export const GBP_SYMBOL = "£";
 

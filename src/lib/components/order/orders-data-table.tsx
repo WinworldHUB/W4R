@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { FC, useMemo, useState } from "react";
 import {
+  Badge,
   Button,
   Card,
   Col,
@@ -21,6 +22,7 @@ import {
 } from "../../constants";
 import { isOrderContains } from "../../utils/order-utils";
 import { Order, OrderStatus } from "../../awsApis";
+import { isLatest, sortByDate } from "../../utils/date-utils";
 
 const filters: string[] = [KEY_UNPAID, KEY_PAID, KEY_PROCESSING, KEY_ALL];
 
@@ -29,6 +31,12 @@ const columns: TableColumn<Order>[] = [
     name: "Order#",
     selector: (row) => row.orderNumber,
     sortable: true,
+    cell: (row) => (
+      <p>
+        {row.orderNumber}&nbsp;
+        {isLatest(row.orderDate) && <Badge bg="primary">recent</Badge>}
+      </p>
+    ),
   },
   {
     name: "Order Value",
@@ -82,41 +90,50 @@ const OrdersDataTable: FC<DataTableProps<Order>> = ({
   const [activeKey, setActiveKey] = useState<string>(filters[0]);
 
   const filteredData = useMemo(() => {
+    var data2Use = [];
     switch (activeKey) {
       case KEY_LATEST:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (order) =>
             order.orderDate ===
               DateTime.now().toFormat(APP_CONVERSION_DATE_FORMAT) &&
             isOrderContains(order, filterText?.trim())
         );
+        break;
       case KEY_UNPAID:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (order) =>
             order?.status === OrderStatus.UNPAID &&
             isOrderContains(order, filterText?.trim())
         );
-
+        break;
       case KEY_PAID:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (order) =>
             order?.status === OrderStatus.PAID &&
             isOrderContains(order, filterText?.trim())
         );
+        break;
 
       case KEY_PROCESSING:
-        return (data ?? []).filter(
+        data2Use = (data ?? []).filter(
           (order) =>
             order?.status === OrderStatus.PROCESSING &&
             isOrderContains(order, filterText?.trim())
         );
+        break;
 
       case KEY_ALL:
-        return (data ?? []).filter((order) =>
+        data2Use = (data ?? []).filter((order) =>
           isOrderContains(order, filterText?.trim())
         );
+        break;
     }
+
+    (data2Use ?? []).sort((a, b) => sortByDate(a.orderDate, b.orderDate));
+    return data2Use;
   }, [data, activeKey, filterText]);
+
   return (
     <Card>
       <Card.Header>
